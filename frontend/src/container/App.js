@@ -18,11 +18,11 @@ function renderCurrentView(store) {
 
 const App = observer(({ store }) => {
     let content = null;
-    if (store.isAuthenticated || (store.currentView && store.currentView.bypassAuth)) {
+    // if (store.isAuthenticated || (store.currentView && store.currentView.bypassAuth)) {
         content = renderCurrentView(store);
-    } else {
-        content = <Login viewStore={store} />;
-    }
+    // } else {
+        // content = <Login viewStore={store} />;
+    // }
     return (
         <div>
             <Header store={store} />
