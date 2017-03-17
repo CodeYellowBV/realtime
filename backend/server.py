@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from settings import SETTINGS
 from db import db, Activity, Claim, Tag
 from datetime import datetime
-from flask.ext.cors import CORS
+from flask_cors import CORS
 from dateutil import parser
 import json
 import pytz
