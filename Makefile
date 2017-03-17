@@ -20,10 +20,10 @@ backend-pip: FORCE
 	cd backend; ./venv/bin/pip install -U -r packages.pip
 
 backend-migrations: FORCE
-	cd backend; ./venv/bin/python migrations.py
+	cd backend; ./venv/bin/python manage.py db upgrade
 
 backend-dev-server:
-	cd backend; ./venv/bin/python server.py
+	cd backend; ./venv/bin/python manage.py runserver
 
 frontend-npm: FORCE
 	rm -rf frontend/node_modules
