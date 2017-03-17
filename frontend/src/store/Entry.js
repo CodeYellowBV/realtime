@@ -1,4 +1,5 @@
 import { observable } from 'mobx';
+import moment from 'moment';
 import { Model, Store } from './Base';
 import { Project } from './Project';
 
@@ -7,8 +8,8 @@ export class Entry extends Model {
 
     @observable id = null;
     @observable description = '';
-    @observable startedAt = null;
-    @observable endedAt = null;
+    @observable startedAt = moment();
+    @observable endedAt = moment();
 
     relations() {
         return {
