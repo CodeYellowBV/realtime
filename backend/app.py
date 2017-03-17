@@ -12,32 +12,31 @@
 # app = Flask(__name__)
 # CORS(app)
 
-import settings
-
+from settings import Settings
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://' + os.environ.get('CY_DB_USER') + '@/' + os.environ.get('CY_DB_NAME')
+app.config.from_object(Settings)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from models import Entry, Project
+
 
 # def from_iso8601(iso_dt):
 #     dt_local = parser.parse(iso_dt)
 #     dt_utc = dt_local.astimezone(pytz.utc)
 #     return dt_utc.replace(tzinfo=None)
 
-
-@app.route('/')
+@app.route('/api/')
 def home():
     return 'Hello World!'
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
 
 # @app.route('/api/activity', methods=['GET'])
 # def activity_getcollection():
