@@ -1,0 +1,8 @@
+exports[`test Button renders correctly 1`] = `
+<button
+  disabled={undefined}
+  onClick={undefined}
+  type="button">
+  Yes!
+</button>
+`;

@@ -1,0 +1,6 @@
+{
+    "extends": "codeyellow/react",
+    "env": {
+        "jest": true
+    }
+}
