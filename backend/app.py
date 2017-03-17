@@ -16,6 +16,7 @@ from settings import Settings
 from flask import Flask
 from flask_socketio import SocketIO, send
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 import os
 
 
@@ -36,11 +37,11 @@ ma = Marshmallow(app)
 
 @app.route('/api/')
 def home():
-    return 'Hello World!'
+	return 'Hello World!'
 
 @socketio.on('message')
 def handle_message(message):
-    print('received message: ' + message)
+	print('received message: ' + message)
 	send(message)
 
 # @app.route('/api/activity', methods=['GET'])
