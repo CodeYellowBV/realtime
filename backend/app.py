@@ -24,7 +24,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://' + os.environ.ge
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# from models import Result
+from models import Entry, Project
 
 # def from_iso8601(iso_dt):
 #     dt_local = parser.parse(iso_dt)
