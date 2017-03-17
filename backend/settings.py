@@ -1,13 +1,29 @@
-from dotenv import Dotenv
-from os import path, environ as env
+import os
+from dotenv import load_dotenv, find_dotenv
 
-# First, parse env file and splice it into the OS environment
-envpath = path.join(path.dirname(__file__), '..', '.env')
-dotenv = Dotenv(envpath)
-env.update(dotenv)
+load_dotenv(find_dotenv())
 
-# Now, parse and set the settings dict
-SETTINGS = {
-    'DEBUG': env.get('CY_DEBUG', '').lower() == 'true',
-    'DB_FILE': env.get('CY_DB_FILE', '').lower(),
-}
+# class Settings(object):
+# 	DEBUG = False
+# 	TESTING = False
+# 	CSRF_ENABLED = True
+# 	SECRET_KEY = 'this-really-needs-to-be-changed'
+# 	SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://' + os.environ.get('CY_DB_USER') + '@/' os.environ.get('CY_DB_NAME')
+
+
+# class ProductionSettings(Settings):
+# 	DEBUG = False
+
+
+# class StagingSettings(Settings):
+# 	DEVELOPMENT = True
+# 	DEBUG = True
+
+
+# class DevelopmentSettings(Settings):
+# 	DEVELOPMENT = True
+# 	DEBUG = True
+
+
+# class TestingSettings(Settings):
+# 	TESTING = True
