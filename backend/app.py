@@ -14,16 +14,18 @@
 
 from settings import Settings
 from flask import Flask
+from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 app.config.from_object(Settings)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from models import Entry, Project
+# from models import Entry, Project
 
 
 # def from_iso8601(iso_dt):
@@ -36,7 +38,7 @@ def home():
     return 'Hello World!'
 
 # if __name__ == '__main__':
-#     app.run()
+#     socketio.run(app)
 
 # @app.route('/api/activity', methods=['GET'])
 # def activity_getcollection():
