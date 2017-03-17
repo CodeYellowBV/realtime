@@ -19,6 +19,9 @@ export default class EntryList extends Component {
     }
 
     render() {
+        if (!this.props.entries.length) {
+            return <div>You do not have any entries yet.</div>;
+        }
         return (
             <table>
                 <thead>
