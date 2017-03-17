@@ -14,16 +14,17 @@
 
 from settings import Settings
 from flask import Flask
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 
 app = Flask(__name__)
-socketio = SocketIO(app)
 app.config.from_object(Settings)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+socketio = SocketIO(app)
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 
 # from models import Entry, Project
 
@@ -37,8 +38,10 @@ db = SQLAlchemy(app)
 def home():
     return 'Hello World!'
 
-# if __name__ == '__main__':
-#     socketio.run(app)
+@socketio.on('message')
+def handle_message(message):
+    print('received message: ' + message)
+	send(message)
 
 # @app.route('/api/activity', methods=['GET'])
 # def activity_getcollection():
