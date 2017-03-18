@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime
 # from sqlalchemy.dialects.postgresql import JSON
 
 def get_iso8601(ts):
@@ -16,13 +17,22 @@ class Entry(db.Model):
 	project = db.relationship('Project',
 		backref=db.backref('entries', lazy='dynamic'))
 
-	def __init__(self, project, description='', started_at=None, ended_at=None):
-		self.project = project
-		self.description = description
-		if started_at is None:
-			started_at = datetime.utcnow()
-		self.started_at = started_at
-		self.ended_at = ended_at
+	def __init__(self, data):
+		if not data:
+			return
+
+		if data.project:
+			self.project = data['project']
+
+		if data.started_at:
+			self.started_at = data['started_at']
+
+		if data.ended_at:
+			self.ended_at = data['ended_at']
+
+		if data.description:
+			self.description = data['description']
+
 
 	def __repr__(self):
 		return '<Entry %r>' % self.id
@@ -39,7 +49,7 @@ class Entry(db.Model):
 	def transform(model):
 		return {
 			'id': model.id,
-			'started_at': get_iso8601(model.started_at),
+			'started_at': get_iso8601(model.started_at) if model.ended_at is not None else '',
 			'ended_at': get_iso8601(model.ended_at) if model.ended_at is not None else '',
 			'description': model.description,
 			'project': Project.transform(model.project) if model.project else None,

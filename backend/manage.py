@@ -54,6 +54,7 @@ class Server(_Server):
 
 	def __call__(self, app, host, port, use_debugger, use_reloader):
 		use_reloader = app.config['DEBUG']
+		use_debugger = app.config['DEBUG']
 
 		socketio.run(app,
 					host=host,

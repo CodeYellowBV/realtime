@@ -4,7 +4,6 @@
 # from datetime import datetime
 # from flask_cors import CORS
 # from dateutil import parser
-# import json
 # import pytz
 # # import iso8601
 
@@ -13,10 +12,11 @@
 # CORS(app)
 
 from settings import Settings
-from flask import Flask
+from flask import Flask, request
 from flask_socketio import SocketIO, send
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+import json
 import os
 
 
@@ -27,7 +27,7 @@ socketio = SocketIO(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-# from models import Entry, Project
+from models import Entry, Project
 
 
 # def from_iso8601(iso_dt):
@@ -39,10 +39,18 @@ ma = Marshmallow(app)
 def home():
 	return 'Hello World!'
 
-@socketio.on('message')
+@socketio.on('saveEntry')
 def handle_message(message):
 	print('received message: ' + message)
-	send(message)
+	# send(message)
+
+@app.route('/api/entry', methods=['POST'])
+def saveEntry():
+	body = request.json
+	entry = Entry(body)
+	db.session.add(entry)
+	db.session.commit()
+	return json.dumps(Entry.transform(entry))
 
 # @app.route('/api/activity', methods=['GET'])
 # def activity_getcollection():
