@@ -35,23 +35,23 @@ from models import Entry, Project
 
 @app.route('/api/')
 def home():
-	return 'Hello World!'
+    return 'Hello World!'
 
 
 @sockets.route('/api/echo')
 def echo_socket(ws):
-	while not ws.closed:
-		message = ws.receive()
-		ws.send(message)
+    while not ws.closed:
+        message = ws.receive()
+        ws.send(message)
 
 
 @app.route('/api/entry', methods=['POST'])
 def saveEntry():
-	body = request.get_json()
-	entry = Entry(body)
-	db.session.add(entry)
-	db.session.commit()
-	return json.dumps(Entry.transform(entry))
+    body = request.get_json()
+    entry = Entry(body)
+    db.session.add(entry)
+    db.session.commit()
+    return json.dumps(Entry.transform(entry))
 
 
 # @app.route('/api/activity', methods=['GET'])

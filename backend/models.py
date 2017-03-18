@@ -20,20 +20,8 @@ class Entry(db.Model):
 		backref=db.backref('entries', lazy='dynamic'))
 
 	def __init__(self, data):
-		if not data:
-			return
-
-		if 'project' in data:
-			self.project_id = data['project']
-
-		if 'started_at' in data:
-			self.started_at = data['started_at']
-
-		if 'ended_at' in data:
-			self.ended_at = data['ended_at']
-
-		if 'description' in data:
-			self.description = data['description']
+		for key in data:
+			setattr(self, key, data[key])
 
 	def __repr__(self):
 		return '<Entry %r>' % self.id
