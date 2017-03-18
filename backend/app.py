@@ -47,7 +47,7 @@ def echo_socket(ws):
 
 @app.route('/api/entry', methods=['POST'])
 def saveEntry():
-	body = request.json
+	body = request.get_json()
 	entry = Entry(body)
 	db.session.add(entry)
 	db.session.commit()

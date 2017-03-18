@@ -1,9 +1,11 @@
 from app import db
-from datetime import datetime
+# from datetime import datetime
 # from sqlalchemy.dialects.postgresql import JSON
+
 
 def get_iso8601(ts):
 	return ts.strftime('%Y-%m-%dT%H:%M:%S%z+0000')
+
 
 class Entry(db.Model):
 	__tablename__ = 'entries'
@@ -21,18 +23,17 @@ class Entry(db.Model):
 		if not data:
 			return
 
-		if data.project:
-			self.project = data['project']
+		if 'project' in data:
+			self.project_id = data['project']
 
-		if data.started_at:
+		if 'started_at' in data:
 			self.started_at = data['started_at']
 
-		if data.ended_at:
+		if 'ended_at' in data:
 			self.ended_at = data['ended_at']
 
-		if data.description:
+		if 'description' in data:
 			self.description = data['description']
-
 
 	def __repr__(self):
 		return '<Entry %r>' % self.id
@@ -62,6 +63,7 @@ class Entry(db.Model):
 		for model in collection:
 			output.append(Entry.transform(model))
 		return output
+
 
 class Project(db.Model):
 	__tablename__ = 'projects'
