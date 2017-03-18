@@ -1,4 +1,5 @@
 from app import db
+
 # from datetime import datetime
 # from sqlalchemy.dialects.postgresql import JSON
 
@@ -25,6 +26,14 @@ class Entry(db.Model):
 
     def __repr__(self):
         return '<Entry %r>' % self.id
+
+    def dump(self):
+        data = {}
+        for col in self.__table__.columns:
+            key = col.name
+            data[key] = getattr(self, key)
+
+        return data
 
     @staticmethod
     def find_all(session):
