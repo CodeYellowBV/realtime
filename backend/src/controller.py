@@ -22,16 +22,21 @@ class Controller():
         target = globals()[class_name]
 
         # Call the method with the class as param
-        return getattr(self, method)(db, target, body['data'])
+        return getattr(self, method)(db, target, body)
 
-    def save(self, db, cls, data):
-        # TODO If id isset and not is null
-        # find it first otherwise create it
-        m = cls(data)
+    def save(self, db, cls, body):
+        data = body['data']
+
+        # Create instance if id is not given
+        if 'id' in data:
+            m = db.session.query(cls).get(data['id'])
+            m.parse(data)
+
+        else:
+            m = cls(data)
 
         db.session.add(m)
         db.session.commit()
 
         result = m.dump()
-
         return json.dumps(result)

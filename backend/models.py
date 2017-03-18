@@ -21,6 +21,9 @@ class Entry(db.Model):
         backref=db.backref('entries', lazy='dynamic'))
 
     def __init__(self, data):
+        self.parse(data)
+
+    def parse(self, data):
         for key in data:
             setattr(self, key, data[key])
 
