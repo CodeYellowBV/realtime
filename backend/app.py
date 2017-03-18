@@ -25,8 +25,9 @@ sockets = Sockets(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-from models import Entry, Project
 
+from src.controller import Controller
+controller = Controller()
 
 # def from_iso8601(iso_dt):
 #     dt_local = parser.parse(iso_dt)
@@ -45,13 +46,21 @@ def echo_socket(ws):
         ws.send(message)
 
 
-@app.route('/api/entry', methods=['POST'])
-def saveEntry():
-    body = request.get_json()
-    entry = Entry(body)
-    db.session.add(entry)
-    db.session.commit()
-    return json.dumps(Entry.transform(entry))
+@sockets.route('/api/')
+def open_socket(ws):
+    while not ws.closed:
+        message = ws.receive()
+        res = controller.handle(db, message)
+        ws.send(res)
+
+
+# @app.route('/api/entry', methods=['POST'])
+# def saveEntry():
+#     body = request.get_json()
+#     entry = Entry(body)
+#     db.session.add(entry)
+#     db.session.commit()
+#     return json.dumps(Entry.transform(entry))
 
 
 # @app.route('/api/activity', methods=['GET'])
