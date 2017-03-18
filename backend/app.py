@@ -13,17 +13,15 @@
 
 from settings import Settings
 from flask import Flask, request
-from flask_socketio import SocketIO, send
+from flask_sockets import Sockets
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import json
-import os
-
 
 app = Flask(__name__)
 app.config.from_object(Settings)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-socketio = SocketIO(app)
+sockets = Sockets(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
@@ -39,10 +37,13 @@ from models import Entry, Project
 def home():
 	return 'Hello World!'
 
-@socketio.on('saveEntry')
-def handle_message(message):
-	print('received message: ' + message)
-	# send(message)
+
+@sockets.route('/api/echo')
+def echo_socket(ws):
+	while not ws.closed:
+		message = ws.receive()
+		ws.send(message)
+
 
 @app.route('/api/entry', methods=['POST'])
 def saveEntry():
@@ -51,6 +52,7 @@ def saveEntry():
 	db.session.add(entry)
 	db.session.commit()
 	return json.dumps(Entry.transform(entry))
+
 
 # @app.route('/api/activity', methods=['GET'])
 # def activity_getcollection():

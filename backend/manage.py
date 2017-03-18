@@ -1,70 +1,75 @@
-import os
-from flask_script import Manager, Server as _Server, Option
+from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
-from app import app, db, socketio
-
-import eventlet
-eventlet.monkey_patch()
+from app import app, db
 
 migrate = Migrate(app, db)
 manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
 
-class Server(_Server):
-	help = description = 'Runs the Socket.IO web server'
 
-	def get_options(self):
-		options = (
-			Option('-h', '--host',
-				dest='host',
-				default=self.host),
+@manager.command
+def runserver():
+	print('runserver')
+	from gevent import pywsgi
+	from geventwebsocket.handler import WebSocketHandler
+	server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+	server.serve_forever()
 
-			Option('-p', '--port',
-				dest='port',
-				type=int,
-				default=self.port),
+# class Server(_Server):
+# 	help = description = 'Runs the Socket.IO web server'
 
-			Option('-d', '--debug',
-				action='store_true',
-				dest='use_debugger',
-				help=('enable the Werkzeug debugger (DO NOT use in '
-						'production code)'),
-				default=self.use_debugger),
-			Option('-D', '--no-debug',
-				action='store_false',
-				dest='use_debugger',
-				help='disable the Werkzeug debugger',
-				default=self.use_debugger),
+# 	def get_options(self):
+# 		options = (
+# 			Option('-h', '--host',
+# 				dest='host',
+# 				default=self.host),
 
-			Option('-r', '--reload',
-				action='store_true',
-				dest='use_reloader',
-				help=('monitor Python files for changes (not 100%% safe '
-						'for production use)'),
-				default=self.use_reloader),
-			Option('-R', '--no-reload',
-				action='store_false',
-				dest='use_reloader',
-				help='do not monitor Python files for changes',
-				default=self.use_reloader),
-		)
-		return options
+# 			Option('-p', '--port',
+# 				dest='port',
+# 				type=int,
+# 				default=self.port),
 
-	def __call__(self, app, host, port, use_debugger, use_reloader):
-		use_reloader = app.config['DEBUG']
-		use_debugger = app.config['DEBUG']
+# 			Option('-d', '--debug',
+# 				action='store_true',
+# 				dest='use_debugger',
+# 				help=('enable the Werkzeug debugger (DO NOT use in '
+# 						'production code)'),
+# 				default=self.use_debugger),
+# 			Option('-D', '--no-debug',
+# 				action='store_false',
+# 				dest='use_debugger',
+# 				help='disable the Werkzeug debugger',
+# 				default=self.use_debugger),
 
-		socketio.run(app,
-					host=host,
-					port=port,
-					debug=use_debugger,
-					use_reloader=use_reloader,
-					**self.server_options)
+# 			Option('-r', '--reload',
+# 				action='store_true',
+# 				dest='use_reloader',
+# 				help=('monitor Python files for changes (not 100%% safe '
+# 						'for production use)'),
+# 				default=self.use_reloader),
+# 			Option('-R', '--no-reload',
+# 				action='store_false',
+# 				dest='use_reloader',
+# 				help='do not monitor Python files for changes',
+# 				default=self.use_reloader),
+# 		)
+# 		return options
+
+# 	def __call__(self, app, host, port, use_debugger, use_reloader):
+# 		use_reloader = app.config['DEBUG']
+# 		use_debugger = app.config['DEBUG']
+
+# 		socketio.run(app,
+# 			host=host,
+# 			port=port,
+# 			debug=use_debugger,
+# 			use_reloader=use_reloader,
+# 			**self.server_options)
 
 
-manager.add_command('runserver', Server(host='0.0.0.0'))
+# manager.add_command('runserver', Server(host='0.0.0.0'))
 
 if __name__ == '__main__':
 	manager.run()
