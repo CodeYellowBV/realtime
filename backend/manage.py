@@ -12,19 +12,19 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def runserver():
-	from gevent import pywsgi, monkey
-	from geventwebsocket.handler import WebSocketHandler
-	server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+    from gevent import pywsgi, monkey
+    from geventwebsocket.handler import WebSocketHandler
+    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
 
-	if app.debug:
-		logging.basicConfig(format='%(asctime)s %(message)s')
-		logger = logging.getLogger()
-		logger.setLevel(logging.DEBUG)
-		monkey.patch_all()
-		run_with_reloader(server.serve_forever)
-	else:
-		server.serve_forever()
+    if app.debug:
+        logging.basicConfig(format='%(asctime)s %(message)s')
+        logger = logging.getLogger()
+        logger.setLevel(logging.DEBUG)
+        monkey.patch_all()
+        run_with_reloader(server.serve_forever)
+    else:
+        server.serve_forever()
 
 
 if __name__ == '__main__':
-	manager.run()
+    manager.run()

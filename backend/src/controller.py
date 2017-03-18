@@ -1,5 +1,14 @@
 import json
+from app import app
 from models import Entry, Project
+from flask_marshmallow import Marshmallow
+
+ma = Marshmallow(app)
+
+
+class EntrySchema(ma.ModelSchema):
+    class Meta:
+        model = Entry
 
 
 class Controller():
@@ -31,4 +40,7 @@ class Controller():
         db.session.add(m)
         db.session.commit()
 
-        return json.dumps(cls.transform(m))
+        schema = EntrySchema()
+        result = schema.dump(m)
+
+        return json.dumps(result.data)

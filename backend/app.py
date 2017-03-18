@@ -12,19 +12,15 @@
 # CORS(app)
 
 from settings import Settings
-from flask import Flask, request
+from flask import Flask
 from flask_sockets import Sockets
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-import json
 
 app = Flask(__name__)
 app.config.from_object(Settings)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 sockets = Sockets(app)
 db = SQLAlchemy(app)
-ma = Marshmallow(app)
-
 
 from src.controller import Controller
 controller = Controller()
@@ -33,6 +29,7 @@ controller = Controller()
 #     dt_local = parser.parse(iso_dt)
 #     dt_utc = dt_local.astimezone(pytz.utc)
 #     return dt_utc.replace(tzinfo=None)
+
 
 @app.route('/api/')
 def home():
