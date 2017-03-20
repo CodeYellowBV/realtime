@@ -8,9 +8,11 @@ const routes = {
 };
 
 function routeWrapper(store) {
-    return mapValues(routes, (controller) => {
-        return function (...params) {
-            const pController = controller instanceof Promise ? controller : Promise.resolve(controller);
+    return mapValues(routes, controller => {
+        return function(...params) {
+            const pController = controller instanceof Promise
+                ? controller
+                : Promise.resolve(controller);
             pController.then(resolvedContr => resolvedContr(store, ...params));
         };
     });
@@ -20,7 +22,9 @@ export default function startRouter(store) {
     const wrappedRoutes = routeWrapper(store);
 
     // Update state on url change.
-    return new Router(wrappedRoutes).configure({
-        notfound: () => misc.notFound(store),
-    }).init();
+    return new Router(wrappedRoutes)
+        .configure({
+            notfound: () => misc.notFound(store),
+        })
+        .init();
 }

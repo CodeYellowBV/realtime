@@ -8,9 +8,7 @@ function handleClick(e, to) {
 }
 
 const Link = ({ to, children }) => {
-    return (
-        <a href={to} onClick={e => handleClick(e, to)}>{children}</a>
-    );
+    return <a href={to} onClick={e => handleClick(e, to)}>{children}</a>;
 };
 
 Link.propTypes = {

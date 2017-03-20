@@ -3,13 +3,16 @@ import NotFound from 'component/NotFound';
 import { Entry } from 'store/Entry';
 import { ProjectStore } from 'store/Project';
 
-const PROJECT_DATA = [{
-    id: 1,
-    title: 'REX',
-}, {
-    id: 2,
-    title: 'DOCC',
-}];
+const PROJECT_DATA = [
+    {
+        id: 1,
+        title: 'REX',
+    },
+    {
+        id: 2,
+        title: 'DOCC',
+    },
+];
 
 export function home(store) {
     const projectStore = new ProjectStore().parse(PROJECT_DATA);

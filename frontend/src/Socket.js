@@ -14,7 +14,7 @@ export default class Socket {
             console.log('Connected to socket');
             // this._joinRooms(this.rooms);
         });
-        this.instance.on('connect_error', (err) => {
+        this.instance.on('connect_error', err => {
             console.log('Socket failed to connect', err);
         });
         this.instance.on('disconnected', () => {
@@ -44,5 +44,4 @@ export default class Socket {
             this.instance.destroy();
         }
     }
-
 }

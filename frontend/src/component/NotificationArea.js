@@ -6,10 +6,10 @@ import { observer } from 'mobx-react';
 export default class NotificationArea extends React.Component {
     static propTypes = {
         store: PropTypes.object,
-    }
-    dismiss = (notification) => {
+    };
+    dismiss = notification => {
         this.props.store.notifications.remove(notification);
-    }
+    };
     render() {
         return (
             <NotificationStack

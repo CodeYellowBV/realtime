@@ -6,14 +6,13 @@ import { observer } from 'mobx-react';
 export default class Login extends Component {
     static propTypes = {
         viewStore: PropTypes.object,
-    }
+    };
 
     @observable errorMsg = '';
 
     handleSubmit = (username, password) => {
         this.errorMsg = '';
-        this.props.viewStore.performLogin(username, password)
-        .catch((err) => {
+        this.props.viewStore.performLogin(username, password).catch(err => {
             const status = err.response && err.response.status;
             if (status === 403) {
                 this.errorMsg = 'Wrong credentials.';
@@ -22,11 +21,9 @@ export default class Login extends Component {
                 this.errorMsg = 'Unknown error occured.';
             }
         });
-    }
+    };
 
     render() {
-        return (
-            <div>TODO; make a Phabricator login.</div>
-        );
+        return <div>TODO; make a Phabricator login.</div>;
     }
 }

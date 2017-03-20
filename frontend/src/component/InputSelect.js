@@ -16,14 +16,12 @@ export default class InputSelect extends Component {
         value: '',
     };
 
-    handleChange = (e) => {
+    handleChange = e => {
         this.props.onChange(this.props.name, e.target.value);
     };
 
     renderOption(option) {
-        return (
-            <option value={option.value} key={option.value}>{option.name}</option>
-        );
+        return <option value={option.value} key={option.value}>{option.name}</option>;
     }
 
     render() {

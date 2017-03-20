@@ -18,7 +18,4 @@ remotedev(viewStore);
 // without page refresh...
 window.myRouter = startRouter(viewStore);
 
-ReactDOM.render(
-    <App store={viewStore} />,
-    document.getElementById('root')
-);
+ReactDOM.render(<App store={viewStore} />, document.getElementById('root'));

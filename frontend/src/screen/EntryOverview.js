@@ -9,11 +9,11 @@ export default class EntryOverview extends Component {
         viewStore: PropTypes.object.isRequired,
         currentEntry: PropTypes.object.isRequired,
         projectStore: PropTypes.object.isRequired,
-    }
+    };
 
     handleSubmitEntry = () => {
         this.props.viewStore.saveEntry(this.props.currentEntry);
-    }
+    };
 
     render() {
         const { entries } = this.props.viewStore;

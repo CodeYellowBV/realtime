@@ -14,7 +14,7 @@ export default class InputText extends Component {
         value: '',
     };
 
-    handleChange = (e) => {
+    handleChange = e => {
         this.props.onChange(this.props.name, e.target.value);
     };
 

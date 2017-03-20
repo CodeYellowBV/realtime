@@ -11,9 +11,7 @@ function renderLoggedIn(store) {
 }
 
 const Header = observer(({ store }) => {
-    return (
-        <h1>CY Time - {store.isAuthenticated ? renderLoggedIn(store) : 'not logged in' }</h1>
-    );
+    return <h1>CY Time - {store.isAuthenticated ? renderLoggedIn(store) : 'not logged in'}</h1>;
 });
 
 Header.propTypes = {
