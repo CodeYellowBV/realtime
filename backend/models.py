@@ -24,8 +24,11 @@ class Entry(db.Model):
         self.parse(data)
 
     def parse(self, data):
+        cols = {col.name for col in self.__table__.columns}
+
         for key in data:
-            setattr(self, key, data[key])
+            if key in cols:
+                setattr(self, key, data[key])
 
     def __repr__(self):
         return '<Entry %r>' % self.id
