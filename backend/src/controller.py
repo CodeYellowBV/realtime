@@ -31,7 +31,7 @@ class Controller():
         data = body['data']
 
         # Create instance if id is not given
-        if 'id' in data:
+        if 'id' in data and data['id'] is not None:
             m = db.session.query(cls).get(data['id'])
             m.parse(data)
 
