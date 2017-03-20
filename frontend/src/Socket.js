@@ -30,7 +30,7 @@ export default class Socket {
         };
 
         this.instance.onmessage = (evt) => {
-            if (evt === 'pong') {
+            if (evt.data === 'pong') {
                 return;
             }
             const msg = JSON.parse(evt.data);
