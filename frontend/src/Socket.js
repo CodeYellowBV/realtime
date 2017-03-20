@@ -13,17 +13,12 @@ export default class Socket {
 
         this.instance.onopen = () => {
             this.handlers.onOpen();
-            this.pingInterval = setInterval(() => {
-                this.instance.send('ping');
-            }, 30000);
+            this._initiatePingInterval();
         };
 
         this.instance.onclose = () => {
             this.handlers.onClose();
-            if (this.pingInterval) {
-                clearInterval(this.pingInterval);
-                this.pingInterval = null;
-            }
+            this._stopPingInterval();
             setTimeout(() => {
                 this.initialize();
             }, 2000);
@@ -45,5 +40,18 @@ export default class Socket {
             type,
             data,
         }));
+    }
+
+    _initiatePingInterval() {
+        this.pingInterval = setInterval(() => {
+            this.instance.send('ping');
+        }, 30000);
+    }
+
+    _stopPingInterval() {
+        if (this.pingInterval) {
+            clearInterval(this.pingInterval);
+            this.pingInterval = null;
+        }
     }
 }
