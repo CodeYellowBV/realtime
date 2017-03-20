@@ -1,47 +1,38 @@
-import io from 'socket.io-client';
-
 export default class Socket {
     instance = null;
-    // rooms = [];
+    handlers = {};
 
-    constructor() {
-        const options = {
-            transports: ['websocket'],
+    constructor(handlers) {
+        this.handlers = handlers;
+        this.initialize();
+    }
+
+    initialize() {
+        this.instance = new WebSocket(process.env.CY_APP_WEBSOCKET_URL);
+
+        this.instance.onopen = () => {
+            this.handlers.onOpen();
         };
-        this.instance = io('/api', options);
 
-        this.instance.on('connect', () => {
-            console.log('Connected to socket');
-            // this._joinRooms(this.rooms);
-        });
-        this.instance.on('connect_error', err => {
-            console.log('Socket failed to connect', err);
-        });
-        this.instance.on('disconnected', () => {
-            console.log('Socket disconnected');
-        });
+        this.instance.onclose = () => {
+            this.handlers.onClose();
+            setTimeout(() => {
+                this.initialize();
+            }, 2000);
+        };
+
+        this.instance.onmessage = (evt) => {
+            const msg = JSON.parse(evt.data);
+            console.log('[received]', msg.type, msg.data);
+            this.handlers.onMessage(msg.type, msg.data);
+        };
     }
 
     send(type, data) {
-        this.instance.emit(type, data);
-        console.log('Sent to socket', type, data);
-    }
-
-    // _joinRooms(rooms) {
-    //     rooms.forEach(() => {
-    //         this.instance.emit('room', rooms);
-    //     });
-    // }
-
-    // addRoom(name) {
-    //     this.rooms.push(name);
-    //     this._joinRooms([name]);
-    // }
-
-    destroy() {
-        if (this.instance) {
-            this.instance.off();
-            this.instance.destroy();
-        }
+        console.log('[sent]', type, data);
+        this.instance.send(JSON.stringify({
+            type,
+            data,
+        }));
     }
 }

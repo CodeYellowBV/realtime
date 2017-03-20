@@ -4,19 +4,38 @@ import { EntryStore } from './Entry';
 import Socket from '../Socket';
 
 export default class ViewStore {
+    socket = null;
+    @observable online = false;
     @observable currentUser = null;
     @observable.ref currentView = null;
     @observable notifications = [];
     @observable entries = new EntryStore();
-    @observable socket = new Socket();
 
     @computed get isAuthenticated() {
         return this.currentUser !== null;
     }
 
     constructor() {
-        this.fetchBootstrap();
+        this.socket = new Socket({
+            onOpen: this.handleSocketOpen,
+            onClose: this.handleSocketClose,
+            onMessage: this.handleSocketMessage,
+        });
     }
+
+    handleSocketOpen = () => {
+        this.online = true;
+        console.log('Connection established.');
+    };
+
+    handleSocketClose = () => {
+        this.online = false;
+        console.log('Connection closed.');
+    };
+
+    handleSocketMessage = (type, data) => {
+        //
+    };
 
     saveEntry(entry) {
         this.socket.send('saveEntry', entry.toBackend());
@@ -28,17 +47,5 @@ export default class ViewStore {
 
     @action setView(view) {
         this.currentView = view;
-    }
-
-    @action fetchBootstrap() {
-        //
-    }
-
-    @action performLogin(username, password) {
-        //
-    }
-
-    @action performLogout() {
-        //
     }
 }
