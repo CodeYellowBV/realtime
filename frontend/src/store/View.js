@@ -22,6 +22,10 @@ export default class ViewStore {
         this.socket.send('saveEntry', entry.toBackend());
     }
 
+    register(code) {
+        console.log('Code from Phabricator:', code);
+    }
+
     @action setView(view) {
         this.currentView = view;
     }
