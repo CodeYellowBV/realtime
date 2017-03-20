@@ -11,6 +11,7 @@ export default class Login extends Component {
     static propTypes = {
         entry: PropTypes.object.isRequired,
         projectStore: PropTypes.object.isRequired,
+        onSubmitEntry: PropTypes.func.isRequired,
     };
 
     handleInput = (key, value) => {
@@ -38,7 +39,7 @@ export default class Login extends Component {
     };
 
     handleSubmit = () => {
-        console.log('submit!');
+        this.props.onSubmitEntry();
     };
 
     formatProjectToOption(project) {

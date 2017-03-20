@@ -18,6 +18,10 @@ export default class ViewStore {
         this.fetchBootstrap();
     }
 
+    saveEntry(entry) {
+        this.socket.send('saveEntry', entry.toBackend());
+    }
+
     @action setView(view) {
         this.currentView = view;
     }

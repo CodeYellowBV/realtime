@@ -11,6 +11,10 @@ export default class EntryOverview extends Component {
         projectStore: PropTypes.object.isRequired,
     }
 
+    handleSubmitEntry = () => {
+        this.props.viewStore.saveEntry(this.props.currentEntry);
+    }
+
     render() {
         const { entries } = this.props.viewStore;
         return (
@@ -18,6 +22,7 @@ export default class EntryOverview extends Component {
                 <TimeEntry
                     entry={this.props.currentEntry}
                     projectStore={this.props.projectStore}
+                    onSubmitEntry={this.handleSubmitEntry}
                 />
                 <EntryList entries={entries} />
             </div>
