@@ -8,6 +8,9 @@ class Controller():
     # The type is like addEntry of getProject
     # Split the type into a method and a class
     def handle(self, db, message):
+        if message == 'ping':
+            return 'pong'
+
         body = json.loads(message)
 
         # TODO just split on first uppercase

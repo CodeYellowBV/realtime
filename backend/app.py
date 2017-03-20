@@ -47,8 +47,9 @@ def echo_socket(ws):
 def open_socket(ws):
     while not ws.closed:
         message = ws.receive()
-        res = controller.handle(db, message)
-        ws.send(res)
+        if message:
+            res = controller.handle(db, message)
+            ws.send(res)
 
 
 # @app.route('/api/entry', methods=['POST'])
