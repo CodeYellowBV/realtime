@@ -9,7 +9,7 @@ export default class ViewStore {
     @observable currentUser = new User();
     @observable.ref currentView = null;
     @observable notifications = [];
-    @observable entries = new EntryStore();
+    @observable entries = new EntryStore({ relations: ['project'] });
 
     @computed get isAuthenticated() {
         return !!this.currentUser.id;

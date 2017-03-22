@@ -9,11 +9,11 @@ export default class EntryList extends Component {
 
     renderEntry(entry) {
         return (
-            <tr>
-                <th>{entry.description}</th>
-                <th>-</th>
-                <th>{entry.startedAt}</th>
-                <th>{entry.endedAt}</th>
+            <tr key={entry.id}>
+                <td>{entry.description}</td>
+                <td>{entry.project.id ? entry.project.title : '[Missing]'}</td>
+                <td>{entry.startedAt.format('YYYY-MM-DD HH:mm')}</td>
+                <td>{entry.endedAt.format('YYYY-MM-DD HH:mm')}</td>
             </tr>
         );
     }
