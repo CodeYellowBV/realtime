@@ -7,6 +7,8 @@ export const TopMenu = styled.div`
     display: flex;
     margin-bottom: 1em;
     justify-content: space-between;
+    align-items: center;
+    flex: 1;
 `;
 
 export const TopMenuNav = styled.nav`

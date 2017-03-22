@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { TopMenu, TopMenuNav, TopMenuRight, TopMenuLink } from '../component/TopMenu';
+import AppHeader from '../component/AppHeader';
 
 @observer
 export default class Header extends Component {
@@ -15,29 +16,26 @@ export default class Header extends Component {
     renderLoggedIn() {
         const { store } = this.props;
         return (
-            <div>
-                <TopMenu>
-                    <TopMenuNav>
-                        <TopMenuLink to="/">Personal</TopMenuLink>
-                        <TopMenuLink to="/users">Employees</TopMenuLink>
-                        <TopMenuLink to="/projects">Projects</TopMenuLink>
-                    </TopMenuNav>
-                    <TopMenuRight>
-                        {store.currentUser.fullName}
-                        <button type="button" onClick={this.handleClickLogout}>Logout</button>
-                    </TopMenuRight>
-                </TopMenu>
-            </div>
+            <TopMenu>
+                <TopMenuNav>
+                    <TopMenuLink to="/">Personal</TopMenuLink>
+                    <TopMenuLink to="/users">Employees</TopMenuLink>
+                    <TopMenuLink to="/projects">Projects</TopMenuLink>
+                </TopMenuNav>
+                <TopMenuRight>
+                    {store.currentUser.displayName}
+                    <button type="button" onClick={this.handleClickLogout}>Logout</button>
+                </TopMenuRight>
+            </TopMenu>
         );
     }
 
     render() {
         const { store } = this.props;
         return (
-            <div>
-                <h1>CY Time</h1>
+            <AppHeader>
                 {store.isAuthenticated ? this.renderLoggedIn() : null}
-            </div>
+            </AppHeader>
         );
     }
 }
