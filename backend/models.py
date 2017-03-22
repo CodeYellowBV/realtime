@@ -1,4 +1,5 @@
 from app import db
+from dateutil import parser
 
 # from datetime import datetime
 # from sqlalchemy.dialects.postgresql import JSON
@@ -24,10 +25,18 @@ class Entry(db.Model):
         self.parse(data)
 
     def parse(self, data):
-        cols = {col.name for col in self.__table__.columns}
+        cols = self.__table__.columns
+        col_names = {col.name for col in cols}
 
         for key in data:
-            if key in cols:
+            if key in col_names:
+                # TODO, clean this mess up
+                col = list(filter(lambda c: c.name == key, cols))[0]
+                col_type = str(col.type)
+
+                if col_type == 'DATETIME':
+                    data[key] = parser.parse(data[key])
+
                 setattr(self, key, data[key])
 
     def __repr__(self):
