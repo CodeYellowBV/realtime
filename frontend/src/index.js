@@ -13,9 +13,6 @@ const viewStore = new ViewStore();
 // For info on how to use: https://github.com/zalmoxisus/mobx-remotedev
 remotedev(viewStore);
 
-// TODO: This is a horrible temporary hack, but we need to be able
-// to access the router in <Link> compnents to push new links
-// without page refresh...
-window.myRouter = startRouter(viewStore);
+const router = startRouter(viewStore);
 
-ReactDOM.render(<App store={viewStore} />, document.getElementById('root'));
+ReactDOM.render(<App store={viewStore} router={router} />, document.getElementById('root'));

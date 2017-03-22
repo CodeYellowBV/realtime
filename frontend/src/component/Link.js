@@ -1,19 +1,27 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-function handleClick(e, to) {
-    e.preventDefault();
+export default class Link extends Component {
+    static propTypes = {
+        to: PropTypes.string.isRequired,
+        children: PropTypes.string.isRequired,
+        className: PropTypes.string,
+    };
 
-    // TODO: Horrible hack...
-    window.myRouter.setRoute(to);
+    static contextTypes = {
+        router: PropTypes.object.isRequired,
+    };
+
+    handleClick = (e) => {
+        e.preventDefault();
+
+        this.context.router.setRoute(this.props.to);
+    };
+
+    render() {
+        return (
+            <a href={this.props.to} onClick={this.handleClick} className={this.props.className}>
+                {this.props.children}
+            </a>
+        );
+    }
 }
-
-const Link = ({ to, children }) => {
-    return <a href={to} onClick={e => handleClick(e, to)}>{children}</a>;
-};
-
-Link.propTypes = {
-    to: PropTypes.string.isRequired,
-    children: PropTypes.string.isRequired,
-};
-
-export default Link;
