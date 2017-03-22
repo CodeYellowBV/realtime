@@ -24,3 +24,9 @@ export const TopMenuLink = styled(Link)`
     display: block;
     padding: .9em .9em 0 0;
 `;
+
+export const TopMenuAvatar = styled.img`
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+`;

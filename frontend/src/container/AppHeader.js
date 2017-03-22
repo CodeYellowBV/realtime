@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import { TopMenu, TopMenuNav, TopMenuRight, TopMenuLink } from '../component/TopMenu';
+import { TopMenu, TopMenuNav, TopMenuRight, TopMenuAvatar, TopMenuLink } from '../component/TopMenu';
 import AppHeader from '../component/AppHeader';
 
 @observer
@@ -24,6 +24,7 @@ export default class Header extends Component {
                 </TopMenuNav>
                 <TopMenuRight>
                     {store.currentUser.displayName}
+                    <TopMenuAvatar src={store.currentUser.avatarUrl} />
                     <button type="button" onClick={this.handleClickLogout}>Logout</button>
                 </TopMenuRight>
             </TopMenu>
