@@ -16,7 +16,7 @@ export default class Login extends Component {
         const url = new Uri(window.location.href);
         const urlParams = url.search(true);
         if (urlParams.code) {
-            this.props.viewStore.register(urlParams.code);
+            this.props.viewStore.performAuthentication(urlParams.code);
         }
     }
 

@@ -6,13 +6,13 @@ import Socket from '../Socket';
 export default class ViewStore {
     socket = null;
     @observable online = false;
-    @observable currentUser = null;
+    @observable currentUser = new User();
     @observable.ref currentView = null;
     @observable notifications = [];
     @observable entries = new EntryStore();
 
     @computed get isAuthenticated() {
-        return this.currentUser !== null;
+        return !!this.currentUser.id;
     }
 
     constructor() {
@@ -34,15 +34,21 @@ export default class ViewStore {
     };
 
     handleSocketMessage = (type, data) => {
-        //
+        if (type === 'authenticate') {
+            if (data === null) {
+                this.currentUser.clear();
+            } else {
+                this.currentUser.parse(data);
+            }
+        }
     };
 
     saveEntry(entry) {
         this.socket.send('saveEntry', entry.toBackend());
     }
 
-    register(code) {
-        console.log('Code from Phabricator:', code);
+    performAuthentication(code) {
+        this.socket.send('authenticate', { code });
     }
 
     @action setView(view) {

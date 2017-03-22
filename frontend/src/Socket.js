@@ -36,6 +36,17 @@ export default class Socket {
 
     send(type, data) {
         console.log('[sent]', type, data);
+        // Wait for a while if the socket is not yet done connecting...
+        if (this.instance.readyState !== 1) {
+            setTimeout(() => {
+                this._sendDirectly(type, data);
+            }, 200);
+            return;
+        }
+        this._sendDirectly(type, data);
+    }
+
+    _sendDirectly(type, data) {
         this.instance.send(JSON.stringify({
             type,
             data,
