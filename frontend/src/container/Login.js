@@ -11,13 +11,17 @@ export default class Login extends Component {
         viewStore: PropTypes.object,
     };
 
+    static contextTypes = {
+        router: PropTypes.object.isRequired,
+    };
+
     componentDidMount() {
         // I don't like this at all. Perhaps move it elsewhere?
         const url = new Uri(window.location.href);
         const urlParams = url.search(true);
         if (urlParams.code) {
-            // TODO: redirect after successfull auth
             this.props.viewStore.performAuthentication(urlParams.code);
+            this.context.router.setRoute('/');
         }
     }
 
