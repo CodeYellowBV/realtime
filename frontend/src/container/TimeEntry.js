@@ -75,6 +75,7 @@ export default class TimeEntry extends Component {
                         name="startedAt"
                         onChange={this.handleInput}
                         value={entry.startedAt ? entry.startedAt.format('HH:mm') : ''}
+                        disableCancel
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Ended at" size="1">
