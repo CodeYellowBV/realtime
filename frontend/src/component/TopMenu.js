@@ -17,6 +17,7 @@ export const TopMenuNav = styled.nav`
 
 export const TopMenuRight = styled.div`
     display: flex;
+    align-items: center;
 `;
 
 export const TopMenuLink = styled(Link)`
@@ -29,4 +30,5 @@ export const TopMenuAvatar = styled.img`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin: 0 .9em;
 `;

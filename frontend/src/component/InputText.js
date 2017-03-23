@@ -6,7 +6,6 @@ export default class InputText extends Component {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         name: PropTypes.string.isRequired,
-        label: PropTypes.string.isRequired,
         value: PropTypes.string,
     };
 
@@ -19,18 +18,12 @@ export default class InputText extends Component {
     };
 
     render() {
-        // TODO: Maybe just generate a random id with `_.uniqueId()`?
-        const id = `inputfield-${name}`;
         return (
-            <div>
-                <label htmlFor={id}>{this.props.label}</label>
-                <input
-                    id={id}
-                    name={this.props.name}
-                    value={this.props.value}
-                    onChange={this.handleChange}
-                />
-            </div>
+            <input
+                name={this.props.name}
+                value={this.props.value}
+                onChange={this.handleChange}
+            />
         );
     }
 }

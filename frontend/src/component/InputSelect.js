@@ -6,7 +6,6 @@ export default class InputSelect extends Component {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         name: PropTypes.string.isRequired,
-        label: PropTypes.string.isRequired,
         options: MobxTypes.arrayOrObservableArray.isRequired,
         value: PropTypes.string,
         placeholder: PropTypes.string,
@@ -25,16 +24,11 @@ export default class InputSelect extends Component {
     }
 
     render() {
-        // TODO: Maybe just generate a random id with `_.uniqueId()`?
-        const id = `select-${name}`;
         return (
-            <div>
-                <label htmlFor={id}>{this.props.label}</label>
-                <select value={this.props.value} onChange={this.handleChange}>
-                    <option value="">{this.props.placeholder}</option>
-                    {this.props.options.map(this.renderOption)}
-                </select>
-            </div>
+            <select value={this.props.value} onChange={this.handleChange}>
+                <option value="">{this.props.placeholder}</option>
+                {this.props.options.map(this.renderOption)}
+            </select>
         );
     }
 }

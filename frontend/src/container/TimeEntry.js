@@ -4,7 +4,8 @@ import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime from '../component/InputTime';
 import InputSelect from '../component/InputSelect';
-import Form from '../component/Form';
+import FormField from '../component/FormField';
+import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 
 @observer
 export default class Login extends Component {
@@ -52,35 +53,39 @@ export default class Login extends Component {
     render() {
         const { entry } = this.props;
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <InputText
-                    name="description"
-                    label="Description"
-                    onChange={this.handleInput}
-                    value={entry.description}
-                />
-                <InputSelect
-                    name="project"
-                    label="Project"
-                    placeholder="Choose project"
-                    options={this.props.projectStore.map(this.formatProjectToOption)}
-                    onChange={this.handleInput}
-                    value={entry.project.id ? String(entry.project.id) : ''}
-                />
-                <InputTime
-                    name="startedAt"
-                    label="Started at"
-                    onChange={this.handleInput}
-                    value={entry.startedAt.format('HH:mm')}
-                />
-                <InputTime
-                    name="endedAt"
-                    label="Ended at"
-                    onChange={this.handleInput}
-                    value={entry.endedAt.format('HH:mm')}
-                />
+            <TimeEntryForm onSubmit={this.handleSubmit}>
+                <TimeEntryFormField label="Description" size="2">
+                    <InputText
+                        name="description"
+                        onChange={this.handleInput}
+                        value={entry.description}
+                    />
+                </TimeEntryFormField>
+                <TimeEntryFormField label="Project" size="1">
+                    <InputSelect
+                        name="project"
+                        placeholder="Choose project"
+                        options={this.props.projectStore.map(this.formatProjectToOption)}
+                        onChange={this.handleInput}
+                        value={entry.project.id ? String(entry.project.id) : ''}
+                    />
+                </TimeEntryFormField>
+                <TimeEntryFormField label="Started at" size="1">
+                    <InputTime
+                        name="startedAt"
+                        onChange={this.handleInput}
+                        value={entry.startedAt.format('HH:mm')}
+                    />
+                </TimeEntryFormField>
+                <TimeEntryFormField label="Ended at" size="1">
+                    <InputTime
+                        name="endedAt"
+                        onChange={this.handleInput}
+                        value={entry.endedAt.format('HH:mm')}
+                    />
+                </TimeEntryFormField>
                 <button>Save</button>
-            </Form>
+            </TimeEntryForm>
         );
     }
 }

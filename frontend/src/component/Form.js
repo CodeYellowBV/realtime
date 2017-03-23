@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 
-const Form = ({ children, onSubmit }) => (
+const Form = ({ children, onSubmit, ...props }) => (
     <form
         onSubmit={e => {
             e.preventDefault();
             onSubmit();
         }}
+        {...props}
     >
         {children}
     </form>
