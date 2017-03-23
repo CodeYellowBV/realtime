@@ -1,4 +1,4 @@
-import { Model as BModel, Store as BStore, BinderApi } from 'mobx-spine';
+import { Model as BModel, Store as BStore, BinderApi, Casts as BCasts } from 'mobx-spine';
 
 const myApi = new BinderApi();
 
@@ -11,3 +11,5 @@ export class Store extends BStore {
 }
 
 export const api = myApi;
+
+export const Casts = BCasts;

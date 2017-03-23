@@ -2,6 +2,7 @@ import EntryOverview from 'screen/EntryOverview';
 import NotFound from 'component/NotFound';
 import { Entry } from 'store/Entry';
 import { ProjectStore } from 'store/Project';
+import moment from 'moment';
 
 const PROJECT_DATA = [
     {
@@ -19,7 +20,7 @@ export function home(store) {
     store.setView({
         name: 'home',
         render: EntryOverview,
-        currentEntry: new Entry(null, { relations: ['project'] }),
+        currentEntry: new Entry({ startedAt: moment().format() }, { relations: ['project'] }),
         projectStore,
     });
 }

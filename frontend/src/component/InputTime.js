@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import MaskedInput from 'react-text-mask';
 
 @observer
 export default class InputTime extends Component {
@@ -20,8 +19,8 @@ export default class InputTime extends Component {
 
     render() {
         return (
-            <MaskedInput
-                mask={[/\d/, /\d/, ':', /\d/, /\d/]}
+            <input
+                type="time"
                 name={this.props.name}
                 value={this.props.value}
                 onChange={this.handleChange}

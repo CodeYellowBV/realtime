@@ -1,5 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
+import styled from 'styled-components';
+
+const StyledInput = styled.input`
+    flex: 1;
+`;
 
 @observer
 export default class InputText extends Component {
@@ -19,7 +24,7 @@ export default class InputText extends Component {
 
     render() {
         return (
-            <input
+            <StyledInput
                 name={this.props.name}
                 value={this.props.value}
                 onChange={this.handleChange}

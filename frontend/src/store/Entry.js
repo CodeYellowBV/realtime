@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
-import moment from 'moment';
-import { Model, Store } from './Base';
+import { Model, Store, Casts } from './Base';
 import { Project } from './Project';
 
 export class Entry extends Model {
@@ -8,18 +7,14 @@ export class Entry extends Model {
 
     @observable id = null;
     @observable description = '';
-    @observable startedAt = moment();
-    @observable endedAt = moment();
+    @observable startedAt = null;
+    @observable endedAt = null;
 
-    @action parse(data) {
-        if (data.started_at !== undefined) {
-            data.started_at = moment(data.started_at);
-        }
-        if (data.ended_at !== undefined) {
-            data.ended_at = moment(data.ended_at);
-        }
-
-        super.parse(data);
+    casts() {
+        return {
+            startedAt: Casts.datetime,
+            endedAt: Casts.datetime,
+        };
     }
 
     relations() {
@@ -28,12 +23,10 @@ export class Entry extends Model {
         };
     }
 
-    toBackend() {
-        let data = super.toBackend();
-        data.started_at = this.startedAt.format();
-        data.ended_at = this.endedAt.format();
-
-        return data;
+    @action partialClear() {
+        const startedAt = this.startedAt;
+        this.clear();
+        this.startedAt = startedAt;
     }
 }
 

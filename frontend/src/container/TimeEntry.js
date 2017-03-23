@@ -4,11 +4,10 @@ import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime from '../component/InputTime';
 import InputSelect from '../component/InputSelect';
-import FormField from '../component/FormField';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 
 @observer
-export default class Login extends Component {
+export default class TimeEntry extends Component {
     static propTypes = {
         entry: PropTypes.object.isRequired,
         projectStore: PropTypes.object.isRequired,
@@ -35,12 +34,13 @@ export default class Login extends Component {
         }
 
         if (key === 'endedAt') {
-            entry.endedAt = moment(value, 'HH:mm');
+            entry.endedAt = value === '' ? null : moment(value, 'HH:mm');
         }
     };
 
     handleSubmit = () => {
         this.props.onSubmitEntry();
+        this.props.entry.partialClear();
     };
 
     formatProjectToOption(project) {
@@ -74,14 +74,14 @@ export default class Login extends Component {
                     <InputTime
                         name="startedAt"
                         onChange={this.handleInput}
-                        value={entry.startedAt.format('HH:mm')}
+                        value={entry.startedAt ? entry.startedAt.format('HH:mm') : ''}
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Ended at" size="1">
                     <InputTime
                         name="endedAt"
                         onChange={this.handleInput}
-                        value={entry.endedAt.format('HH:mm')}
+                        value={entry.endedAt ? entry.endedAt.format('HH:mm') : ''}
                     />
                 </TimeEntryFormField>
                 <button>Save</button>
