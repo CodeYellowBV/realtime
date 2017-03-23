@@ -49,7 +49,6 @@ class Controller():
         return json.dumps(result)
 
     def auth(self, db, body):
-        print('auth')
         data = {
             'client_id': os.environ.get('CY_APP_PHABRICATOR_CLIENT_ID'),
             'client_secret': os.environ.get('CY_APP_PHABRICATOR_CLIENT_SECRET'),
@@ -74,8 +73,8 @@ class Controller():
         res = r2.json()['result']
 
         user = db.session.query(User).filter(User.email == res['primaryEmail']).first()
+
         if not user:
-            print('creating user')
             u = {
                 'username': res['userName'],
                 'email': res['primaryEmail'],
@@ -85,7 +84,8 @@ class Controller():
             user = User(u)
             db.session.add(user)
             db.session.commit()
-        else:
-            print('exisiting user found')
 
-        return json.dumps(user.dump())
+        return json.dumps({
+            'type': 'authenticate',
+            'data': user.dump(),
+        })
