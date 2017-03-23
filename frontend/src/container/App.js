@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import NotificationArea from '../component/NotificationArea';
 import Login from './Login';
 import Header from './AppHeader';
+import AppContainer from '../component/AppContainer';
 
 function renderCurrentView(store) {
     const view = store.currentView;
@@ -40,11 +41,11 @@ export default class App extends Component {
             content = <Login viewStore={store} />;
         }
         return (
-            <div>
+            <AppContainer>
                 <Header store={store} />
                 <NotificationArea store={store} />
                 {content}
-            </div>
+            </AppContainer>
         );
     }
 }
