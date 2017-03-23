@@ -9,18 +9,7 @@ def get_iso8601(ts):
     return ts.strftime('%Y-%m-%dT%H:%M:%S%z+0000')
 
 
-class Entry(db.Model):
-    __tablename__ = 'entries'
-
-    id = db.Column(db.Integer, primary_key=True)
-    started_at = db.Column(db.DateTime)
-    ended_at = db.Column(db.DateTime)
-    description = db.Column(db.Text())
-
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
-    project = db.relationship('Project',
-        backref=db.backref('entries', lazy='dynamic'))
-
+class Base(object):
     def __init__(self, data):
         self.parse(data)
 
@@ -55,6 +44,19 @@ class Entry(db.Model):
             data[key] = val
         return data
 
+
+class Entry(Base, db.Model):
+    __tablename__ = 'entries'
+
+    id = db.Column(db.Integer, primary_key=True)
+    started_at = db.Column(db.DateTime)
+    ended_at = db.Column(db.DateTime)
+    description = db.Column(db.Text())
+
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+    project = db.relationship('Project',
+        backref=db.backref('entries', lazy='dynamic'))
+
     @staticmethod
     def find_all(session):
         return (
@@ -83,27 +85,15 @@ class Entry(db.Model):
         return output
 
 
-class Project(db.Model):
+class Project(Base, db.Model):
     __tablename__ = 'projects'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     description = db.Column(db.String(200))
 
-    def __init__(self, name, description=''):
-        self.name = name
-        self.description = description
-
     def __repr__(self):
         return '<Project %r>' % self.name
-
-    @staticmethod
-    def transform(model):
-        return {
-            'id': model.id,
-            'name': model.name,
-            'description': model.description,
-        }
 
     @staticmethod
     def find_all(session):
@@ -120,3 +110,25 @@ class Project(db.Model):
         for model in collection:
             output.append(Project.transform(model))
         return output
+
+
+class User(Base, db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100))
+    username = db.Column(db.String(50))
+    display_name = db.Column(db.String(50))
+    avatar_url = db.Column(db.String(300))
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)

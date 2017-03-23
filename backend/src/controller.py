@@ -1,7 +1,7 @@
 import json
 import os
 import requests
-from models import Entry, Project
+from .models import Entry, Project, User
 
 
 class Controller():
@@ -73,13 +73,19 @@ class Controller():
 
         res = r2.json()['result']
 
-        return json.dumps({
-            'type': 'authenticate',
-            'data': {
-                'id': 'TODO',
+        user = db.session.query(User).filter(User.email == res['primaryEmail']).first()
+        if not user:
+            print('creating user')
+            u = {
                 'username': res['userName'],
                 'email': res['primaryEmail'],
                 'avatar_url': res['image'],
                 'display_name': res['realName'],
             }
-        })
+            user = User(u)
+            db.session.add(user)
+            db.session.commit()
+        else:
+            print('exisiting user found')
+
+        return json.dumps(user.dump())
