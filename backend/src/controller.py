@@ -17,8 +17,9 @@ class Controller():
 
         if body['type'] == 'authenticate':
             return self.auth(db, body)
+
         # TODO just split on first uppercase
-        elif body['type'].startswith('save'):
+        if body['type'].startswith('save'):
             method = 'save'
         elif body['type'].startswith('get'):
             method = 'get'
@@ -85,7 +86,10 @@ class Controller():
             db.session.add(user)
             db.session.commit()
 
+        token = user.create_session()
+
         return json.dumps({
             'type': 'authenticate',
             'data': user.dump(),
+            'authorization': token,
         })

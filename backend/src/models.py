@@ -1,5 +1,9 @@
 from app import db
 from dateutil import parser, tz
+import jwt
+import os
+
+jwt.encode({'some': 'payload'}, 'secret', algorithm='HS256')
 
 # from datetime import datetime
 # from sqlalchemy.dialects.postgresql import JSON
@@ -120,6 +124,11 @@ class User(Base, db.Model):
     username = db.Column(db.String(50))
     display_name = db.Column(db.String(50))
     avatar_url = db.Column(db.String(300))
+
+    def create_session(self):
+        secret = os.environ.get('CY_SECRET_KEY')
+        payload = self.dump()
+        return jwt.encode(payload, secret, algorithm='HS256').decode('utf-8')
 
     def is_authenticated(self):
         return True
