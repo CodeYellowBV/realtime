@@ -28,7 +28,7 @@ class Base(object):
                 # loop through cols and check of data key exists
                 col = list(filter(lambda c: c.name == key, cols))[0]
 
-                if str(col.type) == 'DATETIME':
+                if str(col.type) == 'DATETIME' and data[key] is not None:
                     data[key] = parser.parse(data[key])
 
                 setattr(self, key, data[key])
@@ -42,7 +42,7 @@ class Base(object):
             key = col.name
             val = getattr(self, key)
 
-            if str(col.type) == 'DATETIME':
+            if str(col.type) == 'DATETIME' and val is not None:
                 # Make aware and format as iso
                 val = val.replace(tzinfo=tz.tzlocal()).isoformat()
 
