@@ -24,7 +24,6 @@ db = SQLAlchemy(app)
 
 
 from src.controller import Controller
-controller = Controller()
 
 # def from_iso8601(iso_dt):
 #     dt_local = parser.parse(iso_dt)
@@ -49,5 +48,6 @@ def open_socket(ws):
     while not ws.closed:
         message = ws.receive()
         if message:
-            res = controller.handle(db, message)
+            controller = Controller(db, message)
+            res = controller.handle()
             ws.send(res)

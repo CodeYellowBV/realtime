@@ -5,56 +5,63 @@ from .models import Entry, Project, User
 
 
 class Controller():
+    db = None
+    message = None
+    body = None
+
+    def __init__(self, db, message):
+        self.db = db
+        self.message = message
 
     # The type is like addEntry of getProject
     # Split the type into a method and a class
-    def handle(self, db, message):
-        if message == 'ping':
+    def handle(self):
+        if self.message == 'ping':
             # todo keepalive logic
             return 'pong'
 
-        body = json.loads(message)
+        self.body = json.loads(self.message)
 
-        if body['type'] == 'authenticate':
-            return self.auth(db, body)
+        if self.body['type'] == 'authenticate':
+            return self.auth()
 
         # TODO just split on first uppercase
-        if body['type'].startswith('save'):
+        if self.body['type'].startswith('save'):
             method = 'save'
-        elif body['type'].startswith('get'):
+        elif self.body['type'].startswith('get'):
             method = 'get'
 
-        class_name = body['type'].split(method)[1]
+        class_name = self.body['type'].split(method)[1]
 
         # Get the Class from string 'Class'
         target = globals()[class_name]
 
         # Call the method with the class as param
-        return getattr(self, method)(db, target, body)
+        return getattr(self, method)(target)
 
-    def save(self, db, cls, body):
-        data = body['data']
+    def save(self, cls):
+        data = self.body['data']
 
         # Create instance if id is not given
         if 'id' in data and data['id'] is not None:
-            m = db.session.query(cls).get(data['id'])
+            m = self.db.session.query(cls).get(data['id'])
             m.parse(data)
 
         else:
             m = cls(data)
 
-        db.session.add(m)
-        db.session.commit()
+        self.db.session.add(m)
+        self.db.session.commit()
 
         result = m.dump()
         return json.dumps(result)
 
-    def auth(self, db, body):
+    def auth(self):
         data = {
             'client_id': os.environ.get('CY_APP_PHABRICATOR_CLIENT_ID'),
             'client_secret': os.environ.get('CY_APP_PHABRICATOR_CLIENT_SECRET'),
             'redirect_uri': os.environ.get('CY_APP_REDIRECT_URI'),
-            'code': body['data']['code'],
+            'code': self.body['data']['code'],
             'grant_type': 'authorization_code',
         }
 
@@ -73,7 +80,7 @@ class Controller():
 
         res = r2.json()['result']
 
-        user = db.session.query(User).filter(User.email == res['primaryEmail']).first()
+        user = self.db.session.query(User).filter(User.email == res['primaryEmail']).first()
 
         if not user:
             u = {
@@ -83,8 +90,8 @@ class Controller():
                 'display_name': res['realName'],
             }
             user = User(u)
-            db.session.add(user)
-            db.session.commit()
+            self.db.session.add(user)
+            self.db.session.commit()
 
         token = user.create_session()
 
