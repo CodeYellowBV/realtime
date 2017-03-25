@@ -54,7 +54,11 @@ class Controller():
         self.db.session.commit()
 
         result = m.dump()
-        return json.dumps(result)
+        return json.dumps({
+            'type': self.body['type'],
+            'code': 'success',
+            'data': result,
+        })
 
     def auth(self):
         data = {
