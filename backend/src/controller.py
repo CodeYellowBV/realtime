@@ -1,5 +1,6 @@
 import json
 import os
+import jwt
 import requests
 from .models import Entry, Project, User
 
@@ -8,6 +9,7 @@ class Controller():
     db = None
     message = None
     body = None
+    current_user = None
 
     def __init__(self, db, message):
         self.db = db
@@ -25,6 +27,13 @@ class Controller():
         if self.body['type'] == 'authenticate':
             return self.auth()
 
+        auth = self.check_auth()
+        if not auth:
+            return json.dumps({
+                'type': self.body['type'],
+                'code': 'unauthorized',
+            })
+
         # TODO just split on first uppercase
         if self.body['type'].startswith('save'):
             method = 'save'
@@ -38,6 +47,17 @@ class Controller():
 
         # Call the method with the class as param
         return getattr(self, method)(target)
+
+    def check_auth(self):
+        if 'authorization' not in self.body:
+            return False
+
+        try:
+            self.current_user = jwt.decode(self.body['authorization'], os.environ.get('CY_SECRET_KEY'), algorithms=['HS256'])
+        except jwt.InvalidTokenError:
+            return False
+
+        return True
 
     def save(self, cls):
         data = self.body['data']

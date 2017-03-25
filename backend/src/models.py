@@ -1,5 +1,6 @@
 from app import db
 from dateutil import parser, tz
+import datetime
 import jwt
 import os
 
@@ -128,6 +129,7 @@ class User(Base, db.Model):
     def create_session(self):
         secret = os.environ.get('CY_SECRET_KEY')
         payload = self.dump()
+        expires_at = str(datetime.datetime.now() + datetime.timedelta(weeks=8))
         return jwt.encode(payload, secret, algorithm='HS256').decode('utf-8')
 
     def is_authenticated(self):
