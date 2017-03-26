@@ -11,13 +11,22 @@ const TEST_ENTRY_DATA = [{
 }, {
     id: 3,
     description: 'Finished some stuff',
-    startedAt: '2017-03-23T19:28:40+00:00',
+    startedAt: '2017-03-23T17:28:40+00:00',
     endedAt: '2017-03-23T22:28:40+00:00',
 }, {
     id: 4,
     description: '',
-    startedAt: '2017-03-23T19:28:40+00:00',
+    startedAt: '2017-03-23T15:28:40+00:00',
     endedAt: '2017-03-23T22:28:40+00:00',
+    project: {
+        id: 1,
+        title: 'REX',
+    },
+}, {
+    id: 5,
+    description: '',
+    startedAt: '2017-03-26T15:28:40+00:00',
+    endedAt: '2017-03-26T22:28:40+00:00',
     project: {
         id: 1,
         title: 'REX',

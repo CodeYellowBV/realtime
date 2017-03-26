@@ -1,5 +1,5 @@
 import { observable, computed, action } from 'mobx';
-import moment from 'moment';
+import { groupBy, orderBy } from 'lodash';
 import { Model, Store, Casts } from './Base';
 import { Project } from './Project';
 
@@ -36,9 +36,17 @@ export class Entry extends Model {
         }
         return null;
     }
+
+    @computed get startedAtDate() {
+        return this.startedAt.format('YYYY-MM-DD');
+    }
 }
 
 export class EntryStore extends Store {
     Model = Entry;
     url = '/api/entry/';
+
+    @computed get groupByDate() {
+        return groupBy(orderBy(this.models, 'startedAt', 'desc'), entry => entry.startedAtDate);
+    }
 }
