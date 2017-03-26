@@ -114,11 +114,8 @@ class Controller():
             })
 
         token = r1.json()['access_token']
-
         r2 = requests.get(os.environ.get('CY_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
-
         res = r2.json()['result']
-
         user = self.db.session.query(User).filter(User.email == res['primaryEmail']).first()
 
         if not user:

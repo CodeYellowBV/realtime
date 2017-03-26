@@ -4,11 +4,6 @@ import datetime
 import jwt
 import os
 
-jwt.encode({'some': 'payload'}, 'secret', algorithm='HS256')
-
-# from datetime import datetime
-# from sqlalchemy.dialects.postgresql import JSON
-
 
 def get_iso8601(ts):
     return ts.strftime('%Y-%m-%dT%H:%M:%S%z+0000')
