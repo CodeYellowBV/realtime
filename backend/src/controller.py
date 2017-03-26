@@ -2,6 +2,7 @@ import json
 import os
 import jwt
 import requests
+import copy
 from .models import Entry, Project, User
 
 
@@ -34,6 +35,8 @@ class Controller():
                 'code': 'unauthorized',
             })
 
+        if self.body['type'] == 'bootstrap':
+            return self.get_bootstrap()
         # TODO just split on first uppercase
         if self.body['type'].startswith('save'):
             method = 'save'
@@ -47,6 +50,18 @@ class Controller():
 
         # Call the method with the class as param
         return getattr(self, method)(target)
+
+    def get_bootstrap(self):
+        output = copy.copy(self.current_user)
+        # Remove session specific data as we only want the bootstrap to return
+        # user data
+        # dict.pop(key) errors if the key isn't found
+        # But we expect a session to always include an exp(iration_date) so that's okay
+        output.pop('exp')
+        return json.dumps({
+            'type': self.body['type'],
+            'data': output,
+        })
 
     def check_auth(self):
         if 'authorization' not in self.body:
