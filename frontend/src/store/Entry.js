@@ -1,4 +1,5 @@
-import { observable, action } from 'mobx';
+import { observable, computed, action } from 'mobx';
+import moment from 'moment';
 import { Model, Store, Casts } from './Base';
 import { Project } from './Project';
 
@@ -27,6 +28,13 @@ export class Entry extends Model {
         const startedAt = this.startedAt;
         this.clear();
         this.startedAt = startedAt;
+    }
+
+    @computed get differenceInMinutes() {
+        if (this.startedAt && this.endedAt) {
+            return this.endedAt.diff(this.startedAt, 'minutes');
+        }
+        return null;
     }
 }
 
