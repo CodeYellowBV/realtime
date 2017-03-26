@@ -2,6 +2,9 @@ from src.controller import Controller
 
 
 class SocketContainer():
+    # This only exists because
+    # I want to do some pubsub scoping logic
+    # And it doesnt belong in the controller
     hub = None
     ws = None
 

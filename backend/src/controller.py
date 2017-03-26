@@ -28,30 +28,36 @@ class Controller():
         self.body = json.loads(self.message)
 
         if self.body['type'] == 'authenticate':
-            return self.auth()
+            return self.do_auth()
 
-        auth = self.check_auth()
-        if not auth:
-            return json.dumps({
-                'type': self.body['type'],
-                'code': 'unauthorized',
-            })
+        authorized = self.check_auth()
+        if not authorized:
+            return self.error('unauthorized')
 
         if self.body['type'] == 'bootstrap':
             return self.get_bootstrap()
-        # TODO just split on first uppercase
-        if self.body['type'].startswith('save'):
-            method = 'save'
-        elif self.body['type'].startswith('get'):
-            method = 'get'
 
-        class_name = self.body['type'].split(method)[1]
+        if 'target' not in self.body:
+            return self.error('No target given')
 
-        # Get the Class from string 'Class'
-        target = globals()[class_name]
+        if self.body['target'] not in globals():
+            return self.error('Invalid target given')
+
+        target = globals()[self.body['type']]
+        method = getattr(self, self.body['type'])
+
+        if not method:
+            return self.error('No valid type given')
 
         # Call the method with the class as param
-        return getattr(self, method)(target)
+        return method(target)
+
+    def error(self, msg):
+        return json.dumps({
+            'type': self.body['type'],
+            'code': 'error',
+            'message': msg if msg else '',
+        })
 
     def get_bootstrap(self):
         output = copy.copy(self.current_user)
@@ -97,7 +103,7 @@ class Controller():
             'data': result,
         })
 
-    def auth(self):
+    def do_auth(self):
         data = {
             'client_id': os.environ.get('CY_PHABRICATOR_CLIENT_ID'),
             'client_secret': os.environ.get('CY_PHABRICATOR_CLIENT_SECRET'),
@@ -111,7 +117,7 @@ class Controller():
         if r1.status_code != 200:
             return json.dumps({
                 'type': 'authenticate',
-                'code': 'fail',
+                'code': 'error',
                 'message': r1.json()['error_description']
             })
 
