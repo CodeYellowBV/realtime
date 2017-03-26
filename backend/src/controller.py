@@ -8,12 +8,14 @@ from .models import Entry, Project, User
 
 class Controller():
     db = None
+    hub = None
     message = None
     body = None
     current_user = None
 
-    def __init__(self, db, message):
+    def __init__(self, db, hub, message):
         self.db = db
+        self.hub = hub
         self.message = message
 
     # The type is like addEntry of getProject
