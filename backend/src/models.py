@@ -38,8 +38,6 @@ class Base(object):
 
                 setattr(self, key, data[key])
 
-
-
     def __repr__(self):
         return '<Entry %r>' % self.id
 

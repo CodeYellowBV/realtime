@@ -136,6 +136,5 @@ class Controller():
 
         return json.dumps({
             'type': 'authenticate',
-            'data': user.dump(),
             'authorization': token,
         })
