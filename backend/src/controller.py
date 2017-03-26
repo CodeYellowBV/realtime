@@ -49,10 +49,10 @@ class Controller():
             return self.error('Invalid target given')
 
         target = globals()[t.title()]
-        method = getattr(self, self.body['type'])
+        method = getattr(self, self.body['type'], None)
 
-        if not method:
-            return self.error('No valid type given')
+        if not method or self.body['type'] not in ['save, update, delete, subscribe, unsubscribe, get']:
+            return self.error('Invalid type given')
 
         # Call the method with the class as param
         return method(target)
