@@ -1,8 +1,12 @@
-import json
-import os
-import jwt
-import requests
-import copy
+# Make sure all non-model imports start with an underscore `_`
+# We use globals() to dynamically load models from body['target']
+# And we check that the target doesn't start with an underscore
+# to prevent arbitrary code execution
+import json as _json
+import os as _os
+import jwt as _jwt
+import requests as _requests
+import copy as _copy
 from .models import Entry, Project, User
 
 
@@ -25,7 +29,7 @@ class Controller():
             # todo keepalive logic
             return 'pong'
 
-        self.body = json.loads(self.message)
+        self.body = _json.loads(self.message)
 
         if self.body['type'] == 'authenticate':
             return self.do_auth()
@@ -40,10 +44,11 @@ class Controller():
         if 'target' not in self.body:
             return self.error('No target given')
 
-        if self.body['target'] not in globals():
+        t = self.body['target']
+        if t not in globals() or t.startswith('_') or t == 'self':
             return self.error('Invalid target given')
 
-        target = globals()[self.body['target'].title()]
+        target = globals()[t.title()]
         method = getattr(self, self.body['type'])
 
         if not method:
@@ -53,20 +58,20 @@ class Controller():
         return method(target)
 
     def error(self, msg):
-        return json.dumps({
+        return _json.dumps({
             'type': self.body['type'],
             'code': 'error',
             'message': msg if msg else '',
         })
 
     def get_bootstrap(self):
-        output = copy.copy(self.current_user)
+        output = _copy.copy(self.current_user)
         # Remove session specific data as we only want the bootstrap to return
         # user data
         # dict.pop(key) errors if the key isn't found
         # But we expect a session to always include an exp(iration_date) so that's okay
         output.pop('exp')
-        return json.dumps({
+        return _json.dumps({
             'type': self.body['type'],
             'data': output,
         })
@@ -76,8 +81,8 @@ class Controller():
             return False
 
         try:
-            self.current_user = jwt.decode(self.body['authorization'], os.environ.get('CY_SECRET_KEY'), algorithms=['HS256'])
-        except jwt.InvalidTokenError:
+            self.current_user = _jwt.decode(self.body['authorization'], _os.environ.get('CY_SECRET_KEY'), algorithms=['HS256'])
+        except _jwt.InvalidTokenError:
             return False
 
         return True
@@ -97,7 +102,7 @@ class Controller():
         self.db.session.commit()
 
         result = m.dump()
-        return json.dumps({
+        return _json.dumps({
             'type': self.body['type'],
             'code': 'success',
             'data': result,
@@ -105,20 +110,20 @@ class Controller():
 
     def do_auth(self):
         data = {
-            'client_id': os.environ.get('CY_PHABRICATOR_CLIENT_ID'),
-            'client_secret': os.environ.get('CY_PHABRICATOR_CLIENT_SECRET'),
-            'redirect_uri': os.environ.get('CY_REDIRECT_URI'),
+            'client_id': _os.environ.get('CY_PHABRICATOR_CLIENT_ID'),
+            'client_secret': _os.environ.get('CY_PHABRICATOR_CLIENT_SECRET'),
+            'redirect_uri': _os.environ.get('CY_REDIRECT_URI'),
             'code': self.body['data']['code'],
             'grant_type': 'authorization_code',
         }
 
-        r1 = requests.post(os.environ.get('CY_PHABRICATOR_URL') + '/oauthserver/token/', params=data)
+        r1 = _requests.post(_os.environ.get('CY_PHABRICATOR_URL') + '/oauthserver/token/', params=data)
 
         if r1.status_code != 200:
             return self.error(r1.json()['error_description'])
 
         token = r1.json()['access_token']
-        r2 = requests.get(os.environ.get('CY_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
+        r2 = _requests.get(_os.environ.get('CY_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
         res = r2.json()['result']
         user = self.db.session.query(User).filter(User.email == res['primaryEmail']).first()
 
@@ -135,7 +140,7 @@ class Controller():
 
         token = user.create_session()
 
-        return json.dumps({
+        return _json.dumps({
             'type': 'authenticate',
             'authorization': token,
         })
