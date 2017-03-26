@@ -20,7 +20,7 @@ export default class EntryOverview extends Component {
         const dayTitle = day.calendar(null, {
             sameDay: '[Today]',
             lastDay: '[Yesterday]',
-            lastWeek: '[Past] dddd',
+            lastWeek: '[Last] dddd',
             sameElse: 'dddd DD MMM',
         });
         return (
