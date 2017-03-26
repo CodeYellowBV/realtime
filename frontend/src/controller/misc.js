@@ -1,4 +1,4 @@
-import EntryOverview from 'screen/EntryOverview';
+import Personal from 'screen/Personal';
 import NotFound from 'component/NotFound';
 import { Entry } from 'store/Entry';
 import { ProjectStore } from 'store/Project';
@@ -19,7 +19,7 @@ export function home(store) {
     const projectStore = new ProjectStore().parse(PROJECT_DATA);
     store.setView({
         name: 'home',
-        render: EntryOverview,
+        render: Personal,
         currentEntry: new Entry({ startedAt: moment().format() }, { relations: ['project'] }),
         projectStore,
     });

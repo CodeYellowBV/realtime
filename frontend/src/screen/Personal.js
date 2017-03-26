@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import TimeEntry from '../container/TimeEntry';
-import EntryList from '../container/EntryList';
+import EntryOverview from '../container/EntryOverview';
 
 @observer
-export default class EntryOverview extends Component {
+export default class Personal extends Component {
     static propTypes = {
         viewStore: PropTypes.object.isRequired,
         currentEntry: PropTypes.object.isRequired,
@@ -24,7 +24,7 @@ export default class EntryOverview extends Component {
                     projectStore={this.props.projectStore}
                     onSubmitEntry={this.handleSubmitEntry}
                 />
-                <EntryList entries={entries} />
+                <EntryOverview entries={entries} />
             </div>
         );
     }
