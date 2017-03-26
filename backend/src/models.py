@@ -21,11 +21,24 @@ class Base(object):
     def parse(self, data):
         for col in self.__table__.columns:
             key = col.name
+
+            # If it is a foreign key, we check the input for the key without `_id`
+            # EG if we are at col 'project_id' and it is a fk, we check the input for `project`
+            if len(col.foreign_keys):
+                assert key.endswith('_id')
+                # Split the keyname in _, throw away the last part (_id) and join the rest
+                key = '_'.join(key.split('_')[:-1])
+                if key in data:
+                    setattr(self, key + '_id', data[key])
+                    continue
+
             if key in data:
                 if str(col.type) == 'DATETIME' and data[key] is not None:
                     data[key] = parser.parse(data[key])
 
                 setattr(self, key, data[key])
+
+
 
     def __repr__(self):
         return '<Entry %r>' % self.id
