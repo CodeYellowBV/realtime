@@ -10,7 +10,7 @@ export default class Socket {
     }
 
     initialize() {
-        this.instance = new WebSocket(process.env.CY_APP_WEBSOCKET_URL);
+        this.instance = new WebSocket(process.env.CY_FRONTEND_WEBSOCKET_URL);
 
         this.instance.onopen = () => {
             this.handlers.onOpen();

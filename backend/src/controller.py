@@ -97,14 +97,14 @@ class Controller():
 
     def auth(self):
         data = {
-            'client_id': os.environ.get('CY_APP_PHABRICATOR_CLIENT_ID'),
-            'client_secret': os.environ.get('CY_APP_PHABRICATOR_CLIENT_SECRET'),
-            'redirect_uri': os.environ.get('CY_APP_REDIRECT_URI'),
+            'client_id': os.environ.get('CY_PHABRICATOR_CLIENT_ID'),
+            'client_secret': os.environ.get('CY_PHABRICATOR_CLIENT_SECRET'),
+            'redirect_uri': os.environ.get('CY_REDIRECT_URI'),
             'code': self.body['data']['code'],
             'grant_type': 'authorization_code',
         }
 
-        r1 = requests.post(os.environ.get('CY_APP_PHABRICATOR_URL') + '/oauthserver/token/', params=data)
+        r1 = requests.post(os.environ.get('CY_PHABRICATOR_URL') + '/oauthserver/token/', params=data)
 
         if r1.status_code != 200:
             return json.dumps({
@@ -115,7 +115,7 @@ class Controller():
 
         token = r1.json()['access_token']
 
-        r2 = requests.get(os.environ.get('CY_APP_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
+        r2 = requests.get(os.environ.get('CY_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
 
         res = r2.json()['result']
 
