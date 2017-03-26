@@ -19,15 +19,9 @@ class Base(object):
         self.parse(data)
 
     def parse(self, data):
-        cols = self.__table__.columns
-        col_names = {col.name for col in cols}
-
-        for key in data:
-            if key in col_names:
-                # TODO, clean this mess up, loop other way around,
-                # loop through cols and check of data key exists
-                col = list(filter(lambda c: c.name == key, cols))[0]
-
+        for col in self.__table__.columns:
+            key = col.name
+            if key in data:
                 if str(col.type) == 'DATETIME' and data[key] is not None:
                     data[key] = parser.parse(data[key])
 
