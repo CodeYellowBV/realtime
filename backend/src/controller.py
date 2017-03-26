@@ -43,7 +43,7 @@ class Controller():
         if self.body['target'] not in globals():
             return self.error('Invalid target given')
 
-        target = globals()[self.body['type']]
+        target = globals()[self.body['target'].title()]
         method = getattr(self, self.body['type'])
 
         if not method:
@@ -115,11 +115,7 @@ class Controller():
         r1 = requests.post(os.environ.get('CY_PHABRICATOR_URL') + '/oauthserver/token/', params=data)
 
         if r1.status_code != 200:
-            return json.dumps({
-                'type': 'authenticate',
-                'code': 'error',
-                'message': r1.json()['error_description']
-            })
+            return self.error(r1.json()['error_description'])
 
         token = r1.json()['access_token']
         r2 = requests.get(os.environ.get('CY_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
