@@ -4,6 +4,26 @@ import { EntryStore } from './Entry';
 import Socket from '../Socket';
 import Uri from 'urijs';
 
+const TEST_ENTRY_DATA = [{
+    id: 2,
+    description: '',
+    startedAt: '2017-03-23T19:28:40+00:00',
+}, {
+    id: 3,
+    description: 'Finished some stuff',
+    startedAt: '2017-03-23T19:28:40+00:00',
+    endedAt: '2017-03-23T22:28:40+00:00',
+}, {
+    id: 4,
+    description: '',
+    startedAt: '2017-03-23T19:28:40+00:00',
+    endedAt: '2017-03-23T22:28:40+00:00',
+    project: {
+        id: 1,
+        title: 'REX',
+    },
+}];
+
 export default class ViewStore {
     socket = null;
     router = null;
@@ -23,6 +43,7 @@ export default class ViewStore {
             onClose: this.handleSocketClose,
             onMessage: this.handleSocketMessage,
         });
+        this.entries.parse(TEST_ENTRY_DATA);
     }
 
     initialize() {
