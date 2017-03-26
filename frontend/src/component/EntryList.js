@@ -27,3 +27,7 @@ export const EntryItemProject = styled.div`
 export const EntryItemHours = styled.div`
     flex: 2;
 `;
+
+export const EntryItemActions = styled.div`
+    align-self: flex-end;
+`;
