@@ -2,9 +2,11 @@ import { observable, computed, action } from 'mobx';
 import { User } from './User';
 import { EntryStore } from './Entry';
 import Socket from '../Socket';
+import Uri from 'urijs';
 
 export default class ViewStore {
     socket = null;
+    router = null;
     @observable online = false;
     @observable currentUser = new User();
     @observable.ref currentView = null;
@@ -23,6 +25,21 @@ export default class ViewStore {
         });
     }
 
+    initialize() {
+        const url = new Uri(window.location.href);
+        const urlParams = url.search(true);
+        if (urlParams.code) {
+            this.performAuthentication(urlParams.code);
+            this.router.setRoute('/');
+        } else {
+            this.tryLogin();
+        }
+    }
+
+    @action setView(view) {
+        this.currentView = view;
+    }
+
     handleSocketOpen = () => {
         this.online = true;
         console.log('Connection established.');
@@ -33,13 +50,20 @@ export default class ViewStore {
         console.log('Connection closed.');
     };
 
-    handleSocketMessage = (type, data) => {
+    handleSocketMessage = ({ type, data, ...meta }) => {
+        if (meta.code === 'unauthorized') {
+            this.currentUser.logout();
+            return;
+        }
         if (type === 'authenticate') {
             if (data === null) {
-                this.currentUser.clear();
+                this.currentUser.logout();
             } else {
-                this.currentUser.parse(data);
+                this.currentUser.login(data, meta.authorization);
             }
+        }
+        if (type === 'bootstrap') {
+            this.currentUser.parse(data);
         }
     };
 
@@ -51,7 +75,16 @@ export default class ViewStore {
         this.socket.send('authenticate', { code });
     }
 
-    @action setView(view) {
-        this.currentView = view;
+    performLogout() {
+        this.socket.authToken = null;
+        this.currentUser.logout();
+    }
+
+    tryLogin() {
+        const token = this.currentUser.getToken();
+        if (token) {
+            this.socket.authToken = token;
+            this.socket.send('bootstrap');
+        }
     }
 }

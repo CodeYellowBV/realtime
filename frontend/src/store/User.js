@@ -7,6 +7,20 @@ export class User extends Model {
     @observable displayName = '';
     @observable email = '';
     @observable avatarUrl = '';
+
+    login(data, token) {
+        localStorage.setItem('jwt-auth-token', token);
+        this.parse(data);
+    }
+
+    logout() {
+        localStorage.removeItem('jwt-auth-token');
+        this.clear();
+    }
+
+    getToken() {
+        return localStorage.getItem('jwt-auth-token');
+    }
 }
 
 export class UserStore extends Store {

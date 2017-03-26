@@ -2,6 +2,7 @@ export default class Socket {
     instance = null;
     handlers = {};
     pingInterval = null;
+    authToken = null;
 
     constructor(handlers) {
         this.handlers = handlers;
@@ -29,28 +30,30 @@ export default class Socket {
                 return;
             }
             const msg = JSON.parse(evt.data);
-            console.log('[received]', msg.type, msg.data);
-            this.handlers.onMessage(msg.type, msg.data);
+            console.log('[received]', msg);
+            this.handlers.onMessage(msg);
         };
     }
 
     send(type, data) {
-        console.log('[sent]', type, data);
+        const msg = {
+            type,
+            data,
+            authorization: this.authToken,
+        };
+        console.log('[sent]', msg);
         // Wait for a while if the socket is not yet done connecting...
         if (this.instance.readyState !== 1) {
             setTimeout(() => {
-                this._sendDirectly(type, data);
+                this._sendDirectly(msg);
             }, 200);
             return;
         }
-        this._sendDirectly(type, data);
+        this._sendDirectly(msg);
     }
 
-    _sendDirectly(type, data) {
-        this.instance.send(JSON.stringify({
-            type,
-            data,
-        }));
+    _sendDirectly(msg) {
+        this.instance.send(JSON.stringify(msg));
     }
 
     _initiatePingInterval() {

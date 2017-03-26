@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import Button from '../component/Button';
-import Uri from 'urijs';
 
 const { CY_APP_PHABRICATOR_URL, CY_APP_PHABRICATOR_CLIENT_ID } = process.env;
 
@@ -14,16 +13,6 @@ export default class Login extends Component {
     static contextTypes = {
         router: PropTypes.object.isRequired,
     };
-
-    componentDidMount() {
-        // I don't like this at all. Perhaps move it elsewhere?
-        const url = new Uri(window.location.href);
-        const urlParams = url.search(true);
-        if (urlParams.code) {
-            this.props.viewStore.performAuthentication(urlParams.code);
-            this.context.router.setRoute('/');
-        }
-    }
 
     handleClick() {
         const redirectUri = encodeURIComponent(window.location.href);

@@ -14,5 +14,7 @@ const viewStore = new ViewStore();
 remotedev(viewStore);
 
 const router = startRouter(viewStore);
+viewStore.router = router;
+viewStore.initialize();
 
 ReactDOM.render(<App store={viewStore} router={router} />, document.getElementById('root'));
