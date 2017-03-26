@@ -47,6 +47,11 @@ class Base(object):
             key = col.name
             val = getattr(self, key)
 
+            # Return {'project': id} instead of {'project_id': id}
+            if len(col.foreign_keys):
+                assert key.endswith('_id')
+                key = '_'.join(key.split('_')[:-1])
+
             if str(col.type) == 'DATETIME' and val is not None:
                 # Make aware and format as iso
                 val = val.replace(tzinfo=tz.tzlocal()).isoformat()
