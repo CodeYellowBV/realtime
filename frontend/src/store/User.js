@@ -8,9 +8,12 @@ export class User extends Model {
     @observable email = '';
     @observable avatarUrl = '';
 
-    login(data, token) {
+    setToken(token) {
         localStorage.setItem('jwt-auth-token', token);
-        this.parse(data);
+    }
+
+    getToken() {
+        return localStorage.getItem('jwt-auth-token');
     }
 
     logout() {
@@ -18,9 +21,6 @@ export class User extends Model {
         this.clear();
     }
 
-    getToken() {
-        return localStorage.getItem('jwt-auth-token');
-    }
 }
 
 export class UserStore extends Store {

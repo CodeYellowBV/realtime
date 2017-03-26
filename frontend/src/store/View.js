@@ -59,7 +59,8 @@ export default class ViewStore {
             if (data === null) {
                 this.currentUser.logout();
             } else {
-                this.currentUser.login(data, meta.authorization);
+                this.currentUser.setToken(meta.authorization);
+                this.tryLogin();
             }
         }
         if (type === 'bootstrap') {
