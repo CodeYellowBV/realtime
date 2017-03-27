@@ -1,8 +1,9 @@
 import { observable, computed, action } from 'mobx';
+import Uri from 'urijs';
 import { User } from './User';
 import { EntryStore } from './Entry';
 import Socket from '../Socket';
-import Uri from 'urijs';
+import { api } from './Base';
 
 const TEST_ENTRY_DATA = [{
     id: 2,
@@ -53,6 +54,7 @@ export default class ViewStore {
             onMessage: this.handleSocketMessage,
         });
         this.entries.parse(TEST_ENTRY_DATA);
+        api.socket = this.socket;
     }
 
     initialize() {
