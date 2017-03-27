@@ -3953,6 +3953,10 @@ mobx@^3.1.7:
   version "3.1.7"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.1.7.tgz#910c01f6e2f7e88ec47baabefee5fe667d37ac00"
 
+mock-socket@^6.0.4:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/mock-socket/-/mock-socket-6.0.4.tgz#85f58a0aa83bc1db4ca7d14b42d8f9dd663e7569"
+
 moment@^2.17.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"

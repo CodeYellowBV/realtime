@@ -1,6 +1,7 @@
 export default class Socket {
     instance = null;
     handlers = {};
+    messageHandlers = [];
     pingInterval = null;
     authToken = null;
 
@@ -31,14 +32,26 @@ export default class Socket {
             }
             const msg = JSON.parse(evt.data);
             console.log('[received]', msg);
-            this.handlers.onMessage(msg);
+
+            const isHandled = this.messageHandlers.some((handler) => {
+                return handler(msg);
+            });
+            if (!isHandled) {
+                this.handlers.onMessage(msg);
+            }
         };
     }
 
-    send(type, data) {
+    addMessageHandler(callback) {
+        this.messageHandlers.push(callback);
+    }
+
+    send(options) {
         const msg = {
-            type,
-            data,
+            type: options.type,
+            data: options.data,
+            target: options.target,
+            requestId: options.requestId,
             authorization: this.authToken,
         };
         console.log('[sent]', msg);

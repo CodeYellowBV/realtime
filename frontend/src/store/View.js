@@ -101,11 +101,11 @@ export default class ViewStore {
     };
 
     saveEntry(entry) {
-        this.socket.send('saveEntry', entry.toBackend());
+        this.socket.send({ type: 'saveEntry', data: entry.toBackend() });
     }
 
     performAuthentication(code) {
-        this.socket.send('authenticate', { code });
+        this.socket.send({ type: 'authenticate', data: { code } });
     }
 
     performLogout() {
@@ -117,7 +117,7 @@ export default class ViewStore {
         const token = this.currentUser.getToken();
         if (token) {
             this.socket.authToken = token;
-            this.socket.send('bootstrap');
+            this.socket.send({ type: 'bootstrap' });
         }
     }
 }

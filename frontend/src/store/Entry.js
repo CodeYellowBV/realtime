@@ -45,6 +45,7 @@ export class Entry extends Model {
 export class EntryStore extends Store {
     Model = Entry;
     url = '/api/entry/';
+    target = 'entry';
 
     @computed get groupByDate() {
         return groupBy(orderBy(this.models, 'startedAt', 'desc'), entry => entry.startedAtDate);
