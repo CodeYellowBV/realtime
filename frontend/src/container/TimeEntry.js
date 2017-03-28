@@ -54,13 +54,6 @@ export default class TimeEntry extends Component {
         const { entry } = this.props;
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
-                <TimeEntryFormField label="Description" size="2">
-                    <InputText
-                        name="description"
-                        onChange={this.handleInput}
-                        value={entry.description}
-                    />
-                </TimeEntryFormField>
                 <TimeEntryFormField label="Project" size="1">
                     <InputSelect
                         name="project"
@@ -68,6 +61,13 @@ export default class TimeEntry extends Component {
                         options={this.props.projectStore.map(this.formatProjectToOption)}
                         onChange={this.handleInput}
                         value={entry.project.id ? String(entry.project.id) : ''}
+                    />
+                </TimeEntryFormField>
+                <TimeEntryFormField label="Description" size="2">
+                    <InputText
+                        name="description"
+                        onChange={this.handleInput}
+                        value={entry.description}
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Started at" size="1">

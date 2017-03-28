@@ -28,10 +28,10 @@ export default class EntryOverviewItem extends Component {
         const diffMinutes = entry.differenceInMinutes;
         return (
             <EntryItem key={entry.id}>
-                <EntryItemDescription>{entry.description}</EntryItemDescription>
                 <EntryItemProject>
                     {entry.project.id ? entry.project.title : '[Missing]'}
                 </EntryItemProject>
+                <EntryItemDescription>{entry.description}</EntryItemDescription>
                 <EntryItemHours>
                     {entry.startedAt.format('HH:mm')}{' - '}
                     {entry.endedAt ? entry.endedAt.format('HH:mm') : 'Running'}
