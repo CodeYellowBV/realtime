@@ -70,7 +70,7 @@ export default class TimeEntry extends Component {
                         value={entry.description}
                     />
                 </TimeEntryFormField>
-                <TimeEntryFormField label="Started at" size="1">
+                <TimeEntryFormField label="From" size="1">
                     <InputTime
                         name="startedAt"
                         onChange={this.handleInput}
@@ -78,7 +78,15 @@ export default class TimeEntry extends Component {
                         disableCancel
                     />
                 </TimeEntryFormField>
-                <TimeEntryFormField label="Ended at" size="1">
+                <TimeEntryFormField label="Duration" size="1">
+                    <InputTime
+                        name="duration"
+                        onChange={this.handleInput}
+                        value={entry.duration ? entry.duration.format('HH:mm') : ''}
+                        disableCancel
+                    />
+                </TimeEntryFormField>
+                <TimeEntryFormField label="Until" size="1">
                     <InputTime
                         name="endedAt"
                         onChange={this.handleInput}

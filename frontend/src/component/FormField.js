@@ -7,6 +7,10 @@ const StyledField = styled.div`
     flex-flow: column wrap;
 `;
 
+const StyledLabel = styled.label`
+    margin-bottom: 5px;
+`;
+
 @observer
 export default class FormField extends Component {
     static propTypes = {
@@ -18,7 +22,7 @@ export default class FormField extends Component {
     render() {
         return (
             <StyledField className={this.props.className}>
-                <label>{this.props.label}</label>
+                <StyledLabel>{this.props.label}</StyledLabel>
                 {this.props.children}
             </StyledField>
         );

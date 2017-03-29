@@ -10,7 +10,6 @@ export const EntryItem = styled.div`
     display: flex;
     width: 100%;
     flex-flow: row wrap;
-    background: #f9f9f9;
     border-bottom: 1px solid #ccc;
     padding: .5em 0;
 `;
