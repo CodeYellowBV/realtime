@@ -82,10 +82,12 @@ export default class InputTime extends Component {
         onChange: PropTypes.func.isRequired,
         name: PropTypes.string.isRequired,
         value: PropTypes.object,
+        disableClear: PropTypes.bool,
     };
 
     static defaultProps = {
         value: null,
+        disableClear: false,
     };
 
     @observable showOverlay = false;
@@ -122,6 +124,18 @@ export default class InputTime extends Component {
         }
     }
 
+    renderClear() {
+        if (this.props.disableClear) {
+            return null;
+        }
+
+        return (
+            <StyledButton variation="warning" onClick={() => { this.changeValue(null); }}>
+                Clear
+            </StyledButton>
+        );
+    }
+
     render() {
         return (
             <Container>
@@ -134,15 +148,13 @@ export default class InputTime extends Component {
                             onClick={() => {
                                 const now = moment();
 
-                                this.handleChangeDate(now);
-                                this.handleChangeTime(now);
+                                this.handleChangeDate(now.format('YYYY-MM-DD'));
+                                this.handleChangeTime(now.format('HH:mm'));
                             }}
                         >
                             Now
                         </StyledButton>
-                        <StyledButton variation="warning" onClick={() => { this.handleChange(null); }}>
-                            Clear
-                        </StyledButton>
+                        {this.renderClear()}
                     </ActionContainer>
                     <StyledInput
                         innerRef={input => { this.inputTime = input; }}
