@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
+import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime from '../component/InputTime';
 import InputSelect from '../component/InputSelect';
@@ -51,6 +52,7 @@ export default class TimeEntry extends Component {
 
     render() {
         const { entry } = this.props;
+        const duration = entry.endedAt ? moment(entry.endedAt.diff(entry.startedAt)) : null;
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
                 <TimeEntryFormField label="Project" size="1">
@@ -77,13 +79,8 @@ export default class TimeEntry extends Component {
                         disableCancel
                     />
                 </TimeEntryFormField>
-                <TimeEntryFormField label="Duration" size="1">
-                    <InputTime
-                        name="duration"
-                        onChange={this.handleInput}
-                        value={entry.duration}
-                        disableCancel
-                    />
+                <TimeEntryFormField label="Description" size="1">
+                    <div>{duration ? duration.format('HH:mm:ss') : '—'}</div>
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Until" size="1">
                     <InputTime
