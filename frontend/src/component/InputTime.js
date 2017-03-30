@@ -81,15 +81,18 @@ export default class InputTime extends Component {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         name: PropTypes.string.isRequired,
-        value: PropTypes.string,
+        value: PropTypes.object,
     };
 
     static defaultProps = {
-        value: '',
+        value: null,
     };
 
     @observable showOverlay = false;
     @observable shouldFocusTime = false;
+
+    @observable date = moment().format('YYYY-MM-DD');
+    @observable time = moment().format('HH:mm');
 
     toggleOverlay = () => {
         const showOverlay = !this.showOverlay;
@@ -97,8 +100,19 @@ export default class InputTime extends Component {
         this.shouldFocusTime = showOverlay;
     };
 
-    handleChange = value => {
-        this.props.onChange(this.props.name, value);
+    changeValue = () => {
+        const datetime = moment(`${this.date} ${this.time}`);
+        this.props.onChange(this.props.name, datetime);
+    };
+
+    handleChangeDate = value => {
+        this.date = value;
+        this.changeValue();
+    };
+
+    handleChangeTime = value => {
+        this.time = value;
+        this.changeValue();
     };
 
     componentDidUpdate() {
@@ -112,21 +126,40 @@ export default class InputTime extends Component {
         return (
             <Container>
                 <StyledButton flex={1} onClick={this.toggleOverlay} showOverlay={this.showOverlay}>
-                    {this.props.value || '—'}
+                    {this.props.value ? this.props.value.format('H:mm') : '—'}
                 </StyledButton>
                 <Overlay hide={!this.showOverlay}>
                     <ActionContainer>
-                        <StyledButton onClick={() => { this.handleChange(moment().format('HH:mm')); }}>Now</StyledButton>
-                        <StyledButton variation="warning" onClick={() => { this.handleChange(null); }}>Clear</StyledButton>
+                        <StyledButton
+                            onClick={() => {
+                                const now = moment();
+
+                                this.handleChangeDate(now);
+                                this.handleChangeTime(now);
+                            }}
+                        >
+                            Now
+                        </StyledButton>
+                        <StyledButton variation="warning" onClick={() => { this.handleChange(null); }}>
+                            Clear
+                        </StyledButton>
                     </ActionContainer>
                     <StyledInput
                         innerRef={input => { this.inputTime = input; }}
                         type="time"
                         name={this.props.name}
-                        value={this.props.value}
-                        onChange={e => { this.handleChange(e.target.value); }}
+                        value={this.props.value ? this.props.value.format('HH:mm') : this.time}
+                        onChange={e => {
+                            this.handleChangeTime(e.target.value);
+                        }}
                     />
-                    {/* TODO: Add date selector. */}
+                    <StyledInput
+                        type="date"
+                        onChange={e => {
+                            this.handleChangeDate(e.target.value);
+                        }}
+                        value={this.props.value ? this.props.value.format('YYYY-MM-DD') : this.date}
+                    />
                 </Overlay>
             </Container>
         );

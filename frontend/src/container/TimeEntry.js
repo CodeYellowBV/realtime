@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime from '../component/InputTime';
 import InputSelect from '../component/InputSelect';
@@ -30,11 +29,11 @@ export default class TimeEntry extends Component {
         }
 
         if (key === 'startedAt') {
-            entry.startedAt = moment(value, 'HH:mm');
+            entry.startedAt = value;
         }
 
         if (key === 'endedAt') {
-            entry.endedAt = value === '' ? null : moment(value, 'HH:mm');
+            entry.endedAt = value;
         }
     };
 
@@ -74,7 +73,7 @@ export default class TimeEntry extends Component {
                     <InputTime
                         name="startedAt"
                         onChange={this.handleInput}
-                        value={entry.startedAt ? entry.startedAt.format('HH:mm') : ''}
+                        value={entry.startedAt}
                         disableCancel
                     />
                 </TimeEntryFormField>
@@ -82,7 +81,7 @@ export default class TimeEntry extends Component {
                     <InputTime
                         name="duration"
                         onChange={this.handleInput}
-                        value={entry.duration ? entry.duration.format('HH:mm') : ''}
+                        value={entry.duration}
                         disableCancel
                     />
                 </TimeEntryFormField>
@@ -90,7 +89,7 @@ export default class TimeEntry extends Component {
                     <InputTime
                         name="endedAt"
                         onChange={this.handleInput}
-                        value={entry.endedAt ? entry.endedAt.format('HH:mm') : ''}
+                        value={entry.endedAt}
                     />
                 </TimeEntryFormField>
                 <button>Save</button>

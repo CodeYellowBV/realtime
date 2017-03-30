@@ -20,7 +20,7 @@ export function home(store) {
     store.setView({
         name: 'home',
         render: Personal,
-        currentEntry: new Entry({ startedAt: moment().format() }, { relations: ['project'] }),
+        currentEntry: new Entry({ startedAt: moment() }, { relations: ['project'] }),
         projectStore,
     });
 }
