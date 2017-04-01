@@ -23,31 +23,14 @@ sockets = Sockets(app)
 db = SQLAlchemy(app)
 
 
-from src.controller import Controller
-
-# def from_iso8601(iso_dt):
-#     dt_local = parser.parse(iso_dt)
-#     dt_utc = dt_local.astimezone(pytz.utc)
-#     return dt_utc.replace(tzinfo=None)
-
-
-@app.route('/api/')
-def home():
-    return 'Hello World!'
-
-
-@sockets.route('/api/echo')
-def echo_socket(ws):
-    while not ws.closed:
-        message = ws.receive()
-        ws.send(message)
+from src.hub import Hub
+hub = Hub()
 
 
 @sockets.route('/api/')
 def open_socket(ws):
-    while not ws.closed:
-        message = ws.receive()
+    socket = hub.add(ws)
+    while not socket.ws.closed:
+        message = socket.ws.receive()
         if message:
-            controller = Controller(db, message)
-            res = controller.handle()
-            ws.send(res)
+            socket.handle(db, message)
