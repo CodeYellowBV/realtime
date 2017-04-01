@@ -44,14 +44,14 @@ class Controller():
         if 'target' not in self.body:
             return self.error('No target given')
 
-        t = self.body['target']
+        t = self.body['target'].title()
         if t not in globals() or t.startswith('_') or t == 'self':
             return self.error('Invalid target given')
 
-        target = globals()[t.title()]
+        target = globals()[t]
         method = getattr(self, self.body['type'], None)
 
-        if not method or self.body['type'] not in ['save, update, delete, subscribe, unsubscribe, get']:
+        if not method or self.body['type'] not in ['save', 'update', 'delete', 'subscribe', 'unsubscribe', 'get']:
             return self.error('Invalid type given')
 
         # Call the method with the class as param
