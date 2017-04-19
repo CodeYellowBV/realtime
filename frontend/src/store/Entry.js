@@ -3,7 +3,6 @@ import { groupBy, orderBy } from 'lodash';
 import { Model, Store, Casts } from './Base';
 
 export class Entry extends Model {
-    urlRoot = '/api/entry/';
     target = 'entry';
 
     @observable id = null;
@@ -39,7 +38,6 @@ export class Entry extends Model {
 
 export class EntryStore extends Store {
     Model = Entry;
-    url = '/api/entry/';
     target = 'entry';
 
     @computed get groupByDate() {

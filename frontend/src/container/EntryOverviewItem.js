@@ -25,7 +25,6 @@ export default class EntryOverviewItem extends Component {
         this.props.entry.delete();
     };
 
-
     render() {
         const { entry } = this.props;
         const diffMinutes = entry.differenceInMinutes;

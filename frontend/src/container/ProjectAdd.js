@@ -16,7 +16,7 @@ export default class ProjectAdd extends Component {
     };
 
     handleSubmit = () => {
-        this.props.project.saveAndForget();
+        this.props.project.save();
         this.props.project.clear();
     };
 

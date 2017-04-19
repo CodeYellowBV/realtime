@@ -44,6 +44,14 @@ class TimeApi extends BinderApi {
             data,
         });
     }
+
+    deleteModel({ target }) {
+        this.socket.send({
+            type: 'delete',
+            target,
+        });
+    }
+
 }
 
 const myApi = new TimeApi();
@@ -53,10 +61,16 @@ export class Model extends BModel {
     target = '';
 
     // TODO: this is a poorly implemented save function that does not wait on the results of the backend
-    saveAndForget() {
+    save() {
         this.api.saveModelWithoutWait({
             target: this.target,
             data: this.toBackend(),
+        });
+    }
+
+    delete() {
+        this.api.deleteModel({
+            target: this.target,
         });
     }
 }
