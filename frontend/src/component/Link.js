@@ -1,3 +1,4 @@
+import page from 'page';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -8,14 +9,10 @@ export default class Link extends Component {
         className: PropTypes.string,
     };
 
-    static contextTypes = {
-        router: PropTypes.object.isRequired,
-    };
-
     handleClick = (e) => {
         e.preventDefault();
 
-        this.context.router.setRoute(this.props.to);
+        page(this.props.to);
     };
 
     render() {

@@ -19,6 +19,7 @@
     "mobx-spine": "0.9.0",
     "moment": "^2.18.1",
     "normalize.css": "^5.0.0",
+    "page": "^1.7.1",
     "prop-types": "^15.5.8",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -26,7 +27,6 @@
     "react-onclickoutside": "^5.10.0",
     "react-test-renderer": "^15.4.2",
     "styled-components": "^1.4.4",
-    "tarantino": "^2.1.0",
     "urijs": "^1.18.9",
     "uuid": "^3.0.1"
   },

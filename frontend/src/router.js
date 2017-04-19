@@ -1,30 +1,27 @@
-import { Router } from 'tarantino';
+import page from 'page';
 // TODO: hmm, misc... Kees do u even naming.
 import * as misc from 'controller/misc';
-import { mapValues } from 'lodash';
+import { each } from 'lodash';
 
 const routes = {
     '/': misc.home,
 };
 
 function routeWrapper(store) {
-    return mapValues(routes, controller => {
-        return function(...params) {
-            const pController = controller instanceof Promise
-                ? controller
-                : Promise.resolve(controller);
-            pController.then(resolvedContr => resolvedContr(store, ...params));
+    each(routes, (controller, route) => {
+        const wrapper = function (options) {
+            const pController = controller instanceof Promise ? controller : Promise.resolve(controller);
+            const params = Object.values(options.params);
+            pController.then(resolvedContr => resolvedContr(store, ...params, options));
         };
+        page(route, wrapper);
     });
 }
 
 export default function startRouter(store) {
-    const wrappedRoutes = routeWrapper(store);
-
-    // Update state on url change.
-    return new Router(wrappedRoutes)
-        .configure({
-            notfound: () => misc.notFound(store),
-        })
-        .init();
+    routeWrapper(store);
+    page('*', () => misc.notFound(store));
+    page({
+        click: false,
+    });
 }

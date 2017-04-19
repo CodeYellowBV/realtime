@@ -1,4 +1,5 @@
 import { observable, computed, action } from 'mobx';
+import page from 'page';
 import Uri from 'urijs';
 import { User } from './User';
 import { EntryStore } from './Entry';
@@ -36,7 +37,6 @@ const TEST_ENTRY_DATA = [{
 
 export default class ViewStore {
     socket = null;
-    router = null;
     @observable online = false;
     @observable currentUser = new User();
     @observable.ref currentView = null;
@@ -62,7 +62,7 @@ export default class ViewStore {
         const urlParams = url.search(true);
         if (urlParams.code) {
             this.performAuthentication(urlParams.code);
-            this.router.setRoute('/');
+            page('/');
         } else {
             this.tryLogin();
         }

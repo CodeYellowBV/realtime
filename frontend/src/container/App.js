@@ -22,16 +22,7 @@ function renderCurrentView(store) {
 export default class App extends Component {
     static propTypes = {
         store: PropTypes.object.isRequired,
-        router: PropTypes.object.isRequired,
     };
-
-    static childContextTypes = {
-        router: PropTypes.object.isRequired,
-    };
-
-    getChildContext() {
-        return { router: this.props.router };
-    }
 
     render() {
         const { store } = this.props;

@@ -4359,6 +4359,12 @@ p-locate@^2.0.0:
   dependencies:
     p-limit "^1.1.0"
 
+page@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/page/-/page-1.7.1.tgz#3886c147b895487783759b37e800a11213bc38ed"
+  dependencies:
+    path-to-regexp "~1.2.1"
+
 pako@~0.2.0:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/pako/-/pako-0.2.9.tgz#f3f7522f4ef782348da8161bad9ecfd51bf83a75"
@@ -4435,6 +4441,12 @@ path-parse@^1.0.5:
 path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
+
+path-to-regexp@~1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.2.1.tgz#b33705c140234d873c8721c7b9fd8b541ed3aff9"
+  dependencies:
+    isarray "0.0.1"
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -5672,10 +5684,6 @@ tar@^2.2.1:
     block-stream "*"
     fstream "^1.0.2"
     inherits "2"
-
-tarantino@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/tarantino/-/tarantino-2.1.0.tgz#445a7d07fd2a5a4941ebdcc876914d110f5b7725"
 
 test-exclude@^4.0.3:
   version "4.0.3"

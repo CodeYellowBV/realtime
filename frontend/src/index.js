@@ -7,8 +7,7 @@ import startRouter from './router';
 
 const viewStore = new ViewStore();
 
-const router = startRouter(viewStore);
-viewStore.router = router;
+startRouter(viewStore);
 viewStore.initialize();
 
-ReactDOM.render(<App store={viewStore} router={router} />, document.getElementById('root'));
+ReactDOM.render(<App store={viewStore} />, document.getElementById('root'));
