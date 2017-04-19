@@ -10,6 +10,7 @@ export default class Personal extends Component {
         viewStore: PropTypes.object.isRequired,
         currentEntry: PropTypes.object.isRequired,
         projectStore: PropTypes.object.isRequired,
+        entryStore: PropTypes.object.isRequired,
     };
 
     componentDidMount() {
@@ -24,11 +25,14 @@ export default class Personal extends Component {
 
     subscribe = () => {
         this.props.projectStore.subscribe();
+        this.props.entryStore.subscribe();
     }
 
     unsubscribe = () => {
         this.props.projectStore.clear();
         this.props.projectStore.unsubscribe();
+        this.props.entryStore.clear();
+        this.props.entryStore.unsubscribe();
     }
 
     handleSubmitEntry = () => {
@@ -36,7 +40,6 @@ export default class Personal extends Component {
     };
 
     render() {
-        const { entries } = this.props.viewStore;
         return (
             <div>
                 <TimeEntry
@@ -44,7 +47,7 @@ export default class Personal extends Component {
                     projectStore={this.props.projectStore}
                     onSubmitEntry={this.handleSubmitEntry}
                 />
-                <EntryOverview entries={entries} />
+                <EntryOverview entries={this.props.entryStore} />
             </div>
         );
     }

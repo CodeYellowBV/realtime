@@ -2,38 +2,8 @@ import { observable, computed, action } from 'mobx';
 import page from 'page';
 import Uri from 'urijs';
 import { User } from './User';
-import { EntryStore } from './Entry';
 import Socket from '../Socket';
 import { api } from './Base';
-
-const TEST_ENTRY_DATA = [{
-    id: 2,
-    description: '',
-    startedAt: '2017-03-23T19:28:40+00:00',
-}, {
-    id: 3,
-    description: 'Finished some stuff',
-    startedAt: '2017-03-23T17:28:40+00:00',
-    endedAt: '2017-03-23T22:28:40+00:00',
-}, {
-    id: 4,
-    description: '',
-    startedAt: '2017-03-23T15:28:40+00:00',
-    endedAt: '2017-03-23T22:28:40+00:00',
-    project: {
-        id: 1,
-        name: 'REX',
-    },
-}, {
-    id: 5,
-    description: '',
-    startedAt: '2017-03-26T15:28:40+00:00',
-    endedAt: '2017-03-26T22:28:40+00:00',
-    project: {
-        id: 1,
-        name: 'REX',
-    },
-}];
 
 export default class ViewStore {
     socket = null;
@@ -41,7 +11,6 @@ export default class ViewStore {
     @observable currentUser = new User();
     @observable.ref currentView = null;
     @observable notifications = [];
-    @observable entries = new EntryStore({ relations: ['project'] });
 
     @computed get isAuthenticated() {
         return !!this.currentUser.id;
@@ -52,7 +21,6 @@ export default class ViewStore {
         this.socket.on('open', this.handleSocketOpen);
         this.socket.on('close', this.handleSocketClose);
         this.socket.on('message', this.handleSocketMessage);
-        this.entries.parse(TEST_ENTRY_DATA);
         api.socket = this.socket;
     }
 
