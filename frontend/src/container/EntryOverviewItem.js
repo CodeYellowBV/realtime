@@ -30,7 +30,7 @@ export default class EntryOverviewItem extends Component {
         return (
             <EntryItem key={entry.id}>
                 <EntryItemProject>
-                    {entry.project.id ? entry.project.title : '[Missing]'}
+                    {entry.project.id ? entry.project.name : '[Missing]'}
                 </EntryItemProject>
                 <EntryItemDescription>{entry.description}</EntryItemDescription>
                 <EntryItemHours>

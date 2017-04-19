@@ -22,7 +22,7 @@ const TEST_ENTRY_DATA = [{
     endedAt: '2017-03-23T22:28:40+00:00',
     project: {
         id: 1,
-        title: 'REX',
+        name: 'REX',
     },
 }, {
     id: 5,
@@ -31,7 +31,7 @@ const TEST_ENTRY_DATA = [{
     endedAt: '2017-03-26T22:28:40+00:00',
     project: {
         id: 1,
-        title: 'REX',
+        name: 'REX',
     },
 }];
 

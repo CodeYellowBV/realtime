@@ -5,7 +5,7 @@ export class Project extends Model {
     urlRoot = '/api/project/';
 
     @observable id = null;
-    @observable title = '';
+    @observable name = '';
     @observable description = '';
 }
 
