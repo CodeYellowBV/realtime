@@ -4,6 +4,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import moment from 'moment';
+import onClickOutside from 'react-onclickoutside';
 
 const Container = styled.div`
     flex: 1;
@@ -78,7 +79,7 @@ const StyledInput = styled.input`
 `;
 
 @observer
-export default class InputTime extends Component {
+export default onClickOutside(class InputTime extends Component {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         name: PropTypes.string.isRequired,
@@ -117,6 +118,10 @@ export default class InputTime extends Component {
         this.time = value;
         this.changeValue();
     };
+
+    handleClickOutside() {
+        this.showOverlay = false;
+    }
 
     componentDidUpdate() {
         if (this.shouldFocusTime) {
@@ -177,4 +182,4 @@ export default class InputTime extends Component {
             </Container>
         );
     }
-}
+});
