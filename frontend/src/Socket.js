@@ -31,7 +31,7 @@ export default class Socket {
                 return;
             }
             const msg = JSON.parse(evt.data);
-            console.log('[received]', msg);
+            // console.log('[received]', msg);
 
             const isHandled = this.messageHandlers.some((handler) => {
                 return handler(msg);
@@ -54,7 +54,7 @@ export default class Socket {
             requestId: options.requestId,
             authorization: this.authToken,
         };
-        console.log('[sent]', msg);
+        // console.log('[sent]', msg);
         // Wait for a while if the socket is not yet done connecting...
         if (this.instance.readyState !== 1) {
             setTimeout(() => {
