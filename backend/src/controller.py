@@ -129,6 +129,27 @@ class Controller():
             'data': result,
         }
 
+    def delete(self, cls):
+        data = self.body['data']
+
+        # Create instance if id is not given
+        if 'id' not in data or data['id'] is None:
+            return self.error('No id given')
+
+        m = self.db.session.query(cls).get(data['id'])
+        m.parse(data)
+
+        self.db.session.delete(m)
+        self.db.session.commit()
+
+        result = m.dump()
+        return {
+            'type': self.body['type'],
+            'target': self.body['target'],
+            'code': 'success',
+            'data': result,
+        }
+
     def subscribe(self, cls):
         result = cls.find_all(self.db.session)
 
