@@ -130,7 +130,9 @@ class Controller():
         }
 
     def delete(self, cls):
-        data = self.body['data']
+        data = self.body.get('data')
+        if not data:
+            return self.error('No data given')
 
         # Create instance if id is not given
         if 'id' not in data or data['id'] is None:
