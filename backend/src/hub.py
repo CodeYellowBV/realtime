@@ -55,13 +55,15 @@ class Hub():
             if isSubscribed:
                 sockets[isSubscribed] = s
 
+        readableType = 'add' if _type == 'save' else _type
+
         for reqId, sub in sockets.items():
             res = json.dumps({
                 'type': 'publish',
                 'target': target,
                 'requestId': reqId,
                 'data': {
-                    _type: [item],
+                    readableType: [item],
                 }
             })
             sub.ws.send(res)
