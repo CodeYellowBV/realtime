@@ -1,5 +1,6 @@
 import { NotificationStack } from 'react-notification';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { observer } from 'mobx-react';
 
 @observer
