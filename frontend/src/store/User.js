@@ -25,4 +25,5 @@ export class User extends Model {
 
 export class UserStore extends Store {
     Model = User;
+    target = 'user';
 }

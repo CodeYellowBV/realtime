@@ -17,6 +17,7 @@ const PROJECT_DATA = [
 
 export function home(store) {
     const projectStore = new ProjectStore().parse(PROJECT_DATA);
+    projectStore.subscribe();
     store.setView({
         name: 'home',
         render: Personal,

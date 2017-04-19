@@ -51,6 +51,9 @@ export class Store extends BStore {
 
     subscribe(scope) {
         this.unsubscribe();
+        if (!this.target) {
+            throw new Error('Store needs `target` property set before subscribing.');
+        }
         this.subscriptionId = this.api.subscribe({
             target: this.target,
             instance: this,

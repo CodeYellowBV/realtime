@@ -12,4 +12,5 @@ export class Project extends Model {
 export class ProjectStore extends Store {
     Model = Project;
     url = '/api/project/';
+    target = 'project';
 }
