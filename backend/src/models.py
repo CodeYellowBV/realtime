@@ -78,9 +78,9 @@ class Entry(Base, db.Model):
     ended_at = db.Column(db.DateTime)
     description = db.Column(db.Text())
 
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id', ondelete='cascade'))
     project = db.relationship('Project',
-        backref=db.backref('entries', lazy='dynamic'))
+        backref=db.backref('entries', lazy='dynamic', cascade='all, delete-orphan'))
 
 
 class Project(Base, db.Model):
