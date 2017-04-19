@@ -1,4 +1,5 @@
 from src.controller import Controller
+import json
 
 
 class SocketContainer():
@@ -10,20 +11,60 @@ class SocketContainer():
     ws = None
 
     def __init__(self, hub, ws):
+        self.hub = hub
         self.ws = ws
 
-    def subscribe(self, requestId, target):
-        print('SocketContainer subscribe', requestId)
-        pass
+    def isSubscribed(self, target, item):
+        for reqId, sub in self.subs.items():
+            if sub['target'] != target:
+                continue
+            if sub['scope']:
+                # TODO scope matching
+                from pudb import set_trace; set_trace()
+            return reqId
+
+        return False
+
+    def subscribe(self, requestId, target, data):
+        self.subs[requestId] = {
+            'target': target,
+            'scope': data,
+        }
 
     def handle(self, db, message):
         controller = Controller(db, self, message)
         res = controller.handle()
-        self.ws.send(res)
+
+        if res['code'] == 'success':
+            # Handle publish for successful saves, deletes and updates
+            if res['type'] in ['save', 'update', 'delete']:
+                self.hub.notify(res['target'], res['type'], res['data'])
+
+        self.ws.send(json.dumps(res))
 
 
 class Hub():
     sockets = []
+
+    def notify(self, target, _type, item):
+        sockets = {}
+        # Find the sockets that are listening to that target with overlapping scope
+        for s in self.sockets:
+            isSubscribed = s.isSubscribed(target, item)
+
+            if isSubscribed:
+                sockets[isSubscribed] = s
+
+        for reqId, sub in sockets.items():
+            res = json.dumps({
+                'type': 'publish',
+                'target': target,
+                'requestId': reqId,
+                'data': {
+                    _type: [item],
+                }
+            })
+            sub.ws.send(res)
 
     def add(self, ws):
         socket = SocketContainer(self, ws)

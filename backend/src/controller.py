@@ -58,11 +58,11 @@ class Controller():
         return method(target)
 
     def error(self, msg):
-        return _json.dumps({
+        return {
             'type': self.body['type'],
             'code': 'error',
             'message': msg if msg else '',
-        })
+        }
 
     def get_bootstrap(self):
         output = _copy.copy(self.currentUser)
@@ -71,10 +71,11 @@ class Controller():
         # dict.pop(key) errors if the key isn't found
         # But we expect a session to always include an exp(iration_date) so that's okay
         output.pop('exp')
-        return _json.dumps({
+        return {
             'type': self.body['type'],
+            'code': 'success',
             'data': output,
-        })
+        }
 
     def check_auth(self):
         if 'authorization' not in self.body:
@@ -102,31 +103,38 @@ class Controller():
         self.db.session.commit()
 
         result = m.dump()
-        return _json.dumps({
+        return {
             'type': self.body['type'],
+            'target': self.body['target'],
             'code': 'success',
             'data': result,
-        })
+        }
 
     def subscribe(self, cls):
         result = cls.find_all(self.db.session)
 
+        scope = self.body['data'] if 'data' in self.body else {}
+
         # Mark the socket as subscribing so we know what is listening to what
-        self.socketContainer.subscribe(self.body['requestId'], self.body['target'])
+        self.socketContainer.subscribe(self.body['requestId'], self.body['target'], scope)
 
         if 'requestId' not in self.body:
             return self.error('No requestId given')
 
-        return _json.dumps({
+        return {
             'type': 'publish',
             'target': self.body['target'],
+            'code': 'success',
             'requestId': self.body['requestId'],
             'data': {
                 'add': result.dump(),
                 'update': [],
                 'delete': [],
             }
-        })
+        }
+
+    def unsubscribe(self, cls):
+        return self.error('TODO UNSUBSCRIBE')
 
     def do_auth(self):
         data = {
@@ -160,7 +168,8 @@ class Controller():
 
         token = user.create_session()
 
-        return _json.dumps({
+        return {
             'type': 'authenticate',
+            'code': 'success',
             'authorization': token,
-        })
+        }

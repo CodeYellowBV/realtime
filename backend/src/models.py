@@ -67,7 +67,6 @@ class Base(object):
     @classmethod
     def find_all(cls, session):
         res = session.query(cls).all()
-        print('res', res, 'making new collection')
         return Collection(res)
 
 
