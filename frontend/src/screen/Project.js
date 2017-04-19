@@ -15,7 +15,6 @@ export default class Project extends Component {
     componentDidMount() {
         this.subscribe();
         this.props.viewStore.socket.on('open', this.subscribe);
-        this.props.viewStore.socket.on('close', this.unsubscribe);
     }
 
     componentWillUnmount() {
@@ -23,11 +22,11 @@ export default class Project extends Component {
     }
 
     subscribe = () => {
+        this.props.projectStore.clear();
         this.props.projectStore.subscribe();
     };
 
     unsubscribe = () => {
-        this.props.projectStore.clear();
         this.props.projectStore.unsubscribe();
     };
 

@@ -16,7 +16,6 @@ export default class Personal extends Component {
     componentDidMount() {
         this.subscribe();
         this.props.viewStore.socket.on('open', this.subscribe);
-        this.props.viewStore.socket.on('close', this.unsubscribe);
     }
 
     componentWillUnmount() {
@@ -24,14 +23,14 @@ export default class Personal extends Component {
     }
 
     subscribe = () => {
+        this.props.projectStore.clear();
         this.props.projectStore.subscribe();
+        this.props.entryStore.clear();
         this.props.entryStore.subscribe();
     }
 
     unsubscribe = () => {
-        this.props.projectStore.clear();
         this.props.projectStore.unsubscribe();
-        this.props.entryStore.clear();
         this.props.entryStore.unsubscribe();
     }
 
