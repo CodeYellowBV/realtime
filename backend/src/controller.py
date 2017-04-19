@@ -93,11 +93,30 @@ class Controller():
 
         # Create instance if id is not given
         if 'id' in data and data['id'] is not None:
-            m = self.db.session.query(cls).get(data['id'])
-            m.parse(data)
+            return self.error('ID given when saving, try using type=update')
 
-        else:
-            m = cls(data)
+        m = cls(data)
+
+        self.db.session.add(m)
+        self.db.session.commit()
+
+        result = m.dump()
+        return {
+            'type': self.body['type'],
+            'target': self.body['target'],
+            'code': 'success',
+            'data': result,
+        }
+
+    def update(self, cls):
+        data = self.body['data']
+
+        # Create instance if id is not given
+        if 'id' not in data or data['id'] is None:
+            return self.error('No id given')
+
+        m = self.db.session.query(cls).get(data['id'])
+        m.parse(data)
 
         self.db.session.add(m)
         self.db.session.commit()
