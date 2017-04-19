@@ -39,11 +39,9 @@ export default class EntryOverview extends Component {
             return <div>You do not have any entries yet.</div>;
         }
         return (
-            <div>
-                <EntryList>
-                    {map(this.props.entries.groupByDate, this.renderDay)}
-                </EntryList>
-            </div>
+            <EntryList>
+                {map(this.props.entries.groupByDate, this.renderDay)}
+            </EntryList>
         );
     }
 }
