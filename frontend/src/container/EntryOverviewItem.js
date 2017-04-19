@@ -18,19 +18,22 @@ function formatDiffMinutes(minutes) {
 export default class EntryOverviewItem extends Component {
     static propTypes = {
         entry: PropTypes.object.isRequired,
+        projectStore: PropTypes.object.isRequired,
     };
 
     handleDelete = () => {
         this.props.entry.delete();
     };
 
+
     render() {
         const { entry } = this.props;
         const diffMinutes = entry.differenceInMinutes;
+        const project = entry.project ? this.props.projectStore.get(entry.project) : null;
         return (
             <EntryItem key={entry.id}>
                 <EntryItemProject>
-                    {entry.project.id ? entry.project.name : '[Missing]'}
+                    {project ? project.name : '[Missing]'}
                 </EntryItemProject>
                 <EntryItemDescription>{entry.description}</EntryItemDescription>
                 <EntryItemHours>

@@ -1,7 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import { groupBy, orderBy } from 'lodash';
 import { Model, Store, Casts } from './Base';
-import { Project } from './Project';
 
 export class Entry extends Model {
     urlRoot = '/api/entry/';
@@ -9,6 +8,7 @@ export class Entry extends Model {
 
     @observable id = null;
     @observable description = '';
+    @observable project = null;
     @observable startedAt = null;
     @observable endedAt = null;
 
@@ -16,12 +16,6 @@ export class Entry extends Model {
         return {
             startedAt: Casts.datetime,
             endedAt: Casts.datetime,
-        };
-    }
-
-    relations() {
-        return {
-            project: Project,
         };
     }
 

@@ -10,11 +10,12 @@ import { EntryList } from '../component/EntryList';
 export default class EntryOverview extends Component {
     static propTypes = {
         entries: PropTypes.object.isRequired,
+        projectStore: PropTypes.object.isRequired,
     };
 
-    renderEntry(entry) {
-        return <EntryOverviewItem key={entry.id} entry={entry} />;
-    }
+    renderEntry = (entry) => {
+        return <EntryOverviewItem key={entry.id} entry={entry} projectStore={this.props.projectStore} />;
+    };
 
     renderDay = (entries, date) => {
         const day = moment(date);

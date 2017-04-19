@@ -42,7 +42,7 @@ export default class Personal extends Component {
                     entry={this.props.currentEntry}
                     projectStore={this.props.projectStore}
                 />
-                <EntryOverview entries={this.props.entryStore} />
+                <EntryOverview entries={this.props.entryStore} projectStore={this.props.projectStore} />
             </div>
         );
     }

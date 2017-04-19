@@ -12,7 +12,6 @@ export default class TimeEntry extends Component {
     static propTypes = {
         entry: PropTypes.object.isRequired,
         projectStore: PropTypes.object.isRequired,
-        onSubmitEntry: PropTypes.func.isRequired,
     };
 
     handleInput = (key, value) => {
@@ -22,12 +21,7 @@ export default class TimeEntry extends Component {
         }
 
         if (key === 'project') {
-            const projectData = this.props.projectStore.get(value);
-            if (projectData) {
-                entry.project.parse(projectData.toJS());
-            } else {
-                entry.project.clear();
-            }
+            entry.project = isNaN(value) ? null : parseInt(value);
         }
 
         if (key === 'startedAt') {
@@ -62,7 +56,7 @@ export default class TimeEntry extends Component {
                         placeholder="Choose project"
                         options={this.props.projectStore.map(this.formatProjectToOption)}
                         onChange={this.handleInput}
-                        value={entry.project.id ? String(entry.project.id) : ''}
+                        value={entry.project ? String(entry.project) : ''}
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Description" size="2">

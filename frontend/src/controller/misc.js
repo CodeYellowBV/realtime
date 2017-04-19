@@ -7,11 +7,11 @@ import moment from 'moment';
 
 export function home(store) {
     const projectStore = new ProjectStore();
-    const entryStore = new EntryStore({ relations: ['project'] });
+    const entryStore = new EntryStore();
     store.setView({
         name: 'home',
         render: PersonalScreen,
-        currentEntry: new Entry({ startedAt: moment() }, { relations: ['project'] }),
+        currentEntry: new Entry({ startedAt: moment() }),
         projectStore,
         entryStore,
     });
