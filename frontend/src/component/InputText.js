@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
 const StyledInput = styled.input`
+    width: 100%;
     flex: 1;
 `;
 
