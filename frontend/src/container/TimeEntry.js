@@ -80,7 +80,7 @@ export default class TimeEntry extends Component {
                         disableClear
                     />
                 </TimeEntryFormField>
-                <TimeEntryFormField label="Description" size="1">
+                <TimeEntryFormField label="Duration" size="1">
                     <div>{duration ? duration.format('HH:mm:ss') : '—'}</div>
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Until" size="1">
