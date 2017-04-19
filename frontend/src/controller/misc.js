@@ -6,7 +6,6 @@ import moment from 'moment';
 
 export function home(store) {
     const projectStore = new ProjectStore();
-    projectStore.subscribe();
     store.setView({
         name: 'home',
         render: Personal,

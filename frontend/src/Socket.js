@@ -1,12 +1,13 @@
+import mitt from 'mitt';
+
 export default class Socket {
     instance = null;
-    handlers = {};
     messageHandlers = [];
     pingInterval = null;
     authToken = null;
 
     constructor(handlers) {
-        this.handlers = handlers;
+        this._events = mitt();
         this.initialize();
     }
 
@@ -14,12 +15,12 @@ export default class Socket {
         this.instance = new WebSocket(process.env.CY_FRONTEND_WEBSOCKET_URL);
 
         this.instance.onopen = () => {
-            this.handlers.onOpen();
+            this._events.emit('open');
             this._initiatePingInterval();
         };
 
         this.instance.onclose = () => {
-            this.handlers.onClose();
+            this._events.emit('close');
             this._stopPingInterval();
             setTimeout(() => {
                 this.initialize();
@@ -37,9 +38,17 @@ export default class Socket {
                 return handler(msg);
             });
             if (!isHandled) {
-                this.handlers.onMessage(msg);
+                this._events.emit('message', msg);
             }
         };
+    }
+
+    on(...args) {
+        return this._events.on(...args);
+    }
+
+    off(...args) {
+        return this._events.off(...args);
     }
 
     addMessageHandler(callback) {

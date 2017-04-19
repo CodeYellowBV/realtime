@@ -48,11 +48,10 @@ export default class ViewStore {
     }
 
     constructor() {
-        this.socket = new Socket({
-            onOpen: this.handleSocketOpen,
-            onClose: this.handleSocketClose,
-            onMessage: this.handleSocketMessage,
-        });
+        this.socket = new Socket();
+        this.socket.on('open', this.handleSocketOpen);
+        this.socket.on('close', this.handleSocketClose);
+        this.socket.on('message', this.handleSocketMessage);
         this.entries.parse(TEST_ENTRY_DATA);
         api.socket = this.socket;
     }
