@@ -5,6 +5,7 @@ import { each } from 'lodash';
 
 const routes = {
     '/': misc.home,
+    '/projects': misc.projects,
 };
 
 function routeWrapper(store) {

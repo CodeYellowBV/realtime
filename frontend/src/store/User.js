@@ -2,6 +2,7 @@ import { observable } from 'mobx';
 import { Model, Store } from './Base';
 
 export class User extends Model {
+    target = 'user';
     @observable id = null;
     @observable username = '';
     @observable displayName = '';

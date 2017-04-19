@@ -5,6 +5,7 @@ import { Project } from './Project';
 
 export class Entry extends Model {
     urlRoot = '/api/entry/';
+    target = 'entry';
 
     @observable id = null;
     @observable description = '';

@@ -36,12 +36,29 @@ class TimeApi extends BinderApi {
             requestId,
         });
     }
+
+    saveModelWithoutWait({ target, data }) {
+        this.socket.send({
+            type: 'save',
+            target,
+            data,
+        });
+    }
 }
 
 const myApi = new TimeApi();
 
 export class Model extends BModel {
     api = myApi;
+    target = '';
+
+    // TODO: this is a poorly implemented save function that does not wait on the results of the backend
+    saveAndForget() {
+        this.api.saveModelWithoutWait({
+            target: this.target,
+            data: this.toBackend(),
+        });
+    }
 }
 
 export class Store extends BStore {

@@ -3,6 +3,7 @@ import { Model, Store } from './Base';
 
 export class Project extends Model {
     urlRoot = '/api/project/';
+    target = 'project';
 
     @observable id = null;
     @observable name = '';
