@@ -45,10 +45,11 @@ class TimeApi extends BinderApi {
         });
     }
 
-    deleteModel({ target }) {
+    deleteModel({ target, id }) {
         this.socket.send({
             type: 'delete',
             target,
+            data: { id },
         });
     }
 
@@ -69,9 +70,15 @@ export class Model extends BModel {
     }
 
     delete() {
-        this.api.deleteModel({
-            target: this.target,
-        });
+        if (this.__store) {
+            this.__store.remove(this);
+        }
+        if (this.id) {
+            this.api.deleteModel({
+                target: this.target,
+                id: this.id,
+            });
+        }
     }
 }
 
