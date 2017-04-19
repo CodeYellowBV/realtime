@@ -136,7 +136,7 @@ export default onClickOutside(class InputTime extends Component {
         }
 
         return (
-            <StyledButton variation="warning" onClick={() => { this.changeValue(null); }}>
+            <StyledButton type="button" variation="warning" onClick={() => { this.changeValue(null); }}>
                 Clear
             </StyledButton>
         );
@@ -145,12 +145,13 @@ export default onClickOutside(class InputTime extends Component {
     render() {
         return (
             <Container>
-                <StyledButton flex={1} onClick={this.toggleOverlay} showOverlay={this.showOverlay}>
+                <StyledButton type="button" flex={1} onClick={this.toggleOverlay} showOverlay={this.showOverlay}>
                     {this.props.value ? this.props.value.format('H:mm') : '—'}
                 </StyledButton>
                 <Overlay hide={!this.showOverlay}>
                     <ActionContainer>
                         <StyledButton
+                            type="button"
                             onClick={() => {
                                 const now = moment();
 
