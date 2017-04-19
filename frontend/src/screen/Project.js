@@ -32,7 +32,6 @@ export default class Project extends Component {
     };
 
     handleSubmit = () => {
-        console.log('submit');
         this.props.currentProject.clear();
     };
 

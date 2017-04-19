@@ -67,10 +67,6 @@ export default class ViewStore {
         }
     };
 
-    saveEntry(entry) {
-        this.socket.send({ type: 'save', target: 'entry', data: entry.toBackend() });
-    }
-
     performAuthentication(code) {
         this.socket.send({ type: 'authenticate', data: { code } });
     }

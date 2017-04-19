@@ -40,7 +40,7 @@ export default class TimeEntry extends Component {
     };
 
     handleSubmit = () => {
-        this.props.onSubmitEntry();
+        this.props.entry.saveAndForget();
         this.props.entry.partialClear();
     };
 

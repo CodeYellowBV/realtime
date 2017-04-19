@@ -35,17 +35,12 @@ export default class Personal extends Component {
         this.props.entryStore.unsubscribe();
     }
 
-    handleSubmitEntry = () => {
-        this.props.viewStore.saveEntry(this.props.currentEntry);
-    };
-
     render() {
         return (
             <div>
                 <TimeEntry
                     entry={this.props.currentEntry}
                     projectStore={this.props.projectStore}
-                    onSubmitEntry={this.handleSubmitEntry}
                 />
                 <EntryOverview entries={this.props.entryStore} />
             </div>
