@@ -6,13 +6,18 @@ class SocketContainer():
     # I want to do some pubsub scoping logic
     # And it doesnt belong in the controller
     hub = None
+    subs = {}
     ws = None
 
     def __init__(self, hub, ws):
         self.ws = ws
 
+    def subscribe(self, requestId, target):
+        print('SocketContainer subscribe', requestId)
+        pass
+
     def handle(self, db, message):
-        controller = Controller(db, self.hub, message)
+        controller = Controller(db, self, message)
         res = controller.handle()
         self.ws.send(res)
 

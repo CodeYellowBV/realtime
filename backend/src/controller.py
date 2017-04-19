@@ -12,14 +12,14 @@ from .models import Entry, Project, User
 
 class Controller():
     db = None
-    hub = None
+    socketContainer = None
     message = None
     body = None
-    current_user = None
+    currentUser = None
 
-    def __init__(self, db, hub, message):
+    def __init__(self, db, socketContainer, message):
         self.db = db
-        self.hub = hub
+        self.socketContainer = socketContainer
         self.message = message
 
     # The type is like addEntry of getProject
@@ -65,7 +65,7 @@ class Controller():
         })
 
     def get_bootstrap(self):
-        output = _copy.copy(self.current_user)
+        output = _copy.copy(self.currentUser)
         # Remove session specific data as we only want the bootstrap to return
         # user data
         # dict.pop(key) errors if the key isn't found
@@ -81,7 +81,7 @@ class Controller():
             return False
 
         try:
-            self.current_user = _jwt.decode(self.body['authorization'], _os.environ.get('CY_SECRET_KEY'), algorithms=['HS256'])
+            self.currentUser = _jwt.decode(self.body['authorization'], _os.environ.get('CY_SECRET_KEY'), algorithms=['HS256'])
         except _jwt.InvalidTokenError:
             return False
 
@@ -106,6 +106,26 @@ class Controller():
             'type': self.body['type'],
             'code': 'success',
             'data': result,
+        })
+
+    def subscribe(self, cls):
+        result = cls.find_all(self.db.session)
+
+        # Mark the socket as subscribing so we know what is listening to what
+        self.socketContainer.subscribe(self.body['requestId'], self.body['target'])
+
+        if 'requestId' not in self.body:
+            return self.error('No requestId given')
+
+        return _json.dumps({
+            'type': 'publish',
+            'target': self.body['target'],
+            'requestId': self.body['requestId'],
+            'data': {
+                'add': result.dump(),
+                'update': [],
+                'delete': [],
+            }
         })
 
     def do_auth(self):
