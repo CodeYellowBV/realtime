@@ -130,6 +130,13 @@ export default onClickOutside(class InputTime extends Component {
         }
     }
 
+    handleButtonClick = () => {
+        const now = moment();
+
+        this.handleChangeDate(now.format('YYYY-MM-DD'));
+        this.handleChangeTime(now.format('HH:mm'));
+    };
+
     renderClear() {
         if (this.props.disableClear) {
             return null;
@@ -143,6 +150,7 @@ export default onClickOutside(class InputTime extends Component {
     }
 
     render() {
+        const now = moment();
         return (
             <Container>
                 <StyledButton type="button" flex={1} onClick={this.toggleOverlay} showOverlay={this.showOverlay}>
@@ -152,12 +160,7 @@ export default onClickOutside(class InputTime extends Component {
                     <ActionContainer>
                         <StyledButton
                             type="button"
-                            onClick={() => {
-                                const now = moment();
-
-                                this.handleChangeDate(now.format('YYYY-MM-DD'));
-                                this.handleChangeTime(now.format('HH:mm'));
-                            }}
+                            onClick={this.handleButtonClick}
                         >
                             Now
                         </StyledButton>
@@ -174,6 +177,7 @@ export default onClickOutside(class InputTime extends Component {
                     />
                     <StyledInput
                         type="date"
+                        max={now.format('YYYY-MM-DD')}
                         onChange={e => {
                             this.handleChangeDate(e.target.value);
                         }}
