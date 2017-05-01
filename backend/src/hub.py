@@ -1,5 +1,6 @@
 from src.controller import Controller
 import json
+import uuid
 
 
 class SocketContainer():
@@ -7,11 +8,12 @@ class SocketContainer():
     # I want to do some pubsub scoping logic
     # And it doesnt belong in the controller
     hub = None
-    subs = {}
     ws = None
 
     def __init__(self, hub, ws):
+        self.uuid = uuid.uuid4()
         self.hub = hub
+        self.subs = {}
         self.ws = ws
 
     def isSubscribed(self, target, item):
@@ -44,12 +46,14 @@ class SocketContainer():
 
 
 class Hub():
-    sockets = []
+
+    def __init__(self):
+        self.sockets = []
 
     def notify(self, target, _type, item):
         sockets = {}
         # Find the sockets that are listening to that target with overlapping scope
-        for s in self.sockets:
+        for idx, s in enumerate(self.sockets):
             isSubscribed = s.isSubscribed(target, item)
 
             if isSubscribed:

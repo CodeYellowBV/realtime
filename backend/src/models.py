@@ -10,9 +10,7 @@ def get_iso8601(ts):
 
 
 class Collection():
-    models = []
-
-    def __init__(self, models):
+    def __init__(self, models=[]):
         self.models = models
 
     def dump(self):
