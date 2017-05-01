@@ -32,7 +32,7 @@ export class Entry extends Model {
     }
 
     @computed get startedAtDate() {
-        return this.startedAt.format('YYYY-MM-DD');
+        return this.startedAt ? this.startedAt.format('YYYY-MM-DD') : null;
     }
 }
 

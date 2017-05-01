@@ -106,17 +106,23 @@ export class Store extends BStore {
     }
 
     parseChanges(changes) {
-        this.add(changes.add);
-        changes.update.forEach((change) => {
-            const model = this.get(change.id);
-            if (model) {
-                model.parse(change);
-            }
-        });
-        const deletions = changes.delete.map((change) => {
-            return this.get(change.id);
-        });
-        this.remove(deletions);
+        if (changes.add) {
+            this.add(changes.add);
+        }
+        if (changes.update) {
+            changes.update.forEach((change) => {
+                const model = this.get(change.id);
+                if (model) {
+                    model.parse(change);
+                }
+            });
+        }
+        if (changes.delete) {
+            const deletions = changes.delete.map((change) => {
+                return this.get(change.id);
+            });
+            this.remove(deletions);
+        }
     }
 }
 
