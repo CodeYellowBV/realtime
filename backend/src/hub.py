@@ -35,7 +35,7 @@ class SocketContainer():
         controller = Controller(db, self, message)
         res = controller.handle()
 
-        if type(res) == 'dict' and res['code'] == 'success':
+        if type(res) is dict and res['code'] == 'success':
             # Handle publish for successful saves, deletes and updates
             if res['type'] in ['save', 'update', 'delete']:
                 self.hub.notify(res['target'], res['type'], res['data'])
