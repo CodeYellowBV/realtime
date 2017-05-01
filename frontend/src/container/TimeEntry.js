@@ -75,7 +75,7 @@ export default class TimeEntry extends Component {
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Duration" size="1">
-                    <div>{duration ? duration.format('HH:mm:ss') : '—'}</div>
+                    <div>{duration ? duration.format('HH:mm') : '—'}</div>
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Until" size="1">
                     <InputTime
