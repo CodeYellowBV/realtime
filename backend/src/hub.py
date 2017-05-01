@@ -61,7 +61,7 @@ class Hub():
 
         readableType = 'add' if _type == 'save' else _type
 
-        for reqId, sub in sockets.items():
+        for reqId, socket in sockets.items():
             res = json.dumps({
                 'type': 'publish',
                 'target': target,
@@ -70,9 +70,16 @@ class Hub():
                     readableType: [item],
                 }
             })
-            sub.ws.send(res)
+
+            if socket.ws.closed:
+                self.remove(socket)
+                continue
+            socket.ws.send(res)
 
     def add(self, ws):
         socket = SocketContainer(self, ws)
         self.sockets.append(socket)
         return socket
+
+    def remove(self, socket):
+        self.sockets.remove(socket)
