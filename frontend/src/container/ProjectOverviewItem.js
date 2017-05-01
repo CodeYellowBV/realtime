@@ -15,7 +15,10 @@ export default class ProjectOverviewItem extends Component {
     };
 
     handleDelete = () => {
-        this.props.project.delete();
+        const sure = window.confirm('Are you completely sure you want to remove this project? All time entries will also be deleted.');
+        if (sure) {
+            this.props.project.delete();
+        }
     };
 
     render() {
