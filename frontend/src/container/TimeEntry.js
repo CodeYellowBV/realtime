@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime from '../component/InputTime';
+import Button from '../component/Button';
 import InputSelect from '../component/InputSelect';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 
@@ -84,7 +85,7 @@ export default class TimeEntry extends Component {
                         value={entry.endedAt}
                     />
                 </TimeEntryFormField>
-                <button>Save</button>
+                <Button type="submit">Save</Button>
             </TimeEntryForm>
         );
     }

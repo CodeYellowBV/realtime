@@ -4,6 +4,7 @@ import 'normalize.css';
 import App from './container/App';
 import ViewStore from './store/View';
 import startRouter from './router';
+import './styles';
 
 const viewStore = new ViewStore();
 

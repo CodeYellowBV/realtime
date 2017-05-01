@@ -1,10 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { DEFAULT_FONT } from '../styles';
+import styled from 'styled-components';
 
-const Button = ({ children, disabled, onClick }) => (
-    <button type="button" onClick={onClick} disabled={disabled}>
-        {children}
-    </button>
+const StyledButton = styled.button`
+    ${DEFAULT_FONT}
+`;
+
+const Button = (props) => (
+    <StyledButton type="button" {...props}>
+        {props.children}
+    </StyledButton>
 );
 
 Button.propTypes = {

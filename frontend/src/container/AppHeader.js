@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { TopMenu, TopMenuNav, TopMenuRight, TopMenuAvatar, TopMenuLink } from '../component/TopMenu';
 import AppHeader from '../component/AppHeader';
+import Button from '../component/Button';
 
 @observer
 export default class Header extends Component {
@@ -26,7 +27,7 @@ export default class Header extends Component {
                 <TopMenuRight>
                     {store.currentUser.displayName}
                     <TopMenuAvatar src={store.currentUser.avatarUrl} />
-                    <button type="button" onClick={this.handleClickLogout}>Logout</button>
+                    <Button onClick={this.handleClickLogout}>Logout</Button>
                 </TopMenuRight>
             </TopMenu>
         );

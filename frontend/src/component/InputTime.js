@@ -48,7 +48,7 @@ const StyledButton = styled.button`
 
 const Overlay = styled.div`
     background: white;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #999;
     border-radius: 0 0 6px 6px;
     display: flex;
     flex-direction: column;

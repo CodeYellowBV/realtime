@@ -3,14 +3,14 @@ import styled from 'styled-components';
 
 export const EntryList = styled.div`
     width: 100%;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #999;
 `;
 
 export const EntryItem = styled.div`
     display: flex;
     width: 100%;
     flex-flow: row wrap;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #999;
     padding: .5em 0;
 `;
 

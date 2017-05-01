@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import InputText from '../component/InputText';
+import Button from '../component/Button';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 
 @observer
@@ -31,7 +32,7 @@ export default class ProjectAdd extends Component {
                         value={project.name}
                     />
                 </TimeEntryFormField>
-                <button>Save</button>
+                <Button type="submit">Save</Button>
             </TimeEntryForm>
         );
     }
