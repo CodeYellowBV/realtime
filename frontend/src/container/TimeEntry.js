@@ -8,6 +8,12 @@ import Button from '../component/Button';
 import InputSelect from '../component/InputSelect';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 
+// Creative hack to show duration diffin H:mm format (courtesy to Stack Overflow)
+function formatDuration(diffMs) {
+    const duration = moment.duration(diffMs);
+    return Math.floor(duration.asHours()) + moment.utc(duration.asMilliseconds()).format(':mm');
+}
+
 @observer
 export default class TimeEntry extends Component {
     static propTypes = {
@@ -48,7 +54,8 @@ export default class TimeEntry extends Component {
 
     render() {
         const { entry } = this.props;
-        const duration = entry.endedAt ? moment(entry.endedAt.diff(entry.startedAt)) : null;
+        // `endedAt` is set to end of the minute so the duration is exactly 1 hours if start time is e.g. 18:00 and end time 19:00
+        const duration = entry.endedAt ? formatDuration(entry.endedAt.endOf('minute').diff(entry.startedAt)) : null;
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
                 <TimeEntryFormField label="Project" size="1">
@@ -76,7 +83,7 @@ export default class TimeEntry extends Component {
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Duration" size="1">
-                    <div>{duration ? duration.format('HH:mm') : '—'}</div>
+                    <div>{duration ? duration : '—'}</div>
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Until" size="1">
                     <InputTime
