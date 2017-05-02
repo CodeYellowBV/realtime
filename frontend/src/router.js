@@ -1,12 +1,11 @@
 import page from 'page';
-// TODO: hmm, misc... Kees do u even naming.
-import * as misc from 'controller/misc';
+import * as controller from './controller';
 import { each } from 'lodash';
 
 const routes = {
-    '/': misc.home,
-    '/projects': misc.projects,
-    '/users': misc.users,
+    '/': controller.home,
+    '/projects': controller.projects,
+    '/users': controller.users,
 };
 
 function routeWrapper(store) {
@@ -22,7 +21,7 @@ function routeWrapper(store) {
 
 export default function startRouter(store) {
     routeWrapper(store);
-    page('*', () => misc.notFound(store));
+    page('*', () => controller.notFound(store));
     page({
         click: false,
     });
