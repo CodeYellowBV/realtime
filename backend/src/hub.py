@@ -20,9 +20,9 @@ class SocketContainer():
         for reqId, sub in self.subs.items():
             if sub['target'] != target:
                 continue
-            if sub['scope']:
-                # TODO scope matching
-                from pudb import set_trace; set_trace()
+            # if sub['scope']:
+            #     # TODO scope matching
+            #     from pudb import set_trace; set_trace()
             return reqId
 
         return False
