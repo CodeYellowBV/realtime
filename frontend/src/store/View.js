@@ -35,7 +35,9 @@ export default class ViewStore {
         }
     }
 
-    @action setView(view) {
+    setView(view) {
+        // We set `currentView` to null temporary on purpose, to let the `currentView` unmount.
+        this.currentView = null;
         this.currentView = view;
     }
 
