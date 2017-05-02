@@ -1,7 +1,9 @@
 import PersonalScreen from '../screen/Personal';
 import ProjectScreen from '../screen/Project';
+import UserScreen from '../screen/User';
 import NotFound from '../component/NotFound';
 import { Project, ProjectStore } from '../store/Project';
+import { UserStore } from '../store/User';
 import { Entry, EntryStore } from '../store/Entry';
 import moment from 'moment';
 
@@ -24,6 +26,15 @@ export function projects(store) {
         render: ProjectScreen,
         currentProject: new Project(),
         projectStore,
+    });
+}
+
+export function users(store) {
+    const userStore = new UserStore();
+    store.setView({
+        name: 'home',
+        render: UserScreen,
+        userStore,
     });
 }
 

@@ -21,7 +21,6 @@ export class User extends Model {
         localStorage.removeItem('jwt-auth-token');
         this.clear();
     }
-
 }
 
 export class UserStore extends Store {
