@@ -32,6 +32,7 @@
     "uuid": "^3.0.1"
   },
   "lint-staged": {
+    "gitDir": "../",
     "*.js": [
       "prettier --single-quote --trailing-comma es5 --tab-width 4 --write",
       "git add"
@@ -41,6 +42,7 @@
     "start": "CY_ENV_FILE=../.env CHOKIDAR_USEPOLLING=true react-cy-scripts start",
     "build": "CY_ENV_FILE=../.env react-cy-scripts build",
     "test": "react-cy-scripts test --env=jsdom",
-    "eject": "react-cy-scripts eject"
+    "eject": "react-cy-scripts eject",
+    "precommit": "lint-staged"
   }
 }
