@@ -26,7 +26,9 @@ export default class Personal extends Component {
         this.props.projectStore.clear();
         this.props.projectStore.subscribe();
         this.props.entryStore.clear();
-        this.props.entryStore.subscribe();
+        this.props.entryStore.subscribe({
+            user: this.props.viewStore.currentUser.id,
+        });
     }
 
     unsubscribe = () => {
