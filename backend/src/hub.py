@@ -20,17 +20,23 @@ class SocketContainer():
         for reqId, sub in self.subs.items():
             if sub['target'] != target:
                 continue
-            # if sub['scope']:
-            #     # TODO scope matching
-            #     from pudb import set_trace; set_trace()
+            if sub['scope']:
+                match = True
+                for skey, sval in sub['scope'].items():
+                    if skey not in item.keys() or sval != item[skey]:
+                        match = False
+                        break
+                if not match:
+                    continue
+
             return reqId
 
         return False
 
-    def subscribe(self, requestId, target, data):
+    def subscribe(self, requestId, target, scope):
         self.subs[requestId] = {
             'target': target,
-            'scope': data,
+            'scope': scope,
         }
 
     def handle(self, db, message):
