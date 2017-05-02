@@ -95,7 +95,7 @@ class Controller():
         if 'id' in data and data['id'] is not None:
             return self.error('ID given when saving, try using type=update')
 
-        m = cls(data)
+        m = cls(data, self.currentUser)
 
         self.db.session.add(m)
         self.db.session.commit()

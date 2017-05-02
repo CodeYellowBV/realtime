@@ -18,10 +18,11 @@ class Collection():
 
 
 class Base(object):
-    def __init__(self, data):
-        self.parse(data)
+    def __init__(self, data, currentUser=None):
+        print('__init__', currentUser)
+        self.parse(data, currentUser)
 
-    def parse(self, data):
+    def parse(self, data, currentUser=None):
         for col in self.__table__.columns:
             key = col.name
 
@@ -79,6 +80,16 @@ class Entry(Base, db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id', ondelete='cascade'))
     project = db.relationship('Project',
         backref=db.backref('entries', lazy='dynamic', cascade='all, delete-orphan'))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'))
+    user = db.relationship('User',
+        backref=db.backref('entries', lazy='dynamic', cascade='all, delete-orphan'))
+
+    def parse(self, data, currentUser):
+        if currentUser:
+            data['user'] = currentUser['id']
+
+        return super(Entry, self).parse(data)
 
 
 class Project(Base, db.Model):
