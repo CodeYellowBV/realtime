@@ -85,4 +85,14 @@ export default class ViewStore {
             this.socket.send({ type: 'bootstrap' });
         }
     }
+
+    addNotification(msg) {
+        // Notifications with the same key have the same contents, so we don't want to display them twice.
+        // Existing ones are removed so the notification stays longer on the screen.
+        const existingMsg = this.notifications.find(a => a.key === msg.key);
+        if (existingMsg) {
+            this.notifications.remove(existingMsg);
+        }
+        this.notifications.push(msg);
+    }
 }

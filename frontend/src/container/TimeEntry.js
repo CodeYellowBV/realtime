@@ -9,6 +9,7 @@ import InputSelect from '../component/InputSelect';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 import { ProjectStore } from '../store/Project';
 import { Entry } from '../store/Entry';
+import View from '../store/View';
 
 // Creative hack to show duration diffin H:mm format (courtesy to Stack Overflow)
 function formatDuration(diffMs) {
@@ -21,6 +22,7 @@ export default class TimeEntry extends Component {
     static propTypes = {
         entry: PropTypes.instanceOf(Entry).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
+        viewStore: PropTypes.instanceOf(View).isRequired,
     };
 
     handleInput = (key, value) => {
@@ -43,8 +45,33 @@ export default class TimeEntry extends Component {
     };
 
     handleSubmit = () => {
-        this.props.entry.save();
-        this.props.entry.partialClear();
+        const { entry, viewStore } = this.props;
+        const now = moment();
+        let msg = '';
+        if (entry.startedAt.isAfter(now)) {
+            msg = 'From time cannot be in the future';
+        }
+        if (entry.endedAt) {
+            if (entry.endedAt.isAfter(now)) {
+                msg = 'Until time cannot be in the future';
+            }
+            if (entry.endedAt.isBefore(entry.startedAt)) {
+                msg = 'Until time cannot be before from time';
+            }
+            if (entry.endedAt.diff(entry.startedAt, 'hours') > 24) {
+                msg = 'It is not humanly possible to work for more than 24 hours';
+            }
+        }
+        if (msg === '') {
+            entry.save();
+            entry.partialClear();
+        } else {
+            viewStore.addNotification({
+                message: msg,
+                key: 'entryFail',
+                dismissAfter: 4000,
+            });
+        }
     };
 
     formatProjectToOption(project) {

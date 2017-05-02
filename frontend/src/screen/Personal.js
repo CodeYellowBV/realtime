@@ -45,6 +45,7 @@ export default class Personal extends Component {
                 <TimeEntry
                     entry={this.props.currentEntry}
                     projectStore={this.props.projectStore}
+                    viewStore={this.props.viewStore}
                 />
                 <EntryOverview entries={this.props.entryStore} projectStore={this.props.projectStore} />
             </div>
