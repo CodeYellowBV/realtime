@@ -7,6 +7,8 @@ import InputTime from '../component/InputTime';
 import Button from '../component/Button';
 import InputSelect from '../component/InputSelect';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
+import { ProjectStore } from '../store/Project';
+import { Entry } from '../store/Entry';
 
 // Creative hack to show duration diffin H:mm format (courtesy to Stack Overflow)
 function formatDuration(diffMs) {
@@ -17,8 +19,8 @@ function formatDuration(diffMs) {
 @observer
 export default class TimeEntry extends Component {
     static propTypes = {
-        entry: PropTypes.object.isRequired,
-        projectStore: PropTypes.object.isRequired,
+        entry: PropTypes.instanceOf(Entry).isRequired,
+        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
     };
 
     handleInput = (key, value) => {

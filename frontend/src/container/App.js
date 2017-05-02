@@ -5,6 +5,7 @@ import NotificationArea from '../component/NotificationArea';
 import Login from './Login';
 import Header from './AppHeader';
 import AppContainer from '../component/AppContainer';
+import View from '../store/View';
 
 function renderCurrentView(store) {
     const view = store.currentView;
@@ -21,7 +22,7 @@ function renderCurrentView(store) {
 @observer
 export default class App extends Component {
     static propTypes = {
-        store: PropTypes.object.isRequired,
+        store: PropTypes.instanceOf(View).isRequired,
     };
 
     render() {

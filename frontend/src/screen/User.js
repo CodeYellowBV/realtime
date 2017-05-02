@@ -2,12 +2,14 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import UserOverview from '../container/UserOverview';
+import View from '../store/View';
+import { UserStore } from '../store/User';
 
 @observer
-export default class User extends Component {
+export default class UserScreen extends Component {
     static propTypes = {
-        viewStore: PropTypes.object.isRequired,
-        userStore: PropTypes.object.isRequired,
+        viewStore: PropTypes.instanceOf(View).isRequired,
+        userStore: PropTypes.instanceOf(UserStore).isRequired,
     };
 
     componentDidMount() {

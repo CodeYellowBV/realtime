@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import UserOverviewItem from './UserOverviewItem';
 import { EntryList } from '../component/EntryList';
+import { UserStore } from '../store/User';
 
 @observer
 export default class UserOverview extends Component {
     static propTypes = {
-        users: PropTypes.object.isRequired,
+        users: PropTypes.instanceOf(UserStore).isRequired,
     };
 
     renderUser(user) {

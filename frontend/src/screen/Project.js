@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import ProjectAdd from '../container/ProjectAdd';
 import ProjectOverview from '../container/ProjectOverview';
+import View from '../store/View';
+import { Project, ProjectStore } from '../store/Project';
 
 @observer
-export default class Project extends Component {
+export default class ProjectScreen extends Component {
     static propTypes = {
-        viewStore: PropTypes.object.isRequired,
-        projectStore: PropTypes.object.isRequired,
-        currentProject: PropTypes.object.isRequired,
+        viewStore: PropTypes.instanceOf(View).isRequired,
+        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
+        currentProject: PropTypes.instanceOf(Project).isRequired,
     };
 
     componentDidMount() {

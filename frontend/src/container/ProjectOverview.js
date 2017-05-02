@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import ProjectOverviewItem from './ProjectOverviewItem';
 import { EntryList } from '../component/EntryList';
+import { ProjectStore } from '../store/Project';
 
 @observer
 export default class ProjectOverview extends Component {
     static propTypes = {
-        projects: PropTypes.object.isRequired,
+        projects: PropTypes.instanceOf(ProjectStore).isRequired,
     };
 
     renderProject(project) {

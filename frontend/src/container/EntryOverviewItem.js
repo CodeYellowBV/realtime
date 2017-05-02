@@ -9,6 +9,8 @@ import {
     EntryItemActions,
 } from '../component/EntryList';
 import Button from '../component/Button';
+import { ProjectStore } from '../store/Project';
+import { Entry } from '../store/Entry';
 
 function formatDiffMinutes(minutes) {
     return (minutes / 60).toFixed(2);
@@ -17,8 +19,8 @@ function formatDiffMinutes(minutes) {
 @observer
 export default class EntryOverviewItem extends Component {
     static propTypes = {
-        entry: PropTypes.object.isRequired,
-        projectStore: PropTypes.object.isRequired,
+        entry: PropTypes.instanceOf(Entry).isRequired,
+        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
     };
 
     handleDelete = () => {

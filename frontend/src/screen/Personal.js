@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import TimeEntry from '../container/TimeEntry';
 import EntryOverview from '../container/EntryOverview';
+import View from '../store/View';
+import { Entry, EntryStore } from '../store/Entry';
+import { ProjectStore } from '../store/Project';
 
 @observer
 export default class Personal extends Component {
     static propTypes = {
-        viewStore: PropTypes.object.isRequired,
-        currentEntry: PropTypes.object.isRequired,
-        projectStore: PropTypes.object.isRequired,
-        entryStore: PropTypes.object.isRequired,
+        viewStore: PropTypes.instanceOf(View).isRequired,
+        currentEntry: PropTypes.instanceOf(Entry).isRequired,
+        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
+        entryStore: PropTypes.instanceOf(EntryStore).isRequired,
     };
 
     componentDidMount() {

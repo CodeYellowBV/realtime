@@ -4,11 +4,12 @@ import { observer } from 'mobx-react';
 import { TopMenu, TopMenuNav, TopMenuRight, TopMenuAvatar, TopMenuLink } from '../component/TopMenu';
 import AppHeader from '../component/AppHeader';
 import Button from '../component/Button';
+import View from '../store/View';
 
 @observer
 export default class Header extends Component {
     static propTypes = {
-        store: PropTypes.object.isRequired,
+        store: PropTypes.instanceOf(View).isRequired,
     };
 
     handleClickLogout = () => {

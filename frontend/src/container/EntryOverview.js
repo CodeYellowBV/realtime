@@ -5,12 +5,14 @@ import { map } from 'lodash';
 import moment from 'moment';
 import EntryOverviewItem from './EntryOverviewItem';
 import { EntryList } from '../component/EntryList';
+import { ProjectStore } from '../store/Project';
+import { EntryStore } from '../store/Entry';
 
 @observer
 export default class EntryOverview extends Component {
     static propTypes = {
-        entries: PropTypes.object.isRequired,
-        projectStore: PropTypes.object.isRequired,
+        entries: PropTypes.instanceOf(EntryStore).isRequired,
+        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
     };
 
     renderEntry = (entry) => {

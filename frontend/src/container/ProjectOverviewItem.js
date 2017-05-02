@@ -7,11 +7,12 @@ import {
     EntryItemActions,
 } from '../component/EntryList';
 import Button from '../component/Button';
+import { Project } from '../store/Project';
 
 @observer
 export default class ProjectOverviewItem extends Component {
     static propTypes = {
-        project: PropTypes.object.isRequired,
+        project: PropTypes.instanceOf(Project).isRequired,
     };
 
     handleDelete = () => {

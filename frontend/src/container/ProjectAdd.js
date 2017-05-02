@@ -4,11 +4,12 @@ import { observer } from 'mobx-react';
 import InputText from '../component/InputText';
 import Button from '../component/Button';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
+import { Project } from '../store/Project';
 
 @observer
 export default class ProjectAdd extends Component {
     static propTypes = {
-        project: PropTypes.object.isRequired,
+        project: PropTypes.instanceOf(Project).isRequired,
     };
 
     handleInput = (key, value) => {

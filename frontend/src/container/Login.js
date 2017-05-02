@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import Button from '../component/Button';
+import View from '../store/View';
 
 const { CY_FRONTEND_PHABRICATOR_URL, CY_FRONTEND_PHABRICATOR_CLIENT_ID } = process.env;
 
 @observer
 export default class Login extends Component {
     static propTypes = {
-        viewStore: PropTypes.object,
+        viewStore: PropTypes.instanceOf(View),
     };
 
     handleClick() {
@@ -17,7 +18,6 @@ export default class Login extends Component {
     }
 
     render() {
-        if (status === '')
         return (<div>
             <p>
                 To get started with CY Time, you need to login with your Phabricator account. After that you're done!
