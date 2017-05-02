@@ -18,6 +18,9 @@ export default class Login extends Component {
     }
 
     render() {
+        if (!this.props.viewStore.online) {
+            return <div>There is no connection to the backend. Do you have an active internet connection?</div>;
+        }
         return (<div>
             <p>
                 To get started with CY Time, you need to login with your Phabricator account. After that you're done!

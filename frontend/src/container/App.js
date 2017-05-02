@@ -5,6 +5,7 @@ import NotificationArea from '../component/NotificationArea';
 import Login from './Login';
 import Header from './AppHeader';
 import AppContainer from '../component/AppContainer';
+import NetworkInfo from '../component/NetworkInfo';
 import View from '../store/View';
 
 function renderCurrentView(store) {
@@ -38,6 +39,7 @@ export default class App extends Component {
                 <Header store={store} />
                 <NotificationArea store={store} />
                 {content}
+                <NetworkInfo store={store} />
             </AppContainer>
         );
     }
