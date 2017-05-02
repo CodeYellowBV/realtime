@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { TopMenu, TopMenuNav, TopMenuRight, TopMenuAvatar, TopMenuLink } from '../component/TopMenu';
+import {
+    TopMenu,
+    TopMenuNav,
+    TopMenuRight,
+    TopMenuAvatar,
+    TopMenuLink,
+} from '../component/TopMenu';
 import AppHeader from '../component/AppHeader';
 import Button from '../component/Button';
 import View from '../store/View';

@@ -21,29 +21,29 @@ const StyledButton = styled.button`
     height: 40px;
     padding: 0 10px;
 
-    ${props => props.flex ? `
+    ${props => (props.flex ? `
         flex: ${props.flex}
-    ` : null};
+    ` : null)};
 
-    ${props => props.showOverlay ? `
+    ${props => (props.showOverlay ? `
         border-radius: 6px 6px 0 0;
         background: #eee;
     ` : `
         border-radius: 6px;
-    `};
+    `)};
 
     ${props => {
-        if (!props.variation) {
-            return null;
-        }
+    if (!props.variation) {
+        return null;
+    }
 
-        switch (props.variation) {
-            case 'warning':
-                return `color: #ec4849;`;
-            default:
-                return null;
-        }
-    }};
+    switch (props.variation) {
+        case 'warning':
+            return `color: #ec4849;`;
+        default:
+            return null;
+    }
+}};
 `;
 
 const Overlay = styled.div`
@@ -56,7 +56,7 @@ const Overlay = styled.div`
     top: 100%;
     left: 0;
     right: 0;
-    ${props => props.hide ? `display: none;` : null};
+    ${props => (props.hide ? `display: none;` : null)};
 `;
 
 const ActionContainer = styled.div`
@@ -78,113 +78,137 @@ const StyledInput = styled.input`
     }
 `;
 
-@observer
-export default onClickOutside(class InputTime extends Component {
-    static propTypes = {
-        onChange: PropTypes.func.isRequired,
-        name: PropTypes.string.isRequired,
-        value: PropTypes.object,
-        disableClear: PropTypes.bool,
-    };
+export default onClickOutside(
+    @observer class InputTime extends Component {
+        static propTypes = {
+            onChange: PropTypes.func.isRequired,
+            name: PropTypes.string.isRequired,
+            value: PropTypes.object,
+            disableClear: PropTypes.bool,
+        };
 
-    static defaultProps = {
-        value: null,
-        disableClear: false,
-    };
+        static defaultProps = {
+            value: null,
+            disableClear: false,
+        };
 
-    @observable showOverlay = false;
-    @observable shouldFocusTime = false;
+        @observable showOverlay = false;
+        @observable shouldFocusTime = false;
 
-    @observable date = moment().format('YYYY-MM-DD');
-    @observable time = moment().format('HH:mm');
+        @observable date = moment().format('YYYY-MM-DD');
+        @observable time = moment().format('HH:mm');
 
-    toggleOverlay = () => {
-        const showOverlay = !this.showOverlay;
-        this.showOverlay = showOverlay;
-        this.shouldFocusTime = showOverlay;
-    };
+        toggleOverlay = () => {
+            const showOverlay = !this.showOverlay;
+            this.showOverlay = showOverlay;
+            this.shouldFocusTime = showOverlay;
+        };
 
-    changeValue = () => {
-        const datetime = moment(`${this.date} ${this.time}`);
-        this.props.onChange(this.props.name, datetime);
-    };
+        changeValue = () => {
+            const datetime = moment(`${this.date} ${this.time}`);
+            this.props.onChange(this.props.name, datetime);
+        };
 
-    handleChangeDate = value => {
-        this.date = value;
-        this.changeValue();
-    };
+        handleChangeDate = value => {
+            this.date = value;
+            this.changeValue();
+        };
 
-    handleChangeTime = value => {
-        this.time = value;
-        this.changeValue();
-    };
+        handleChangeTime = value => {
+            this.time = value;
+            this.changeValue();
+        };
 
-    handleClickOutside() {
-        this.showOverlay = false;
-    }
-
-    componentDidUpdate() {
-        if (this.shouldFocusTime) {
-            this.inputTime.focus();
-            this.shouldFocusTime = false;
-        }
-    }
-
-    handleButtonClick = () => {
-        const now = moment();
-
-        this.handleChangeDate(now.format('YYYY-MM-DD'));
-        this.handleChangeTime(now.format('HH:mm'));
-    };
-
-    renderClear() {
-        if (this.props.disableClear) {
-            return null;
+        handleClickOutside() {
+            this.showOverlay = false;
         }
 
-        return (
-            <StyledButton type="button" variation="warning" onClick={() => { this.changeValue(null); }}>
-                Clear
-            </StyledButton>
-        );
-    }
+        componentDidUpdate() {
+            if (this.shouldFocusTime) {
+                this.inputTime.focus();
+                this.shouldFocusTime = false;
+            }
+        }
 
-    render() {
-        const now = moment();
-        return (
-            <Container>
-                <StyledButton type="button" flex={1} onClick={this.toggleOverlay} showOverlay={this.showOverlay}>
-                    {this.props.value ? this.props.value.format('H:mm') : '—'}
+        handleButtonClick = () => {
+            const now = moment();
+
+            this.handleChangeDate(now.format('YYYY-MM-DD'));
+            this.handleChangeTime(now.format('HH:mm'));
+        };
+
+        renderClear() {
+            if (this.props.disableClear) {
+                return null;
+            }
+
+            return (
+                <StyledButton
+                    type="button"
+                    variation="warning"
+                    onClick={() => {
+                        this.changeValue(null);
+                    }}
+                >
+                    Clear
                 </StyledButton>
-                <Overlay hide={!this.showOverlay}>
-                    <ActionContainer>
-                        <StyledButton
-                            type="button"
-                            onClick={this.handleButtonClick}
-                        >
-                            Now
-                        </StyledButton>
-                        {this.renderClear()}
-                    </ActionContainer>
-                    <StyledInput
-                        innerRef={input => { this.inputTime = input; }}
-                        type="time"
-                        name={this.props.name}
-                        value={this.props.value ? this.props.value.format('HH:mm') : this.time}
-                        onChange={e => {
-                            this.handleChangeTime(e.target.value);
-                        }}
-                    />
-                    <StyledInput
-                        type="date"
-                        max={now.format('YYYY-MM-DD')}
-                        onChange={e => {
-                            this.handleChangeDate(e.target.value);
-                        }}
-                        value={this.props.value ? this.props.value.format('YYYY-MM-DD') : this.date}
-                    />
-                </Overlay>
-            </Container>
-        );
+            );
+        }
+
+        render() {
+            const now = moment();
+            return (
+                <Container>
+                    <StyledButton
+                        type="button"
+                        flex={1}
+                        onClick={this.toggleOverlay}
+                        showOverlay={this.showOverlay}
+                    >
+                        {this.props.value
+                            ? this.props.value.format('H:mm')
+                            : '—'}
+                    </StyledButton>
+                    <Overlay hide={!this.showOverlay}>
+                        <ActionContainer>
+                            <StyledButton
+                                type="button"
+                                onClick={this.handleButtonClick}
+                            >
+                                Now
+                            </StyledButton>
+                            {this.renderClear()}
+                        </ActionContainer>
+                        <StyledInput
+                            innerRef={input => {
+                                this.inputTime = input;
+                            }}
+                            type="time"
+                            name={this.props.name}
+                            value={
+                                this.props.value
+                                    ? this.props.value.format('HH:mm')
+                                    : this.time
+                            }
+                            onChange={e => {
+                                this.handleChangeTime(e.target.value);
+                            }}
+                        />
+                        <StyledInput
+                            type="date"
+                            max={now.format('YYYY-MM-DD')}
+                            onChange={e => {
+                                this.handleChangeDate(e.target.value);
+                            }}
+                            value={
+                                this.props.value
+                                    ? this.props.value.format('YYYY-MM-DD')
+                                    : this.date
+                            }
+                        />
+                    </Overlay>
+                </Container>
+            );
+        }
     }
-});
+);

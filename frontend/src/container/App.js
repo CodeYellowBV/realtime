@@ -29,7 +29,10 @@ export default class App extends Component {
     render() {
         const { store } = this.props;
         let content = null;
-        if (store.isAuthenticated || (store.currentView && store.currentView.bypassAuth)) {
+        if (
+            store.isAuthenticated ||
+            (store.currentView && store.currentView.bypassAuth)
+        ) {
             content = renderCurrentView(store);
         } else {
             content = <Login viewStore={store} />;

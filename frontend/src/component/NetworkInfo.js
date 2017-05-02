@@ -24,8 +24,6 @@ export default class NetworkInfo extends React.Component {
         if (this.props.store.online) {
             return null;
         }
-        return (
-            <Info>No connection with backend.</Info>
-        );
+        return <Info>No connection with backend.</Info>;
     }
 }

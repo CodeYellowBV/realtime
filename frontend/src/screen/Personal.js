@@ -32,12 +32,12 @@ export default class Personal extends Component {
         this.props.entryStore.subscribe({
             user: this.props.viewStore.currentUser.id,
         });
-    }
+    };
 
     unsubscribe = () => {
         this.props.projectStore.unsubscribe();
         this.props.entryStore.unsubscribe();
-    }
+    };
 
     render() {
         return (
@@ -47,7 +47,10 @@ export default class Personal extends Component {
                     projectStore={this.props.projectStore}
                     viewStore={this.props.viewStore}
                 />
-                <EntryOverview entries={this.props.entryStore} projectStore={this.props.projectStore} />
+                <EntryOverview
+                    entries={this.props.entryStore}
+                    projectStore={this.props.projectStore}
+                />
             </div>
         );
     }

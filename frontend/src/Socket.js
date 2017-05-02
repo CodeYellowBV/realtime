@@ -27,14 +27,14 @@ export default class Socket {
             }, 2000);
         };
 
-        this.instance.onmessage = (evt) => {
+        this.instance.onmessage = evt => {
             if (evt.data === 'pong') {
                 return;
             }
             const msg = JSON.parse(evt.data);
             // console.log('[received]', msg);
 
-            const isHandled = this.messageHandlers.some((handler) => {
+            const isHandled = this.messageHandlers.some(handler => {
                 return handler(msg);
             });
             if (!isHandled) {

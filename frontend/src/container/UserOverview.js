@@ -12,7 +12,7 @@ export default class UserOverview extends Component {
     };
 
     renderUser(user) {
-        return <UserOverviewItem key={user.id} user={user}></UserOverviewItem>;
+        return <UserOverviewItem key={user.id} user={user} />;
     }
 
     render() {

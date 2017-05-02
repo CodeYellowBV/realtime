@@ -21,7 +21,11 @@ export default class InputSelect extends Component {
     };
 
     renderOption(option) {
-        return <option value={option.value} key={option.value}>{option.name}</option>;
+        return (
+            <option value={option.value} key={option.value}>
+                {option.name}
+            </option>
+        );
     }
 
     render() {

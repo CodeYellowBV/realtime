@@ -14,7 +14,10 @@ import View from '../store/View';
 // Creative hack to show duration diffin H:mm format (courtesy to Stack Overflow)
 function formatDuration(diffMs) {
     const duration = moment.duration(diffMs);
-    return Math.floor(duration.asHours()) + moment.utc(duration.asMilliseconds()).format(':mm');
+    return (
+        Math.floor(duration.asHours()) +
+        moment.utc(duration.asMilliseconds()).format(':mm')
+    );
 }
 
 @observer
@@ -59,7 +62,8 @@ export default class TimeEntry extends Component {
                 msg = 'Until time cannot be before from time';
             }
             if (entry.endedAt.diff(entry.startedAt, 'hours') > 24) {
-                msg = 'It is not humanly possible to work for more than 24 hours';
+                msg =
+                    'It is not humanly possible to work for more than 24 hours';
             }
         }
         if (msg === '') {
@@ -84,14 +88,20 @@ export default class TimeEntry extends Component {
     render() {
         const { entry } = this.props;
         // `endedAt` is set to end of the minute so the duration is exactly 1 hours if start time is e.g. 18:00 and end time 19:00
-        const duration = entry.endedAt ? formatDuration(entry.endedAt.endOf('minute').diff(entry.startedAt)) : null;
+        const duration = entry.endedAt
+            ? formatDuration(
+                  entry.endedAt.endOf('minute').diff(entry.startedAt)
+              )
+            : null;
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
                 <TimeEntryFormField label="Project" size="1">
                     <InputSelect
                         name="project"
                         placeholder="Choose project"
-                        options={this.props.projectStore.map(this.formatProjectToOption)}
+                        options={this.props.projectStore.map(
+                            this.formatProjectToOption
+                        )}
                         onChange={this.handleInput}
                         value={entry.project ? String(entry.project) : ''}
                     />

@@ -39,9 +39,7 @@ export default class ProjectScreen extends Component {
     render() {
         return (
             <div>
-                <ProjectAdd
-                    project={this.props.currentProject}
-                />
+                <ProjectAdd project={this.props.currentProject} />
                 <ProjectOverview projects={this.props.projectStore} />
             </div>
         );

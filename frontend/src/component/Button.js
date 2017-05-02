@@ -7,7 +7,7 @@ const StyledButton = styled.button`
     ${DEFAULT_FONT}
 `;
 
-const Button = (props) => (
+const Button = props => (
     <StyledButton type="button" {...props}>
         {props.children}
     </StyledButton>

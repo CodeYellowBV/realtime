@@ -15,8 +15,14 @@ export default class EntryOverview extends Component {
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
     };
 
-    renderEntry = (entry) => {
-        return <EntryOverviewItem key={entry.id} entry={entry} projectStore={this.props.projectStore} />;
+    renderEntry = entry => {
+        return (
+            <EntryOverviewItem
+                key={entry.id}
+                entry={entry}
+                projectStore={this.props.projectStore}
+            />
+        );
     };
 
     renderDay = (entries, date) => {

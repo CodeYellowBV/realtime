@@ -7,42 +7,44 @@ beforeEach(() => {
     mockServer = new Server(process.env.CY_FRONTEND_WEBSOCKET_URL);
 });
 
-afterEach((done) => {
+afterEach(done => {
     mockServer.stop(done);
 });
 
-test('Should open a WebSocket successfully', (done) => {
+test('Should open a WebSocket successfully', done => {
     mockServer.on('connection', () => {
         done();
     });
     new Socket({});
 });
 
-test('Should receive a message as object', (done) => {
+test('Should receive a message as object', done => {
     mockServer.on('connection', ws => {
         ws.send(JSON.stringify({ foo: 'bar' }));
     });
     new Socket({
-        onMessage: (msg) => {
+        onMessage: msg => {
             expect(msg).toEqual({ foo: 'bar' });
             done();
         },
     });
 });
 
-test('Should send a message correctly', (done) => {
+test('Should send a message correctly', done => {
     mockServer.on('message', msg => {
-        expect(msg).toEqual(JSON.stringify({
-            type: 'foo',
-            authorization: null
-        }));
+        expect(msg).toEqual(
+            JSON.stringify({
+                type: 'foo',
+                authorization: null,
+            })
+        );
         done();
     });
     const socket = new Socket({});
     socket.send({ type: 'foo' });
 });
 
-test('Should send a message with authToken', (done) => {
+test('Should send a message with authToken', done => {
     mockServer.on('message', msg => {
         expect(JSON.parse(msg).authorization).toBe('fooobar');
         done();
@@ -52,17 +54,17 @@ test('Should send a message with authToken', (done) => {
     socket.send({ type: 'myman' });
 });
 
-test('Should use messageHandlers instead of fallback', (done) => {
+test('Should use messageHandlers instead of fallback', done => {
     mockServer.on('connection', ws => {
         ws.send(JSON.stringify({ foo: 'bar' }));
     });
     const socket = new Socket({
         onMessage: () => {
             done.fail(new Error('It should not come here.'));
-        }
+        },
     });
     let visitedHandler = false;
-    socket.addMessageHandler((msg) => {
+    socket.addMessageHandler(msg => {
         visitedHandler = true;
         return true;
     });
@@ -73,7 +75,7 @@ test('Should use messageHandlers instead of fallback', (done) => {
     }, 100);
 });
 
-test('Should use fallback if messageHandler does not return true', (done) => {
+test('Should use fallback if messageHandler does not return true', done => {
     mockServer.on('connection', ws => {
         ws.send(JSON.stringify({ foo: 'bar' }));
     });
@@ -82,9 +84,9 @@ test('Should use fallback if messageHandler does not return true', (done) => {
         onMessage: () => {
             expect(visitedHandler).toBe(true);
             done();
-        }
+        },
     });
-    socket.addMessageHandler((msg) => {
+    socket.addMessageHandler(msg => {
         visitedHandler = true;
     });
 });

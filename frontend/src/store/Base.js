@@ -1,4 +1,9 @@
-import { Model as BModel, Store as BStore, BinderApi, Casts as BCasts } from 'mobx-spine';
+import {
+    Model as BModel,
+    Store as BStore,
+    BinderApi,
+    Casts as BCasts,
+} from 'mobx-spine';
 import uuid from 'uuid';
 
 class TimeApi extends BinderApi {
@@ -6,7 +11,9 @@ class TimeApi extends BinderApi {
 
     subscribe({ target, instance, data }) {
         const requestId = uuid();
-        this.socket.addMessageHandler(this.handleSocketMessage(instance, requestId));
+        this.socket.addMessageHandler(
+            this.handleSocketMessage(instance, requestId)
+        );
         this.socket.send({
             type: 'subscribe',
             requestId,
@@ -18,7 +25,7 @@ class TimeApi extends BinderApi {
     }
 
     handleSocketMessage(instance, requestId) {
-        return (msg) => {
+        return msg => {
             if (msg.requestId !== requestId) {
                 return false;
             }
@@ -52,7 +59,6 @@ class TimeApi extends BinderApi {
             data: { id },
         });
     }
-
 }
 
 const myApi = new TimeApi();
@@ -90,7 +96,9 @@ export class Store extends BStore {
     subscribe(scope) {
         this.unsubscribe();
         if (!this.target) {
-            throw new Error('Store needs `target` property set before subscribing.');
+            throw new Error(
+                'Store needs `target` property set before subscribing.'
+            );
         }
         this.subscriptionId = this.api.subscribe({
             target: this.target,
@@ -110,7 +118,7 @@ export class Store extends BStore {
             this.add(changes.add);
         }
         if (changes.update) {
-            changes.update.forEach((change) => {
+            changes.update.forEach(change => {
                 const model = this.get(change.id);
                 if (model) {
                     model.parse(change);
@@ -118,7 +126,7 @@ export class Store extends BStore {
             });
         }
         if (changes.delete) {
-            const deletions = changes.delete.map((change) => {
+            const deletions = changes.delete.map(change => {
                 return this.get(change.id);
             });
             this.remove(deletions);

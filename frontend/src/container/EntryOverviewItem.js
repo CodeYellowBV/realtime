@@ -30,7 +30,9 @@ export default class EntryOverviewItem extends Component {
     render() {
         const { entry } = this.props;
         const diffMinutes = entry.differenceInMinutes;
-        const project = entry.project ? this.props.projectStore.get(entry.project) : null;
+        const project = entry.project
+            ? this.props.projectStore.get(entry.project)
+            : null;
         return (
             <EntryItem key={entry.id}>
                 <EntryItemProject>
@@ -40,7 +42,9 @@ export default class EntryOverviewItem extends Component {
                 <EntryItemHours>
                     {entry.startedAt.format('HH:mm')}{' - '}
                     {entry.endedAt ? entry.endedAt.format('HH:mm') : 'Running'}
-                    {diffMinutes ? ` (${formatDiffMinutes(diffMinutes)}h)` : null}
+                    {diffMinutes
+                        ? ` (${formatDiffMinutes(diffMinutes)}h)`
+                        : null}
                 </EntryItemHours>
                 <EntryItemActions>
                     <Button onClick={this.handleDelete}>×</Button>

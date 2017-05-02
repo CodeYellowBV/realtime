@@ -9,7 +9,7 @@ export default class Link extends Component {
         className: PropTypes.string,
     };
 
-    handleClick = (e) => {
+    handleClick = e => {
         e.preventDefault();
 
         page(this.props.to);
@@ -17,7 +17,11 @@ export default class Link extends Component {
 
     render() {
         return (
-            <a href={this.props.to} onClick={this.handleClick} className={this.props.className}>
+            <a
+                href={this.props.to}
+                onClick={this.handleClick}
+                className={this.props.className}
+            >
                 {this.props.children}
             </a>
         );

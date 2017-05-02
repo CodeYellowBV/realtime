@@ -12,7 +12,7 @@ export default class ProjectOverview extends Component {
     };
 
     renderProject(project) {
-        return <ProjectOverviewItem key={project.id} project={project}></ProjectOverviewItem>;
+        return <ProjectOverviewItem key={project.id} project={project} />;
     }
 
     render() {

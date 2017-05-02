@@ -10,10 +10,14 @@ const routes = {
 
 function routeWrapper(store) {
     each(routes, (controller, route) => {
-        const wrapper = function (options) {
-            const pController = controller instanceof Promise ? controller : Promise.resolve(controller);
+        const wrapper = function(options) {
+            const pController = controller instanceof Promise
+                ? controller
+                : Promise.resolve(controller);
             const params = Object.values(options.params);
-            pController.then(resolvedContr => resolvedContr(store, ...params, options));
+            pController.then(resolvedContr =>
+                resolvedContr(store, ...params, options)
+            );
         };
         page(route, wrapper);
     });

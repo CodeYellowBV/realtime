@@ -41,6 +41,9 @@ export class EntryStore extends Store {
     target = 'entry';
 
     @computed get groupByDate() {
-        return groupBy(orderBy(this.models, 'startedAt', 'desc'), entry => entry.startedAtDate);
+        return groupBy(
+            orderBy(this.models, 'startedAt', 'desc'),
+            entry => entry.startedAtDate
+        );
     }
 }
