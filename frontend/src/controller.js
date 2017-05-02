@@ -1,10 +1,10 @@
-import PersonalScreen from '../screen/Personal';
-import ProjectScreen from '../screen/Project';
-import UserScreen from '../screen/User';
-import NotFound from '../component/NotFound';
-import { Project, ProjectStore } from '../store/Project';
-import { UserStore } from '../store/User';
-import { Entry, EntryStore } from '../store/Entry';
+import PersonalScreen from './screen/Personal';
+import ProjectScreen from './screen/Project';
+import UserScreen from './screen/User';
+import NotFound from './component/NotFound';
+import { Project, ProjectStore } from './store/Project';
+import { UserStore } from './store/User';
+import { Entry, EntryStore } from './store/Entry';
 import moment from 'moment';
 
 export function home(store) {
