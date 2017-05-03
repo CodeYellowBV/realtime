@@ -84,6 +84,18 @@ class SocketContainer():
         s = Subscription(self, requestId, target, scope)
         self.subs.append(s)
 
+    def unsubscribe(self, requestId):
+        s = None
+        for sub in self.subs:
+            if sub.reqId == requestId:
+                s = sub
+
+        if not s:
+            return False
+
+        self.subs.remove(s)
+        return True
+
     def handle_event(self, target, _type, item, snapshot):
         if self.ws.closed:
             self.hub.remove(self)

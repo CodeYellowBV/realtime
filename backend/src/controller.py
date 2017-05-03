@@ -40,6 +40,8 @@ class Controller():
 
         if self.body['type'] == 'bootstrap':
             return self.get_bootstrap()
+        if self.body['type'] == 'unsubscribe':
+            return self.unsubscribe(self.body['requestId'])
 
         if 'target' not in self.body:
             return self.error('No target given')
@@ -175,8 +177,19 @@ class Controller():
             }
         }
 
-    def unsubscribe(self, cls):
-        return self.error('TODO UNSUBSCRIBE')
+    def unsubscribe(self, reqId):
+        if 'requestId' not in self.body:
+            return self.error('No requestId given')
+
+        success = self.socketContainer.unsubscribe(reqId)
+        if not success:
+            return self.error('Invavlid requestId given')
+
+        return {
+            'type': 'unsubscribe',
+            'code': 'success',
+            'requestId': self.body['requestId'],
+        }
 
     def do_auth(self):
         data = {
