@@ -85,7 +85,7 @@ class Entry(Base, db.Model):
     user = db.relationship('User',
         backref=db.backref('entries', lazy='dynamic', cascade='all, delete-orphan'))
 
-    def parse(self, data, currentUser):
+    def parse(self, data, currentUser=None):
         if currentUser:
             data['user'] = currentUser['id']
 

@@ -116,7 +116,7 @@ class Controller():
             return self.error('No id given')
 
         m = self.db.session.query(cls).get(data['id'])
-        m.parse(data)
+        m.parse(data, self.currentUser)
 
         self.db.session.add(m)
         self.db.session.commit()
@@ -139,7 +139,6 @@ class Controller():
             return self.error('No id given')
 
         m = self.db.session.query(cls).get(data['id'])
-        m.parse(data)
 
         self.db.session.delete(m)
         self.db.session.commit()
