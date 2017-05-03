@@ -19,7 +19,6 @@ class Collection():
 
 class Base(object):
     def __init__(self, data, currentUser=None):
-        print('__init__', currentUser)
         self.parse(data, currentUser)
 
     def parse(self, data, currentUser=None):

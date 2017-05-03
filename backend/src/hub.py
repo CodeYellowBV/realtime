@@ -28,7 +28,6 @@ class Subscription():
         return True
 
     def handle_event(self, target, _type, item, snapshot):
-        print('sub handle', _type, item, snapshot)
         is_subscribed = self.is_in_scope(target, item)
 
         if _type == 'save':
@@ -86,9 +85,7 @@ class SocketContainer():
         self.subs.append(s)
 
     def handle_event(self, target, _type, item, snapshot):
-        print('socket handle')
         if self.ws.closed:
-            print('socket: ws closed')
             self.hub.remove(self)
             return
 
@@ -115,7 +112,6 @@ class Hub():
         self.sockets = []
 
     def handle_event(self, target, _type, item, snapshot):
-        print('hub handle')
         # Find the sockets that are listening to that target with overlapping scope
         for socket in self.sockets:
             socket.handle_event(target, _type, item, snapshot)
