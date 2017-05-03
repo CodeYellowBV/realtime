@@ -44,9 +44,9 @@ class TimeApi extends BinderApi {
         });
     }
 
-    saveModelWithoutWait({ target, data }) {
+    saveModelWithoutWait({ target, data, isNew }) {
         this.socket.send({
-            type: 'save',
+            type: isNew ? 'save' : 'update',
             target,
             data,
         });
@@ -70,6 +70,7 @@ export class Model extends BModel {
     // TODO: this is a poorly implemented save function that does not wait on the results of the backend
     save() {
         this.api.saveModelWithoutWait({
+            isNew: this.isNew,
             target: this.target,
             data: this.toBackend(),
         });

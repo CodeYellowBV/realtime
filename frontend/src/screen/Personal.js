@@ -40,10 +40,13 @@ export default class Personal extends Component {
     };
 
     render() {
+        const runningEntry = this.props.entryStore.find(
+            entry => !entry.endedAt
+        );
         return (
             <div>
                 <TimeEntry
-                    entry={this.props.currentEntry}
+                    entry={runningEntry || this.props.currentEntry}
                     projectStore={this.props.projectStore}
                     viewStore={this.props.viewStore}
                 />
