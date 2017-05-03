@@ -8,6 +8,7 @@ export class Entry extends Model {
     @observable id = null;
     @observable description = '';
     @observable project = null;
+    @observable user = null;
     @observable startedAt = null;
     @observable endedAt = null;
 

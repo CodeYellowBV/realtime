@@ -31,10 +31,14 @@ export function projects(store) {
 
 export function users(store) {
     const userStore = new UserStore();
+    const entryStore = new EntryStore();
+    const projectStore = new ProjectStore();
     store.setView({
         name: 'home',
         render: UserScreen,
         userStore,
+        entryStore,
+        projectStore,
     });
 }
 
