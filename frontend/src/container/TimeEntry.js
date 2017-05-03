@@ -5,20 +5,12 @@ import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime from '../component/InputTime';
 import Button from '../component/Button';
+import SmartDuration from '../component/SmartDuration';
 import InputSelect from '../component/InputSelect';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 import { ProjectStore } from '../store/Project';
 import { Entry } from '../store/Entry';
 import View from '../store/View';
-
-// Creative hack to show duration diffin H:mm format (courtesy to Stack Overflow)
-function formatDuration(diffMs) {
-    const duration = moment.duration(diffMs);
-    return (
-        Math.floor(duration.asHours()) +
-        moment.utc(duration.asMilliseconds()).format(':mm')
-    );
-}
 
 @observer
 export default class TimeEntry extends Component {
@@ -87,12 +79,6 @@ export default class TimeEntry extends Component {
 
     render() {
         const { entry } = this.props;
-        // `endedAt` is set to end of the minute so the duration is exactly 1 hours if start time is e.g. 18:00 and end time 19:00
-        const duration = entry.endedAt
-            ? formatDuration(
-                  entry.endedAt.endOf('minute').diff(entry.startedAt)
-              )
-            : null;
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
                 <TimeEntryFormField label="Project" size="1">
@@ -122,7 +108,14 @@ export default class TimeEntry extends Component {
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Duration" size="1">
-                    <div>{duration ? duration : '—'}</div>
+                    <div>
+                        {entry.endedAt
+                            ? <SmartDuration
+                                  startedAt={entry.startedAt}
+                                  endedAt={entry.endedAt}
+                              />
+                            : '—'}
+                    </div>
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Until" size="1">
                     <InputTime

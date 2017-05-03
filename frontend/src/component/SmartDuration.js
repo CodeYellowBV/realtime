@@ -15,7 +15,11 @@ export default class SmartDuration extends Component {
 
     render() {
         const { startedAt, endedAt } = this.props;
-        const nowDiff = endedAt.diff(startedAt, 'minutes');
+        // `endedAt` is set to end of the minute so the duration is exactly 1 hours if start time is e.g. 18:00 and end time 19:00
+        const nowDiff = endedAt
+            .clone()
+            .endOf('minute')
+            .diff(startedAt, 'minutes');
         const duration = moment.duration(nowDiff, 'minutes');
 
         let style = {};
