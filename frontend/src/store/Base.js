@@ -26,7 +26,7 @@ class TimeApi extends BinderApi {
 
     handleSocketMessage(instance, requestId) {
         return msg => {
-            if (msg.requestId !== requestId) {
+            if (msg.requestId !== requestId || msg.type !== 'publish') {
                 return false;
             }
             instance.parseChanges({
