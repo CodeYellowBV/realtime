@@ -14,11 +14,11 @@ beforeEach(() => {
     api.socket = socket;
 });
 
-afterEach((done) => {
+afterEach(done => {
     mockServer.stop(done);
 });
 
-test('subscribe() should send subscribe message', (done) => {
+test('subscribe() should send subscribe message', done => {
     const entryStore = new EntryStore();
     entryStore.subscribe({ user: 1 });
 
@@ -32,7 +32,7 @@ test('subscribe() should send subscribe message', (done) => {
     });
 });
 
-test('unsubscribe() should send unsubscribe message', (done) => {
+test('unsubscribe() should send unsubscribe message', done => {
     const entryStore = new EntryStore();
     entryStore.subscribe();
     const requestId = entryStore.subscriptionId;
@@ -51,31 +51,37 @@ describe('Handling published messages', () => {
         const entryStore = new EntryStore();
         entryStore.subscribe();
         const requestId = entryStore.subscriptionId;
-        mockServer.send(JSON.stringify({
-            type: 'publish',
-            requestId,
-            data: {
-                add: [{ id: 4 }],
-                update: [],
-                delete: [],
-            },
-        }));
+        mockServer.send(
+            JSON.stringify({
+                type: 'publish',
+                requestId,
+                data: {
+                    add: [{ id: 4 }],
+                    update: [],
+                    remove: [],
+                },
+            })
+        );
         expect(entryStore.map('id')).toEqual([4]);
     });
 
     test('should handle updating model', () => {
-        const entryStore = new EntryStore().parse([{ id: 3, description: 'Foo' }]);
+        const entryStore = new EntryStore().parse([
+            { id: 3, description: 'Foo' },
+        ]);
         entryStore.subscribe();
         const requestId = entryStore.subscriptionId;
-        mockServer.send(JSON.stringify({
-            type: 'publish',
-            requestId,
-            data: {
-                add: [],
-                update: [{ id: 3, description: 'Boo' }],
-                delete: [],
-            },
-        }));
+        mockServer.send(
+            JSON.stringify({
+                type: 'publish',
+                requestId,
+                data: {
+                    add: [],
+                    update: [{ id: 3, description: 'Boo' }],
+                    remove: [],
+                },
+            })
+        );
         expect(entryStore.at(0).description).toBe('Boo');
     });
 
@@ -84,16 +90,17 @@ describe('Handling published messages', () => {
         expect(entryStore.length).toBe(1);
         entryStore.subscribe();
         const requestId = entryStore.subscriptionId;
-        mockServer.send(JSON.stringify({
-            type: 'publish',
-            requestId,
-            data: {
-                add: [],
-                update: [],
-                delete: [{ id: 3 }],
-            },
-        }));
+        mockServer.send(
+            JSON.stringify({
+                type: 'publish',
+                requestId,
+                data: {
+                    add: [],
+                    update: [],
+                    remove: [{ id: 3 }],
+                },
+            })
+        );
         expect(entryStore.length).toBe(0);
     });
 });
-

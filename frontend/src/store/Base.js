@@ -32,7 +32,7 @@ class TimeApi extends BinderApi {
             instance.parseChanges({
                 add: msg.data.add,
                 update: msg.data.update,
-                delete: msg.data.delete,
+                remove: msg.data.remove,
             });
         };
     }
@@ -125,11 +125,11 @@ export class Store extends BStore {
                 }
             });
         }
-        if (changes.delete) {
-            const deletions = changes.delete.map(change => {
+        if (changes.remove) {
+            const removes = changes.remove.map(change => {
                 return this.get(change.id);
             });
-            this.remove(deletions);
+            this.remove(removes);
         }
     }
 }
