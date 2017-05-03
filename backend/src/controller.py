@@ -116,6 +116,7 @@ class Controller():
             return self.error('No id given')
 
         m = self.db.session.query(cls).get(data['id'])
+        mSnapshot = m.dump()
         m.parse(data, self.currentUser)
 
         self.db.session.add(m)
@@ -125,6 +126,7 @@ class Controller():
         return {
             'type': self.body['type'],
             'target': self.body['target'],
+            'snapshot': mSnapshot,
             'code': 'success',
             'data': result,
         }
@@ -139,7 +141,6 @@ class Controller():
             return self.error('No id given')
 
         m = self.db.session.query(cls).get(data['id'])
-
         self.db.session.delete(m)
         self.db.session.commit()
 
