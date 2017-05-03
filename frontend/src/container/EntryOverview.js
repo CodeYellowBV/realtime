@@ -18,7 +18,7 @@ export default class EntryOverview extends Component {
     renderEntry = entry => {
         return (
             <EntryOverviewItem
-                key={entry.id}
+                key={entry.cid}
                 entry={entry}
                 projectStore={this.props.projectStore}
             />
