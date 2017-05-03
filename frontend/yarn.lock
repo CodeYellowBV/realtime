@@ -3957,6 +3957,10 @@ mock-socket@^6.0.4:
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/mock-socket/-/mock-socket-6.0.4.tgz#85f58a0aa83bc1db4ca7d14b42d8f9dd663e7569"
 
+moment-duration-format@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-1.3.0.tgz#541771b5f87a049cc65540475d3ad966737d6908"
+
 moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"

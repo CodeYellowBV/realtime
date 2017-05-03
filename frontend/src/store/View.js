@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed } from 'mobx';
 import page from 'page';
 import Uri from 'urijs';
 import { User } from './User';

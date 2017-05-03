@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import moment from 'moment';
 import {
     EntryItem,
     EntryItemProject,
@@ -8,6 +9,7 @@ import {
 } from '../component/EntryList';
 import { User } from '../store/User';
 import { ProjectStore } from '../store/Project';
+import SmartDuration from '../component/SmartDuration';
 
 @observer
 export default class UserOverviewItem extends Component {
@@ -19,12 +21,24 @@ export default class UserOverviewItem extends Component {
 
     renderEntry = entry => {
         const project = this.props.projects.get(entry.project);
-        return `${project ? project.name : '[unknown project]'} since ${entry.startedAt.format('HH:mm')}`;
+        return (
+            <span key={entry.id}>
+                {project ? project.name : '[unknown project]'}
+                {' '}
+                since
+                {' '}
+                {entry.startedAt.format('HH:mm')}
+                {' '}
+                (
+                <SmartDuration startedAt={entry.startedAt} endedAt={moment()} />
+                )
+            </span>
+        );
     };
 
     renderEntries = entries => {
         if (entries.length > 0) {
-            return entries.map(this.renderEntry).join(', ');
+            return entries.map(this.renderEntry);
         }
         return 'Not working at the moment';
     };
