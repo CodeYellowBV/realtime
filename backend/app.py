@@ -25,12 +25,12 @@ db = SQLAlchemy(app)
 
 
 from src.hub import Hub
-app.hub = Hub()
+hub = Hub()
 
 
 @sockets.route('/api/')
 def open_socket(ws):
-    socket = app.hub.add(ws)
+    socket = hub.add(ws)
     while not socket.ws.closed:
         message = socket.ws.receive()
         if message:
