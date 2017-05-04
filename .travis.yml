@@ -6,5 +6,4 @@ install:
     - cd backend
     - pip install -r packages.pip
 script:
-    - source ../.env.example
-    - python manage.py test
+    - CY_ENV_FILE=../.env.example python manage.py test

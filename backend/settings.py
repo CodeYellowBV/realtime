@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv, find_dotenv
 
-load_dotenv(find_dotenv())
+load_dotenv(os.environ.get('CY_ENV_FILE', find_dotenv()))
 
 
 class Settings(object):
