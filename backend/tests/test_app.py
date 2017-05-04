@@ -3,7 +3,7 @@ from src.models import Project
 import unittest
 
 
-class CyTestCase(unittest.TestCase):
+class AppCase(unittest.TestCase):
     def setUp(self):
         """
         Creates a new database for the unit test to use
