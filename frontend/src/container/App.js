@@ -8,18 +8,8 @@ import AppContainer from '../component/AppContainer';
 import ContentContainer from '../component/ContentContainer';
 import NetworkInfo from '../component/NetworkInfo';
 import View from '../store/View';
-
-function renderCurrentView(store) {
-    const view = store.currentView;
-    // The view can temporarily be `null` when using code splitting.
-    if (!view) {
-        return null;
-    }
-    if (!view.render) {
-        throw new Error(`View "${view.name}" does not have a render property!`);
-    }
-    return <view.render {...view} viewStore={store} />;
-}
+import Router from '../Router';
+import { BrowserRouter } from 'react-router-dom';
 
 @observer
 export default class App extends Component {
@@ -30,23 +20,22 @@ export default class App extends Component {
     render() {
         const { store } = this.props;
         let content = null;
-        if (
-            store.isAuthenticated ||
-            (store.currentView && store.currentView.bypassAuth)
-        ) {
-            content = renderCurrentView(store);
+        if (store.isAuthenticated) {
+            content = <Router store={store} />;
         } else {
             content = <Login viewStore={store} />;
         }
         return (
-            <AppContainer>
-                <Header store={store} />
-                <NotificationArea store={store} />
-                <ContentContainer>
-                    {content}
-                </ContentContainer>
-                <NetworkInfo store={store} />
-            </AppContainer>
+            <BrowserRouter>
+                <AppContainer>
+                    <Header store={store} />
+                    <NotificationArea store={store} />
+                    <ContentContainer>
+                        {content}
+                    </ContentContainer>
+                    <NetworkInfo store={store} />
+                </AppContainer>
+            </BrowserRouter>
         );
     }
 }

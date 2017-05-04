@@ -1,5 +1,4 @@
 import { observable, computed } from 'mobx';
-import page from 'page';
 import Uri from 'urijs';
 import { User } from './User';
 import Socket from '../Socket';
@@ -9,7 +8,6 @@ export default class ViewStore {
     socket = null;
     @observable online = false;
     @observable currentUser = new User();
-    @observable.ref currentView = null;
     @observable notifications = [];
 
     @computed get isAuthenticated() {
@@ -29,16 +27,10 @@ export default class ViewStore {
         const urlParams = url.search(true);
         if (urlParams.code) {
             this.performAuthentication(urlParams.code);
-            page('/');
+            window.history.replaceState({}, null, '/');
         } else {
             this.tryLogin();
         }
-    }
-
-    setView(view) {
-        // We set `currentView` to null temporary on purpose, to let the `currentView` unmount.
-        this.currentView = null;
-        this.currentView = view;
     }
 
     handleSocketOpen = () => {

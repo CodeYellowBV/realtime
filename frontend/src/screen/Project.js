@@ -10,9 +10,12 @@ import { Project, ProjectStore } from '../store/Project';
 export default class ProjectScreen extends Component {
     static propTypes = {
         viewStore: PropTypes.instanceOf(View).isRequired,
-        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
-        currentProject: PropTypes.instanceOf(Project).isRequired,
     };
+
+    componentWillMount() {
+        this.projectStore = new ProjectStore();
+        this.currentProject = new Project();
+    }
 
     componentDidMount() {
         this.subscribe();
@@ -24,23 +27,23 @@ export default class ProjectScreen extends Component {
     }
 
     subscribe = () => {
-        this.props.projectStore.clear();
-        this.props.projectStore.subscribe();
+        this.projectStore.clear();
+        this.projectStore.subscribe();
     };
 
     unsubscribe = () => {
-        this.props.projectStore.unsubscribe();
+        this.projectStore.unsubscribe();
     };
 
     handleSubmit = () => {
-        this.props.currentProject.clear();
+        this.currentProject.clear();
     };
 
     render() {
         return (
             <div>
-                <ProjectAdd project={this.props.currentProject} />
-                <ProjectOverview projects={this.props.projectStore} />
+                <ProjectAdd project={this.currentProject} />
+                <ProjectOverview projects={this.projectStore} />
             </div>
         );
     }

@@ -6,15 +6,19 @@ import EntryOverview from '../container/EntryOverview';
 import View from '../store/View';
 import { Entry, EntryStore } from '../store/Entry';
 import { ProjectStore } from '../store/Project';
+import moment from 'moment';
 
 @observer
 export default class Personal extends Component {
     static propTypes = {
         viewStore: PropTypes.instanceOf(View).isRequired,
-        currentEntry: PropTypes.instanceOf(Entry).isRequired,
-        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
-        entryStore: PropTypes.instanceOf(EntryStore).isRequired,
     };
+
+    componentWillMount() {
+        this.projectStore = new ProjectStore();
+        this.entryStore = new EntryStore();
+        this.currentEntry = new Entry({ startedAt: moment() });
+    }
 
     componentDidMount() {
         this.subscribe();
@@ -26,33 +30,31 @@ export default class Personal extends Component {
     }
 
     subscribe = () => {
-        this.props.projectStore.clear();
-        this.props.projectStore.subscribe();
-        this.props.entryStore.clear();
-        this.props.entryStore.subscribe({
+        this.projectStore.clear();
+        this.projectStore.subscribe();
+        this.entryStore.clear();
+        this.entryStore.subscribe({
             user: this.props.viewStore.currentUser.id,
         });
     };
 
     unsubscribe = () => {
-        this.props.projectStore.unsubscribe();
-        this.props.entryStore.unsubscribe();
+        this.projectStore.unsubscribe();
+        this.entryStore.unsubscribe();
     };
 
     render() {
-        const runningEntry = this.props.entryStore.find(
-            entry => !entry.endedAt
-        );
+        const runningEntry = this.entryStore.find(entry => !entry.endedAt);
         return (
             <div>
                 <TimeEntry
-                    entry={runningEntry || this.props.currentEntry}
-                    projectStore={this.props.projectStore}
+                    entry={runningEntry || this.currentEntry}
+                    projectStore={this.projectStore}
                     viewStore={this.props.viewStore}
                 />
                 <EntryOverview
-                    entries={this.props.entryStore}
-                    projectStore={this.props.projectStore}
+                    entries={this.entryStore}
+                    projectStore={this.projectStore}
                 />
             </div>
         );

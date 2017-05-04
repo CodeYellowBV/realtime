@@ -11,10 +11,13 @@ import { ProjectStore } from '../store/Project';
 export default class UserScreen extends Component {
     static propTypes = {
         viewStore: PropTypes.instanceOf(View).isRequired,
-        userStore: PropTypes.instanceOf(UserStore).isRequired,
-        entryStore: PropTypes.instanceOf(EntryStore).isRequired,
-        projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
     };
+
+    componentWillMount() {
+        this.userStore = new UserStore();
+        this.entryStore = new EntryStore();
+        this.projectStore = new ProjectStore();
+    }
 
     componentDidMount() {
         this.subscribe();
@@ -26,33 +29,29 @@ export default class UserScreen extends Component {
     }
 
     subscribe = () => {
-        this.props.userStore.clear();
-        this.props.userStore.subscribe();
-        this.props.entryStore.clear();
-        this.props.entryStore.subscribe({
+        this.userStore.clear();
+        this.userStore.subscribe();
+        this.entryStore.clear();
+        this.entryStore.subscribe({
             ended_at: null,
         });
-        this.props.projectStore.clear();
-        this.props.projectStore.subscribe();
+        this.projectStore.clear();
+        this.projectStore.subscribe();
     };
 
     unsubscribe = () => {
-        this.props.userStore.unsubscribe();
-        this.props.entryStore.unsubscribe();
-        this.props.projectStore.unsubscribe();
-    };
-
-    handleSubmit = () => {
-        this.props.currentProject.clear();
+        this.userStore.unsubscribe();
+        this.entryStore.unsubscribe();
+        this.projectStore.unsubscribe();
     };
 
     render() {
         return (
             <div>
                 <UserOverview
-                    users={this.props.userStore}
-                    entries={this.props.entryStore}
-                    projects={this.props.projectStore}
+                    users={this.userStore}
+                    entries={this.entryStore}
+                    projects={this.projectStore}
                 />
             </div>
         );
