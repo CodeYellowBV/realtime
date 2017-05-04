@@ -1,8 +1,8 @@
 from src.hub import Subscription
-import unittest
+from unittest import TestCase, mock
 
 
-class Scope(unittest.TestCase):
+class Scope(TestCase):
     def setUp(self):
         self.subscription = Subscription(None, 42, 'person')
 
@@ -48,6 +48,22 @@ class Scope(unittest.TestCase):
         assert result is False
 
 
-class HandleEvent(unittest.testCase):
+class HandleEvent(TestCase):
     def setUp(self):
         self.subscription = Subscription(None, 42, 'person')
+        self.subscription.publish = mock.MagicMock(name='subscription.publish')
+
+    def test_save_wrong_target(self):
+        self.subscription.handle_event('animal', 'save', {'id': 1}, None)
+        assert self.subscription.publish.call_count == 0
+
+    def test_delete_wrong_target(self):
+        self.subscription.handle_event('animal', 'delete', {'id': 1}, None)
+        assert self.subscription.publish.call_count == 0
+
+    def test_update_wrong_target(self):
+        self.subscription.handle_event('animal', 'update', {'id': 1, 'name': 'foo'}, {'id': 1, 'name': 'bar'})
+        assert self.subscription.publish.call_count == 0
+
+    # test handle event for different target
+    # returns nothing
