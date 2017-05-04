@@ -41,9 +41,15 @@ export default class TimeEntry extends Component {
         }
     };
 
-    handleSubmit = () => {
+    @action handleSubmit = () => {
         const { entry, viewStore } = this.props;
         const now = moment();
+        // If the entry already existed, we just want to set the end time.
+        if (entry.id && !entry.endedAt) {
+            entry._editing = true;
+            entry.endedAt = now;
+            return;
+        }
         let msg = '';
         if (entry.startedAt.isAfter(now)) {
             msg = 'From time cannot be in the future';
@@ -81,6 +87,14 @@ export default class TimeEntry extends Component {
 
     render() {
         const { entry } = this.props;
+        let submitText = 'Save';
+        if (!entry.id && !entry.endedAt) {
+            submitText = 'Start';
+        }
+        if (entry.id && !entry.endedAt) {
+            submitText = 'Stop';
+        }
+
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
                 <TimeEntryFormField label="Project" size="1">
@@ -126,7 +140,7 @@ export default class TimeEntry extends Component {
                         value={entry.endedAt}
                     />
                 </TimeEntryFormField>
-                <Button type="submit">Save</Button>
+                <Button type="submit">{submitText}</Button>
             </TimeEntryForm>
         );
     }
