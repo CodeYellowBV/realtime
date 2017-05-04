@@ -9,5 +9,5 @@ export const TimeEntryForm = styled(Form)`
 
 export const TimeEntryFormField = styled(FormField)`
     flex: ${props => props.size || 0};
-    margin-right: .9em;
+    margin: 0 8px;
 `;

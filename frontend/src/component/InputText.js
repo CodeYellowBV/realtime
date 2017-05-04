@@ -6,6 +6,9 @@ import styled from 'styled-components';
 const StyledInput = styled.input`
     width: 100%;
     flex: 1;
+    border-radius: 6px;
+    border: 0;
+    padding: 0 10px;
 `;
 
 @observer

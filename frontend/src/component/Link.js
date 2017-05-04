@@ -1,6 +1,13 @@
 import page from 'page';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { COLOR_TINT } from 'styles';
+
+const StyledLink = styled.a`
+    text-decoration: none;
+    color: ${COLOR_TINT};
+`;
 
 export default class Link extends Component {
     static propTypes = {
@@ -17,13 +24,13 @@ export default class Link extends Component {
 
     render() {
         return (
-            <a
+            <StyledLink
                 href={this.props.to}
                 onClick={this.handleClick}
                 className={this.props.className}
             >
                 {this.props.children}
-            </a>
+            </StyledLink>
         );
     }
 }

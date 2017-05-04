@@ -1,8 +1,6 @@
-import { injectGlobal, css } from 'styled-components';
+import { injectGlobal } from 'styled-components';
 
-export const DEFAULT_FONT = css`
-    font-family: -apple-system, system-ui, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-`;
+export const COLOR_TINT = '#eecb3d';
 
 export default injectGlobal`
     html {
@@ -12,7 +10,16 @@ export default injectGlobal`
       box-sizing: inherit;
     }
     body {
-        background: #ccc;
-        ${DEFAULT_FONT};
+        background: #333;
+        color: white;
+        font-family: -apple-system, system-ui, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    textarea,
+    input,
+    button {
+        outline: none;
+        font-family: inherit;
     }
 `;

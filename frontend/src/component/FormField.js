@@ -10,6 +10,7 @@ const StyledField = styled.div`
 
 const StyledLabel = styled.label`
     margin-bottom: 5px;
+    font-size: 14px;
 `;
 
 @observer

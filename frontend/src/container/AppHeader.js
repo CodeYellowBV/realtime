@@ -4,11 +4,11 @@ import { observer } from 'mobx-react';
 import {
     TopMenu,
     TopMenuNav,
-    TopMenuRight,
+    TopMenuBlock,
     TopMenuAvatar,
     TopMenuLink,
+    TopMenuLogo,
 } from '../component/TopMenu';
-import AppHeader from '../component/AppHeader';
 import Button from '../component/Button';
 import View from '../store/View';
 
@@ -22,30 +22,37 @@ export default class Header extends Component {
         this.props.store.performLogout();
     };
 
-    renderLoggedIn() {
-        const { store } = this.props;
+    renderNavigation() {
+        if (!this.props.store.isAuthenticated) return null;
+
         return (
-            <TopMenu>
-                <TopMenuNav>
-                    <TopMenuLink to="/">Personal</TopMenuLink>
-                    <TopMenuLink to="/users">Employees</TopMenuLink>
-                    <TopMenuLink to="/projects">Projects</TopMenuLink>
-                </TopMenuNav>
-                <TopMenuRight>
-                    {store.currentUser.displayName}
-                    <TopMenuAvatar src={store.currentUser.avatarUrl} />
-                    <Button onClick={this.handleClickLogout}>Logout</Button>
-                </TopMenuRight>
-            </TopMenu>
+            <TopMenuNav>
+                <TopMenuLink to="/">Personal</TopMenuLink>
+                <TopMenuLink to="/users">Employees</TopMenuLink>
+                <TopMenuLink to="/projects">Projects</TopMenuLink>
+            </TopMenuNav>
         );
     }
 
-    render() {
+    renderAccount() {
         const { store } = this.props;
+        if (!this.props.store.isAuthenticated) return null;
+
         return (
-            <AppHeader>
-                {store.isAuthenticated ? this.renderLoggedIn() : null}
-            </AppHeader>
+            <TopMenuBlock onClick={this.handleClickLogout}>
+                {store.currentUser.displayName}
+                <TopMenuAvatar src={store.currentUser.avatarUrl} />
+            </TopMenuBlock>
+        )
+    }
+
+    render() {
+        return (
+            <TopMenu>
+                <TopMenuLogo>CY Time</TopMenuLogo>
+                {this.renderNavigation()}
+                {this.renderAccount()}
+            </TopMenu>
         );
     }
 }

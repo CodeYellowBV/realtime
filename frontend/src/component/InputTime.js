@@ -17,8 +17,8 @@ const StyledButton = styled.button`
     background: #fff;
     border: 0;
     outline: none;
-    font-size: 18px;
-    height: 40px;
+    font-size: 20px;
+    height: 48px;
     padding: 0 10px;
 
     ${props => (props.flex ? `
@@ -26,10 +26,10 @@ const StyledButton = styled.button`
     ` : null)};
 
     ${props => (props.showOverlay ? `
-        border-radius: 6px 6px 0 0;
+        border-radius: 8px 8px 0 0;
         background: #eee;
     ` : `
-        border-radius: 6px;
+        border-radius: 8px;
     `)};
 
     ${props => {
@@ -49,7 +49,7 @@ const StyledButton = styled.button`
 const Overlay = styled.div`
     background: white;
     border-top: 1px solid #999;
-    border-radius: 0 0 6px 6px;
+    border-radius: 0 0 8px 8px;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -67,7 +67,7 @@ const ActionContainer = styled.div`
 const StyledInput = styled.input`
     margin: 0 10px 10px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 8px;
     text-align: center;
     font-size: 18px;
     height: 40px;

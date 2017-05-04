@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { DEFAULT_FONT } from '../styles';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-    ${DEFAULT_FONT}
+    background: #fff;
+    border-radius: 8px;
+    border: 0;
+    height: 40px;
+    padding: 0 16px;
 `;
 
 const Button = props => (
