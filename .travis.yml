@@ -5,4 +5,6 @@ python:
 install:
     - cd backend && pip install -r packages.pip
 script:
-    - cd backend && python manage.py test
+    - ls -l
+    - pwd
+    - python manage.py test
