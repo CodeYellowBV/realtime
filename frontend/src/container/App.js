@@ -5,6 +5,7 @@ import NotificationArea from '../component/NotificationArea';
 import Login from './Login';
 import Header from './AppHeader';
 import AppContainer from '../component/AppContainer';
+import ContentContainer from '../component/ContentContainer';
 import NetworkInfo from '../component/NetworkInfo';
 import View from '../store/View';
 
@@ -41,7 +42,9 @@ export default class App extends Component {
             <AppContainer>
                 <Header store={store} />
                 <NotificationArea store={store} />
-                {content}
+                <ContentContainer>
+                    {content}
+                </ContentContainer>
                 <NetworkInfo store={store} />
             </AppContainer>
         );

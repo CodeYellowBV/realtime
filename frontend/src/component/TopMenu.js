@@ -3,11 +3,9 @@ import Link from './Link';
 
 export const TopMenu = styled.div`
     height: 64px;
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    flex: 1;
     background: #222;
     padding: 0 16px;
 `;
