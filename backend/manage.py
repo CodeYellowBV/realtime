@@ -26,5 +26,11 @@ def runserver():
         server.serve_forever()
 
 
+@manager.command
+def test():
+    import tests
+    tests.run()
+
+
 if __name__ == '__main__':
     manager.run()

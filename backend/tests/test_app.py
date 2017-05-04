@@ -1,9 +1,6 @@
-from flask import Flask
-import unittest
-
 from app import app, db
 from src.models import Project
-# from constants import test_logs
+import unittest
 
 
 class CyTestCase(unittest.TestCase):
@@ -21,15 +18,12 @@ class CyTestCase(unittest.TestCase):
         """
         db.drop_all()
 
-    def test_foo(self):
+    def test_db(self):
         project = Project({
             'name': '__TEST',
             'description': 'SHOULD NOT BE IN PSQL',
         }, None)
+        assert project.id is None
         db.session.add(project)
         db.session.commit()
-        assert True
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert project.id == 1
