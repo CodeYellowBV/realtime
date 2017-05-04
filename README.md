@@ -1,5 +1,7 @@
 # CY Time
 
+[![Build Status](https://travis-ci.org/CodeYellowBV/cy-time.svg?branch=master)](https://travis-ci.org/CodeYellowBV/cy-time)
+
 CY Time is a time tracking tool made from scratch for the needs of Code Yellow employees.
 
 It is work in progress.
