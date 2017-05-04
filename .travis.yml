@@ -6,7 +6,7 @@ cache:
   pip: true
 install:
     - cd backend
-    - pip install --user codecov coverage
+    - pip install codecov coverage
     - pip install -r packages.pip
 script:
     - CY_ENV_FILE=../.env.example coverage run manage.py test
