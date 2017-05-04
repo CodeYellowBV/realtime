@@ -8,7 +8,7 @@ const StyledInput = styled.input`
     flex: 1;
     border-radius: 6px;
     border: 0;
-    padding: 0 10px;
+    padding: 0 8px;
 `;
 
 @observer

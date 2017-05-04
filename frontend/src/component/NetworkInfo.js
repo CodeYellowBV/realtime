@@ -11,7 +11,7 @@ const Info = styled.div`
     width: 200px;
     background: #76251b;
     color: #fff;
-    padding: 10px;
+    padding: 8px;
 `;
 
 @observer

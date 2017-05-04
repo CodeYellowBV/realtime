@@ -5,21 +5,16 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import moment from 'moment';
 import onClickOutside from 'react-onclickoutside';
+import Button from './Button';
 
 const Container = styled.div`
-    flex: 1;
-    display: flex;
     position: relative;
 `;
 
-const StyledButton = styled.button`
-    cursor: pointer;
-    background: #fff;
-    border: 0;
-    outline: none;
+export const InputTimeButton = styled(Button)`
+    width: 100%;
     font-size: 20px;
     height: 48px;
-    padding: 0 10px;
 
     ${props => (props.flex ? `
         flex: ${props.flex}
@@ -33,9 +28,7 @@ const StyledButton = styled.button`
     `)};
 
     ${props => {
-    if (!props.variation) {
-        return null;
-    }
+    if (!props.variation) return null;
 
     switch (props.variation) {
         case 'warning':
@@ -65,7 +58,7 @@ const ActionContainer = styled.div`
 `;
 
 const StyledInput = styled.input`
-    margin: 0 10px 10px;
+    margin: 0 8px 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
     text-align: center;
@@ -143,7 +136,7 @@ export default onClickOutside(
             }
 
             return (
-                <StyledButton
+                <InputTimeButton
                     type="button"
                     variation="warning"
                     onClick={() => {
@@ -151,7 +144,7 @@ export default onClickOutside(
                     }}
                 >
                     Clear
-                </StyledButton>
+                </InputTimeButton>
             );
         }
 
@@ -159,7 +152,7 @@ export default onClickOutside(
             const now = moment();
             return (
                 <Container>
-                    <StyledButton
+                    <InputTimeButton
                         type="button"
                         flex={1}
                         onClick={this.toggleOverlay}
@@ -168,15 +161,15 @@ export default onClickOutside(
                         {this.props.value
                             ? this.props.value.format('H:mm')
                             : '—'}
-                    </StyledButton>
+                    </InputTimeButton>
                     <Overlay hide={!this.showOverlay}>
                         <ActionContainer>
-                            <StyledButton
+                            <InputTimeButton
                                 type="button"
                                 onClick={this.handleButtonClick}
                             >
                                 Now
-                            </StyledButton>
+                            </InputTimeButton>
                             {this.renderClear()}
                         </ActionContainer>
                         <StyledInput

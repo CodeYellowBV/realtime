@@ -8,6 +8,13 @@ const StyledButton = styled.button`
     border: 0;
     height: 40px;
     padding: 0 16px;
+    cursor: pointer;
+
+    &:disabled {
+        background: #ddd;
+        color: #999;
+        cursor: initial;
+    }
 `;
 
 const Button = props => (

@@ -9,7 +9,7 @@ const Container = styled.div`
 const Main = styled.main`
     margin: 0 auto;
     max-width: 1200px;
-    padding: 20px;
+    padding: 16px;
 `;
 
 const ContentContainer = ({ children }) => (

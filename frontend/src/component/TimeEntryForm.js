@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export const TimeEntryForm = styled(Form)`
     display: flex;
-    padding: 20px;
+    margin-bottom: 40px;
 `;
 
 export const TimeEntryFormField = styled(FormField)`

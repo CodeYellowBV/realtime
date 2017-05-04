@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import InputText from '../component/InputText';
-import InputTime from '../component/InputTime';
+import InputTime, { InputTimeButton } from '../component/InputTime';
 import Button from '../component/Button';
 import SmartDuration from '../component/SmartDuration';
 import InputSelect from '../component/InputSelect';
@@ -108,14 +108,14 @@ export default class TimeEntry extends Component {
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Duration" size="1">
-                    <div>
+                    <InputTimeButton disabled>
                         {entry.endedAt
                             ? <SmartDuration
                                   startedAt={entry.startedAt}
                                   endedAt={entry.endedAt}
                               />
                             : '—'}
-                    </div>
+                    </InputTimeButton>
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Until" size="1">
                     <InputTime
