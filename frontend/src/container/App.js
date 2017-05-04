@@ -8,7 +8,7 @@ import AppContainer from '../component/AppContainer';
 import ContentContainer from '../component/ContentContainer';
 import NetworkInfo from '../component/NetworkInfo';
 import View from '../store/View';
-import Router from '../Router';
+import Router from './Router';
 import { BrowserRouter } from 'react-router-dom';
 
 @observer
