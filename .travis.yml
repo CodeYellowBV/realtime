@@ -3,8 +3,8 @@ language: python
 python:
     - "3.4"
 install:
-    - cd backend && pip install -r packages.pip
+    - cd backend
+    - pip install -r packages.pip
 script:
-    - ls -l
-    - pwd
+    - source ../.env.example
     - python manage.py test
