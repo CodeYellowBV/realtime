@@ -2,6 +2,8 @@ sudo: false
 language: python
 python:
     - "3.4"
+cache:
+  pip: true
 install:
     - cd backend
     - pip install -r packages.pip
