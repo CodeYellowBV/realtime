@@ -11,6 +11,7 @@ export class Entry extends Model {
     @observable user = null;
     @observable startedAt = null;
     @observable endedAt = null;
+    @observable _editing = false;
 
     casts() {
         return {

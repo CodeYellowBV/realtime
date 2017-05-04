@@ -44,7 +44,9 @@ export default class Personal extends Component {
     };
 
     render() {
-        const runningEntry = this.entryStore.find(entry => !entry.endedAt);
+        const runningEntry = this.entryStore.find(
+            entry => entry._editing || !entry.endedAt
+        );
         return (
             <div>
                 <TimeEntry

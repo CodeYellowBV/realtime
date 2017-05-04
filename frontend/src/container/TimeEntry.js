@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import { action } from 'mobx';
 import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime, { InputTimeButton } from '../component/InputTime';
@@ -20,8 +21,9 @@ export default class TimeEntry extends Component {
         viewStore: PropTypes.instanceOf(View).isRequired,
     };
 
-    handleInput = (key, value) => {
+    @action handleInput = (key, value) => {
         const { entry } = this.props;
+        entry._editing = true;
         if (key === 'description') {
             entry.description = value;
         }
