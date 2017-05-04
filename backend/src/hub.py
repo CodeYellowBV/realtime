@@ -45,11 +45,13 @@ class Subscription():
         was_subscribed = self.is_in_scope(target, snapshot)
 
         if is_subscribed and not was_subscribed:
-            self.publish(item, 'add')
+            return self.publish(item, 'add')
         if was_subscribed and not is_subscribed:
-            self.publish(item, 'remove')
+            return self.publish(item, 'remove')
+        if is_subscribed and was_subscribed:
+            return self.publish(item, 'update')
 
-        return self.publish(item, 'update')
+        return
 
     def publish(self, item, publish_type):
         res = json.dumps({
@@ -111,9 +113,7 @@ class SocketContainer():
         if type(res) is dict and res['code'] == 'success':
             # Handle publish for successful saves, deletes and updates
             if res['type'] in ['save', 'update', 'delete']:
-                if 'snapshot' in res:
-                    self.hub.handle_event(res['target'], res['type'], res['data'], res['snapshot'])
-                self.hub.handle_event(res['target'], res['type'], res['data'], None)
+                self.hub.handle_event(res['target'], res['type'], res['data'], res.get('snapshot', None))
 
         self.ws.send(json.dumps(res))
 
