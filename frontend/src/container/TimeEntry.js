@@ -132,10 +132,10 @@ export default class TimeEntry extends Component {
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Duration" size="1">
                     <InputTimeButton disabled>
-                        {entry.endedAt
+                        {entry.startedAt
                             ? <SmartDuration
                                   startedAt={entry.startedAt || moment()}
-                                  endedAt={entry.endedAt || moment()}
+                                  endedAt={entry.endedAt}
                               />
                             : '—'}
                     </InputTimeButton>
