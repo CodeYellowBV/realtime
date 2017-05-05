@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import EntryOverview from '../container/EntryOverview';
 import View from '../store/View';
+import Title from '../component/Title';
 import { ProjectStore } from '../store/Project';
 import { EntryStore } from '../store/Entry';
 
@@ -42,8 +43,11 @@ export default class ProjectEntriesScreen extends Component {
     };
 
     render() {
+        const projectId = this.props.match.params.id;
+        const project = this.projectStore.get(projectId);
         return (
             <div>
+                <Title>Project {project ? project.name : 'Unknown'}</Title>
                 <EntryOverview
                     entries={this.entryStore}
                     projectStore={this.projectStore}
