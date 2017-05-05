@@ -53,17 +53,53 @@ class HandleEvent(TestCase):
         self.subscription = Subscription(None, 42, 'person')
         self.subscription.publish = mock.MagicMock(name='subscription.publish')
 
-    def test_save_wrong_target(self):
+    def test_save_outside_scope(self):
         self.subscription.handle_event('animal', 'save', {'id': 1}, None)
         assert self.subscription.publish.call_count == 0
 
-    def test_delete_wrong_target(self):
-        self.subscription.handle_event('animal', 'delete', {'id': 1}, None)
-        assert self.subscription.publish.call_count == 0
+    def test_save_publish(self):
+        item = {'id': 1}
+        self.subscription.handle_event('person', 'save', item, None)
+        assert self.subscription.publish.call_count == 1
+        assert self.subscription.publish.call_args[0] == (item, 'add')
 
-    def test_update_wrong_target(self):
+    def test_update_into_scope_publish(self):
+        alive = {'alive': True}
+        free = {'alive': False}
+        self.subscription.scope = alive
+        # A person goes from free => alive
+        self.subscription.handle_event('person', 'update', alive, free)
+        assert self.subscription.publish.call_count == 1
+        assert self.subscription.publish.call_args[0] == (alive, 'add')
+
+    def test_update_out_of_scope_publish(self):
+        alive = {'alive': True}
+        free = {'alive': False}
+        self.subscription.scope = alive
+        # A person goes from alive => free
+        self.subscription.handle_event('person', 'update', free, alive)
+        assert self.subscription.publish.call_count == 1
+        assert self.subscription.publish.call_args[0] == (free, 'remove')
+
+    def test_update_inside_scope_publish(self):
+        alive = {'alive': True}
+        alive_and_well = {'alive': True, 'well': True}
+        self.subscription.scope = alive
+        # A person goes from alive => alive_and_well
+        self.subscription.handle_event('person', 'update', alive_and_well, alive)
+        assert self.subscription.publish.call_count == 1
+        assert self.subscription.publish.call_args[0] == (alive_and_well, 'update')
+
+    def test_update_outside_scope(self):
         self.subscription.handle_event('animal', 'update', {'id': 1, 'name': 'foo'}, {'id': 1, 'name': 'bar'})
         assert self.subscription.publish.call_count == 0
 
-    # test handle event for different target
-    # returns nothing
+    def test_delete_inside_scope(self):
+        person = {'id': 1}
+        self.subscription.handle_event('person', 'delete', person, None)
+        assert self.subscription.publish.call_count == 1
+        assert self.subscription.publish.call_args[0] == (person, 'remove')
+
+    def test_delete_outside_scope(self):
+        self.subscription.handle_event('animal', 'delete', {'id': 1}, None)
+        assert self.subscription.publish.call_count == 0
