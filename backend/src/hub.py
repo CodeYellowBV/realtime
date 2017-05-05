@@ -124,8 +124,8 @@ class Hub():
         self.sockets = []
 
     def handle_event(self, target, _type, item, snapshot):
-        # Find the sockets that are listening to that target with overlapping scope
-        for socket in self.sockets:
+        # Clone self.sockets because they may be removed when closed
+        for socket in list(self.sockets):
             socket.handle_event(target, _type, item, snapshot)
 
     def add(self, ws):
