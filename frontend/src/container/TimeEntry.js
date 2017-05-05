@@ -93,7 +93,7 @@ export default class TimeEntry extends Component {
     formatProjectToOption(project) {
         return {
             value: String(project.id),
-            name: project.name,
+            label: project.name,
         };
     }
 

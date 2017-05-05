@@ -27,6 +27,7 @@
     "react-notification": "^6.6.0",
     "react-onclickoutside": "^5.10.0",
     "react-router-dom": "^4.1.1",
+    "react-select": "1.0.0-rc.3",
     "react-test-renderer": "^15.4.2",
     "styled-components": "^1.4.4",
     "urijs": "^1.18.9",

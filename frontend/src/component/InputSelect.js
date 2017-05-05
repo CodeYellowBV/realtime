@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer, PropTypes as MobxTypes } from 'mobx-react';
+import Select from 'react-select';
 
 @observer
 export default class InputSelect extends Component {
@@ -16,8 +17,8 @@ export default class InputSelect extends Component {
         value: '',
     };
 
-    handleChange = e => {
-        this.props.onChange(this.props.name, e.target.value);
+    handleChange = option => {
+        this.props.onChange(this.props.name, option ? option.value : '');
     };
 
     renderOption(option) {
@@ -30,10 +31,12 @@ export default class InputSelect extends Component {
 
     render() {
         return (
-            <select value={this.props.value} onChange={this.handleChange}>
-                <option value="">{this.props.placeholder}</option>
-                {this.props.options.map(this.renderOption)}
-            </select>
+            <Select
+                value={this.props.value}
+                options={this.props.options}
+                onChange={this.handleChange}
+                placeholder={this.props.placeholder}
+            />
         );
     }
 }

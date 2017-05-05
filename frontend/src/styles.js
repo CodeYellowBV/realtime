@@ -1,4 +1,5 @@
 import { injectGlobal } from 'styled-components';
+import 'react-select/dist/react-select.css';
 
 export const COLOR_TINT = '#eecb3d';
 
