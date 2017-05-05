@@ -11,8 +11,8 @@ const StyledButton = styled.button`
     cursor: pointer;
 
     &:disabled {
-        background: #ddd;
-        color: #999;
+        background: #444;
+        color: #fff;
         cursor: initial;
     }
 `;
