@@ -9,11 +9,12 @@ class HandleEvent(TestCase):
     def test_iterates_through_closed_sockets(self):
         sub = mock.MagicMock(name='SocketContainer.sub')
         wsOpen = mock.MagicMock(name='SocketContainer.wsOpen')
-        wsOpen.closed.return_value = False
+        wsOpen.closed = False
 
         wsClosed = mock.MagicMock(name='SocketContainer.wsClosed')
-        wsClosed.closed.return_value = True
+        wsClosed.closed = True
 
+        self.hub.add(wsClosed)
         containerOpen = self.hub.add(wsOpen)
         containerOpen.subs = [sub]
 
