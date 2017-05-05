@@ -6,7 +6,6 @@ import EntryOverview from '../container/EntryOverview';
 import View from '../store/View';
 import { Entry, EntryStore } from '../store/Entry';
 import { ProjectStore } from '../store/Project';
-import moment from 'moment';
 
 @observer
 export default class Personal extends Component {
@@ -51,6 +50,7 @@ export default class Personal extends Component {
             <div>
                 <TimeEntry
                     entry={runningEntry || this.currentEntry}
+                    clearEntry={!runningEntry}
                     projectStore={this.projectStore}
                     viewStore={this.props.viewStore}
                 />

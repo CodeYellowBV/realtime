@@ -79,12 +79,14 @@ export default onClickOutside(
             value: PropTypes.object,
             disableClear: PropTypes.bool,
             disableNow: PropTypes.bool,
+            showDash: PropTypes.bool,
         };
 
         static defaultProps = {
             value: null,
             disableClear: false,
             disableNow: false,
+            showDash: false,
         };
 
         @observable showOverlay = false;
@@ -169,7 +171,7 @@ export default onClickOutside(
                     >
                         {this.props.value
                             ? this.props.value.format('H:mm')
-                            : 'Now'}
+                            : this.props.showDash ? '—' : 'Now'}
                     </InputTimeButton>
                     <Overlay hide={!this.showOverlay}>
                         <ActionContainer>

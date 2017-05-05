@@ -19,6 +19,7 @@ export default class TimeEntry extends Component {
         entry: PropTypes.instanceOf(Entry).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
         viewStore: PropTypes.instanceOf(View).isRequired,
+        clearEntry: PropTypes.bool,
     };
 
     @action handleInput = (key, value) => {
@@ -71,7 +72,10 @@ export default class TimeEntry extends Component {
         if (msg === '') {
             entry.user = this.props.viewStore.currentUser.id;
             entry.save();
-            entry.clear();
+            entry._editing = false;
+            if (this.props.clearEntry) {
+                entry.clear();
+            }
         } else {
             viewStore.addNotification({
                 message: msg,
@@ -142,6 +146,7 @@ export default class TimeEntry extends Component {
                         onChange={this.handleInput}
                         value={entry.endedAt}
                         disableNow
+                        showDash={entry.isNew}
                     />
                 </TimeEntryFormField>
                 <Button type="submit">{submitText}</Button>
