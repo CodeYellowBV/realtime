@@ -75,6 +75,6 @@ export default class SmartDuration extends Component {
             style = { color: 'red' };
         }
 
-        return <span style={style}>{duration.format('h[h] m[m] s[s]')}</span>;
+        return <span style={style}>{duration.format('h[h] m[m]')}</span>;
     }
 }
