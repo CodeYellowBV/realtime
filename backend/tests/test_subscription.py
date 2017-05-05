@@ -1,5 +1,6 @@
 from src.hub import Subscription
 from unittest import TestCase, mock
+import json
 
 
 class Scope(TestCase):
@@ -103,3 +104,65 @@ class HandleEvent(TestCase):
     def test_delete_outside_scope(self):
         self.subscription.handle_event('animal', 'delete', {'id': 1}, None)
         assert self.subscription.publish.call_count == 0
+
+
+class Publish(TestCase):
+    def test_sends_json_over_ws(self):
+        item = {'id': 1}
+        reqId = 42
+        target = 'person'
+        pubType = 'add'
+
+        socket = mock.MagicMock(name='Subscription.socket')
+        socket.ws.closed = False
+        subscription = Subscription(socket, reqId, target)
+
+        res = json.dumps({
+            'type': 'publish',
+            'target': target,
+            'requestId': reqId,
+            'data': {
+                pubType: [item]
+            }
+        })
+
+        subscription.publish(item, pubType)
+
+        assert socket.ws.send.call_count == 1
+        assert socket.ws.send.call_args[0] == (res,)
+
+    def test_does_not_with_closed_ws(self):
+        item = {'id': 1}
+        reqId = 42
+        target = 'person'
+        pubType = 'add'
+
+        socket = mock.MagicMock(name='Subscription.socket')
+        socket.ws.closed = True
+        subscription = Subscription(socket, reqId, target)
+
+        subscription.publish(item, pubType)
+
+        assert socket.ws.send.call_count == 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
