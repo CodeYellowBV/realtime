@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Personal from '../screen/Personal';
 import Project from '../screen/Project';
+import ProjectEntries from '../screen/ProjectEntries';
 import User from '../screen/User';
 import NotFound from '../component/NotFound';
 
@@ -29,6 +30,12 @@ export default class Router extends Component {
                 <Route
                     path="/projects"
                     render={() => <Project viewStore={store} />}
+                />
+                <Route
+                    path="/project/entries/:id"
+                    render={rProps => (
+                        <ProjectEntries viewStore={store} {...rProps} />
+                    )}
                 />
                 <Route render={NotFound} viewStore={() => <NotFound />} />
             </Switch>

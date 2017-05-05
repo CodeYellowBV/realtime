@@ -7,6 +7,7 @@ import {
     EntryItemActions,
 } from '../component/EntryList';
 import Button from '../component/Button';
+import Link from '../component/Link';
 import { Project } from '../store/Project';
 
 @observer
@@ -29,7 +30,9 @@ export default class ProjectOverviewItem extends Component {
         return (
             <EntryItem>
                 <EntryItemProject>
-                    {project.name}
+                    <Link to={`/project/entries/${project.id}`}>
+                        {project.name}
+                    </Link>
                 </EntryItemProject>
                 <EntryItemActions>
                     <Button onClick={this.handleDelete}>×</Button>
