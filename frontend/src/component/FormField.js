@@ -21,10 +21,16 @@ export default class FormField extends Component {
         className: PropTypes.string,
     };
 
+    renderLabel() {
+        if (!this.props.label) return null
+
+        return <StyledLabel>{this.props.label}</StyledLabel>;
+    }
+
     render() {
         return (
             <StyledField className={this.props.className}>
-                <StyledLabel>{this.props.label}</StyledLabel>
+                {this.renderLabel()}
                 {this.props.children}
             </StyledField>
         );

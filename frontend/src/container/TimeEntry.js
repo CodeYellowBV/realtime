@@ -5,13 +5,16 @@ import { action } from 'mobx';
 import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime, { InputTimeButton } from '../component/InputTime';
-import Button from '../component/Button';
 import SmartDuration from '../component/SmartDuration';
 import InputSelect from '../component/InputSelect';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
 import { ProjectStore } from '../store/Project';
 import { Entry } from '../store/Entry';
 import View from '../store/View';
+import Icon from 'component/Icon';
+import IconAdd from 'image/icon-add.svg';
+import IconRecord from 'image/icon-record.svg';
+import IconStop from 'image/icon-stop.svg';
 
 @observer
 export default class TimeEntry extends Component {
@@ -92,15 +95,27 @@ export default class TimeEntry extends Component {
         };
     }
 
+    renderButton() {
+        const { entry } = this.props;
+
+        let icon = IconAdd;
+        if (!entry.endedAt) {
+            if (entry.id) {
+                icon = IconStop;
+            } else {
+                icon = IconRecord;
+            }
+        }
+
+        return (
+            <TimeEntryFormField>
+                <Icon icon={icon} />
+            </TimeEntryFormField>
+        );
+    }
+
     render() {
         const { entry } = this.props;
-        let submitText = 'Save';
-        if (!entry.id && !entry.endedAt) {
-            submitText = 'Start';
-        }
-        if (entry.id && !entry.endedAt) {
-            submitText = 'Stop';
-        }
 
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
@@ -149,7 +164,7 @@ export default class TimeEntry extends Component {
                         showDash={entry.isNew}
                     />
                 </TimeEntryFormField>
-                <Button type="submit">{submitText}</Button>
+                {this.renderButton()}
             </TimeEntryForm>
         );
     }

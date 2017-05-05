@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 const StyledInput = styled.input`
     width: 100%;
-    flex: 1;
-    border-radius: 6px;
+    height: 48px;
+    border-radius: 8px;
     border: 0;
     padding: 0 8px;
 `;
