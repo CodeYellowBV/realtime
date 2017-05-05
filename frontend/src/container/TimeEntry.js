@@ -50,7 +50,7 @@ export default class TimeEntry extends Component {
             entry.endedAt = now;
         }
         if (!entry.startedAt) {
-            entry.endedAt = now;
+            entry.startedAt = now;
         }
         let msg = '';
         if (entry.startedAt.isAfter(now)) {
@@ -130,8 +130,8 @@ export default class TimeEntry extends Component {
                     <InputTimeButton disabled>
                         {entry.endedAt
                             ? <SmartDuration
-                                  startedAt={entry.startedAt}
-                                  endedAt={entry.endedAt}
+                                  startedAt={entry.startedAt || moment()}
+                                  endedAt={entry.endedAt || moment()}
                               />
                             : '—'}
                     </InputTimeButton>
@@ -141,6 +141,7 @@ export default class TimeEntry extends Component {
                         name="endedAt"
                         onChange={this.handleInput}
                         value={entry.endedAt}
+                        disableNow
                     />
                 </TimeEntryFormField>
                 <Button type="submit">{submitText}</Button>

@@ -78,11 +78,13 @@ export default onClickOutside(
             name: PropTypes.string.isRequired,
             value: PropTypes.object,
             disableClear: PropTypes.bool,
+            disableNow: PropTypes.bool,
         };
 
         static defaultProps = {
             value: null,
             disableClear: false,
+            disableNow: false,
         };
 
         @observable showOverlay = false;
@@ -123,11 +125,8 @@ export default onClickOutside(
             }
         }
 
-        handleButtonClick = () => {
-            const now = moment();
-
-            this.handleChangeDate(now.format('YYYY-MM-DD'));
-            this.handleChangeTime(now.format('HH:mm'));
+        handleReset = () => {
+            this.props.onChange(this.props.name, null);
         };
 
         renderClear() {
@@ -139,11 +138,21 @@ export default onClickOutside(
                 <InputTimeButton
                     type="button"
                     variation="warning"
-                    onClick={() => {
-                        this.changeValue(null);
-                    }}
+                    onClick={this.handleReset}
                 >
                     Clear
+                </InputTimeButton>
+            );
+        }
+
+        renderNow() {
+            if (this.props.disableNow) {
+                return null;
+            }
+
+            return (
+                <InputTimeButton type="button" onClick={this.handleReset}>
+                    Now
                 </InputTimeButton>
             );
         }
@@ -160,16 +169,11 @@ export default onClickOutside(
                     >
                         {this.props.value
                             ? this.props.value.format('H:mm')
-                            : '—'}
+                            : 'Now'}
                     </InputTimeButton>
                     <Overlay hide={!this.showOverlay}>
                         <ActionContainer>
-                            <InputTimeButton
-                                type="button"
-                                onClick={this.handleButtonClick}
-                            >
-                                Now
-                            </InputTimeButton>
+                            {this.renderNow()}
                             {this.renderClear()}
                         </ActionContainer>
                         <StyledInput

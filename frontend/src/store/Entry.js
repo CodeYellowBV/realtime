@@ -20,12 +20,6 @@ export class Entry extends Model {
         };
     }
 
-    @action partialClear() {
-        const startedAt = this.startedAt;
-        this.clear();
-        this.startedAt = startedAt;
-    }
-
     @computed get differenceInMinutes() {
         if (this.startedAt && this.endedAt) {
             return this.endedAt.diff(this.startedAt, 'minutes');

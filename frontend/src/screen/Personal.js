@@ -17,7 +17,7 @@ export default class Personal extends Component {
     componentWillMount() {
         this.projectStore = new ProjectStore();
         this.entryStore = new EntryStore();
-        this.currentEntry = new Entry({ startedAt: moment() });
+        this.currentEntry = new Entry();
     }
 
     componentDidMount() {
