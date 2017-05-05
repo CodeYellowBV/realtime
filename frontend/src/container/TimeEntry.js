@@ -28,20 +28,22 @@ export default class TimeEntry extends Component {
     @action handleInput = (key, value) => {
         const { entry } = this.props;
         entry._editing = true;
-        if (key === 'description') {
-            entry.description = value;
-        }
 
-        if (key === 'project') {
-            entry.project = isNaN(value) ? null : parseInt(value);
-        }
-
-        if (key === 'startedAt') {
-            entry.startedAt = value;
-        }
-
-        if (key === 'endedAt') {
-            entry.endedAt = value;
+        switch (key) {
+            case 'description':
+                entry.description = value;
+                break;
+            case 'project':
+                entry.project = isNaN(value) ? null : parseInt(value);
+                break;
+            case 'startedAt':
+                entry.startedAt = value;
+                break;
+            case 'endedAt':
+                entry.endedAt = value;
+                break;
+            default:
+                break;
         }
     };
 
