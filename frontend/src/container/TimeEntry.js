@@ -48,7 +48,9 @@ export default class TimeEntry extends Component {
         if (entry.id && !entry.endedAt) {
             entry._editing = true;
             entry.endedAt = now;
-            return;
+        }
+        if (!entry.startedAt) {
+            entry.endedAt = now;
         }
         let msg = '';
         if (entry.startedAt.isAfter(now)) {
@@ -67,8 +69,9 @@ export default class TimeEntry extends Component {
             }
         }
         if (msg === '') {
+            entry.user = this.props.viewStore.currentUser.id;
             entry.save();
-            entry.partialClear();
+            entry.clear();
         } else {
             viewStore.addNotification({
                 message: msg,
