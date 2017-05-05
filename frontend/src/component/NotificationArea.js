@@ -2,6 +2,14 @@ import { NotificationStack } from 'react-notification';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react';
+import styled from 'styled-components';
+
+// TODO: I don't like this...
+const StyledWrapper = styled.div`
+    .notification-bar-active {
+        font-size: 1.2em; /* FIXME rutger */
+    }
+`;
 
 @observer
 export default class NotificationArea extends React.Component {
@@ -13,10 +21,12 @@ export default class NotificationArea extends React.Component {
     };
     render() {
         return (
-            <NotificationStack
-                notifications={this.props.store.notifications.slice()}
-                onDismiss={this.dismiss}
-            />
+            <StyledWrapper>
+                <NotificationStack
+                    notifications={this.props.store.notifications.slice()}
+                    onDismiss={this.dismiss}
+                />
+            </StyledWrapper>
         );
     }
 }
