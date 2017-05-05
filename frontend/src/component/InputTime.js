@@ -22,26 +22,25 @@ export const InputTimeButton = styled(Button)`
 
     ${props => (props.showOverlay ? `
         border-radius: 8px 8px 0 0;
-        background: #eee;
+        background: #ddd;
     ` : `
         border-radius: 8px;
     `)};
 
     ${props => {
-    if (!props.variation) return null;
+        if (!props.variation) return null;
 
-    switch (props.variation) {
-        case 'warning':
-            return `color: #ec4849;`;
-        default:
-            return null;
-    }
-}};
+        switch (props.variation) {
+            case 'warning':
+                return `color: #ec4849;`;
+            default:
+                return null;
+        }
+    }}
 `;
 
 const Overlay = styled.div`
     background: white;
-    border-top: 1px solid #999;
     border-radius: 0 0 8px 8px;
     display: flex;
     flex-direction: column;
