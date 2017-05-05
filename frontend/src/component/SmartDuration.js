@@ -6,6 +6,7 @@ import moment from 'moment';
 
 // It's not likely you can work for more than 12 hours.
 const UNLIKELY_MINUTES = 720;
+const IMPOSSIBLE_MINUTES = 1440;
 
 @observer
 export default class SmartDuration extends Component {
@@ -71,8 +72,11 @@ export default class SmartDuration extends Component {
         const duration = moment.duration(nowDiff, 'minutes');
 
         let style = {};
-        if (nowDiff > UNLIKELY_MINUTES) {
-            style = { color: 'red' };
+
+        if (nowDiff > IMPOSSIBLE_MINUTES || nowDiff < 0) {
+            style = { color: '#ed4949' };
+        } else if (nowDiff > UNLIKELY_MINUTES) {
+            style = { color: '#eecb3d' };
         }
 
         return <span style={style}>{duration.format('h[h] m[m]')}</span>;
