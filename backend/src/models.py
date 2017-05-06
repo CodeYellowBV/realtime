@@ -5,10 +5,6 @@ import jwt
 import os
 
 
-def get_iso8601(ts):
-    return ts.strftime('%Y-%m-%dT%H:%M:%S%z+0000')
-
-
 class Collection():
     def __init__(self, models=[]):
         self.models = models
@@ -67,8 +63,31 @@ class Base(object):
 
     @classmethod
     def find(cls, session, scope):
-        res = session.query(cls).all()
-        return Collection(res)
+        query = session.query(cls)
+
+        for col in cls.__table__.columns:
+            key = col.name
+
+            if key in scope:
+                val = scope[key]
+                query = query.filter_by(**{key: val})
+                # from pudb import set_trace; set_trace()
+                continue
+
+            # Translate 'project_id' to 'project', a relation key shorthand
+            if len(col.foreign_keys):
+                assert key.endswith('_id')
+                keyRelShorthand = '_'.join(key.split('_')[:-1])
+            else:
+                continue
+
+            if keyRelShorthand in scope:
+                val = scope[keyRelShorthand]
+                query = query.filter_by(**{key: val})
+                continue
+
+        # from pudb import set_trace; set_trace()
+        return Collection(query.all())
 
 
 class Entry(Base, db.Model):
