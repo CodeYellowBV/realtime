@@ -155,9 +155,9 @@ class Controller():
         }
 
     def subscribe(self, cls):
-        result = cls.find_all(self.db.session)
-
         scope = self.body['data'] if 'data' in self.body else {}
+
+        result = cls.find(self.db.session, scope)
 
         # Mark the socket as subscribing so we know what is listening to what
         self.socketContainer.subscribe(self.body['requestId'], self.body['target'], scope)

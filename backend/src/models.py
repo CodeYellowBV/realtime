@@ -13,6 +13,9 @@ class Collection():
     def __init__(self, models=[]):
         self.models = models
 
+    def __len__(self):
+        return len(self.models)
+
     def dump(self):
         return [m.dump() for m in self.models]
 
@@ -42,7 +45,7 @@ class Base(object):
                 setattr(self, key, data[key])
 
     def __repr__(self):
-        return '<Entry %r>' % self.id
+        return '<Model %r>' % self.id
 
     def dump(self):
         data = {}
@@ -63,7 +66,7 @@ class Base(object):
         return data
 
     @classmethod
-    def find_all(cls, session):
+    def find(cls, session, scope):
         res = session.query(cls).all()
         return Collection(res)
 
