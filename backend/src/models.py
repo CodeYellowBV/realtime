@@ -66,24 +66,17 @@ class Base(object):
         query = session.query(cls)
 
         for col in cls.__table__.columns:
-            key = col.name
-
-            if key in scope:
-                val = scope[key]
-                query = query.filter_by(**{key: val})
-                # from pudb import set_trace; set_trace()
-                continue
+            dbKey = col.name
+            scopeKey = dbKey
 
             # Translate 'project_id' to 'project', a relation key shorthand
             if len(col.foreign_keys):
-                assert key.endswith('_id')
-                keyRelShorthand = '_'.join(key.split('_')[:-1])
-            else:
-                continue
+                assert dbKey.endswith('_id')
+                scopeKey = '_'.join(dbKey.split('_')[:-1])
 
-            if keyRelShorthand in scope:
-                val = scope[keyRelShorthand]
-                query = query.filter_by(**{key: val})
+            if dbKey in scope or scopeKey in scope:
+                val = scope[scopeKey]
+                query = query.filter_by(**{dbKey: val})
                 continue
 
         # from pudb import set_trace; set_trace()
