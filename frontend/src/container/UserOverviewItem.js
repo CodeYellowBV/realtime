@@ -7,6 +7,7 @@ import {
     EntryItemProject,
     EntryItemDescription,
 } from '../component/EntryList';
+import Link from '../component/Link';
 import { User } from '../store/User';
 import { ProjectStore } from '../store/Project';
 import SmartDuration from '../component/SmartDuration';
@@ -48,7 +49,9 @@ export default class UserOverviewItem extends Component {
         return (
             <EntryItem>
                 <EntryItemProject>
-                    {user.displayName}
+                    <Link to={`/user/entries/${user.id}`}>
+                        {user.displayName}
+                    </Link>
                 </EntryItemProject>
                 <EntryItemDescription>
                     {this.renderEntries(entries)}
