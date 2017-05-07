@@ -17,7 +17,7 @@
     "mitt": "^1.1.2",
     "mobx": "^3.1.7",
     "mobx-react": "^4.1.3",
-    "mobx-spine": "0.11.2",
+    "mobx-spine": "0.11.4",
     "moment": "^2.18.1",
     "moment-duration-format": "^1.3.0",
     "normalize.css": "^5.0.0",
