@@ -9,6 +9,6 @@ install:
     - pip install codecov coverage
     - pip install -r packages.pip
 script:
-    - CY_ENV_FILE=../.env.example coverage run manage.py test
+    - CY_ENV_FILE=../.env.example coverage run --omit="venv/*" manage.py test
 after_success:
     - codecov
