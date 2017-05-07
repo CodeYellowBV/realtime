@@ -22,7 +22,7 @@ export default class EntryOverviewItem extends Component {
     static propTypes = {
         entry: PropTypes.instanceOf(Entry).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
-        userStore: PropTypes.instanceOf(UserStore).isRequired,
+        userStore: PropTypes.instanceOf(UserStore),
     };
 
     handleDelete = () => {
