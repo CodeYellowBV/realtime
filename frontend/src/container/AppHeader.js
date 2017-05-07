@@ -9,7 +9,8 @@ import {
     TopMenuLink,
     TopMenuLogo,
 } from '../component/TopMenu';
-import Button from '../component/Button';
+import Flex from '../component/Flex';
+import ColorPicker from '../container/ColorPicker';
 import View from '../store/View';
 
 @observer
@@ -43,16 +44,19 @@ export default class Header extends Component {
                 {store.currentUser.displayName}
                 <TopMenuAvatar src={store.currentUser.avatarUrl} />
             </TopMenuBlock>
-        )
+        );
     }
 
     render() {
         return (
-            <TopMenu>
-                <TopMenuLogo>CY Time</TopMenuLogo>
-                {this.renderNavigation()}
-                {this.renderAccount()}
-            </TopMenu>
+            <Flex direction="column">
+                <TopMenu>
+                    <TopMenuLogo>CY Time</TopMenuLogo>
+                    {this.renderNavigation()}
+                    {this.renderAccount()}
+                </TopMenu>
+                <ColorPicker store={this.props.store} />
+            </Flex>
         );
     }
 }
