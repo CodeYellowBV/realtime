@@ -1,6 +1,7 @@
 import { observable, computed } from 'mobx';
 import Uri from 'urijs';
 import { User } from './User';
+import { Theme } from './Theme';
 import Socket from '../Socket';
 import { api } from './Base';
 
@@ -8,6 +9,7 @@ export default class ViewStore {
     socket = null;
     @observable online = false;
     @observable currentUser = new User();
+    @observable currentTheme = new Theme();
     @observable notifications = [];
 
     @computed get isAuthenticated() {

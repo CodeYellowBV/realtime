@@ -15,6 +15,10 @@ export const TopMenuNav = styled.nav`
     display: flex;
     align-items: stretch;
     margin: 0 16px;
+
+    > a {
+        ${props => (props.color ? `color: ${props.color}` : '')};
+    }
 `;
 
 export const TopMenuLink = styled(Link)`

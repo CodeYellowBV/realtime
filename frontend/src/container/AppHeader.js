@@ -25,9 +25,10 @@ export default class Header extends Component {
 
     renderNavigation() {
         if (!this.props.store.isAuthenticated) return null;
+        const color = this.props.store.currentTheme.hex;
 
         return (
-            <TopMenuNav>
+            <TopMenuNav color={color}>
                 <TopMenuLink to="/">Personal</TopMenuLink>
                 <TopMenuLink to="/users">Employees</TopMenuLink>
                 <TopMenuLink to="/projects">Projects</TopMenuLink>

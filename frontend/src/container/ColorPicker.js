@@ -9,9 +9,9 @@ export default class ColorPicker extends React.Component {
     static propTypes = {
         store: PropTypes.object.isRequired,
     };
-    handleColorChange(a, b, c) {
-        console.log('handleColorChange', a, b, c);
-    }
+    handleColorChange = color => {
+        this.props.store.currentTheme.hex = color.hex;
+    };
     render() {
         return <Color onChange={this.handleColorChange} />;
     }
