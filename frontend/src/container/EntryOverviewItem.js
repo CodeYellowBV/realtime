@@ -10,6 +10,7 @@ import {
 } from '../component/EntryList';
 import Button from '../component/Button';
 import { ProjectStore } from '../store/Project';
+import { UserStore } from '../store/User';
 import { Entry } from '../store/Entry';
 
 function formatDiffMinutes(minutes) {
@@ -21,6 +22,7 @@ export default class EntryOverviewItem extends Component {
     static propTypes = {
         entry: PropTypes.instanceOf(Entry).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
+        userStore: PropTypes.instanceOf(UserStore).isRequired,
     };
 
     handleDelete = () => {
@@ -33,6 +35,13 @@ export default class EntryOverviewItem extends Component {
         const project = entry.project
             ? this.props.projectStore.get(entry.project)
             : null;
+        let userColumn = null;
+        if (this.props.userStore) {
+            const user = entry.user
+                ? this.props.userStore.get(entry.user)
+                : null;
+            userColumn = <EntryItemHours>{user.displayName}</EntryItemHours>;
+        }
         return (
             <EntryItem key={entry.id}>
                 <EntryItemProject>
@@ -46,6 +55,7 @@ export default class EntryOverviewItem extends Component {
                         ? ` (${formatDiffMinutes(diffMinutes)}h)`
                         : null}
                 </EntryItemHours>
+                {userColumn}
                 <EntryItemActions>
                     <Button onClick={this.handleDelete}>×</Button>
                 </EntryItemActions>

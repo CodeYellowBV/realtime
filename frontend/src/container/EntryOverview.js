@@ -7,12 +7,14 @@ import EntryOverviewItem from './EntryOverviewItem';
 import { EntryList } from '../component/EntryList';
 import { ProjectStore } from '../store/Project';
 import { EntryStore } from '../store/Entry';
+import { UserStore } from '../store/User';
 
 @observer
 export default class EntryOverview extends Component {
     static propTypes = {
         entries: PropTypes.instanceOf(EntryStore).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
+        userStore: PropTypes.instanceOf(UserStore),
     };
 
     renderEntry = entry => {
@@ -21,6 +23,7 @@ export default class EntryOverview extends Component {
                 key={entry.cid}
                 entry={entry}
                 projectStore={this.props.projectStore}
+                userStore={this.props.userStore}
             />
         );
     };

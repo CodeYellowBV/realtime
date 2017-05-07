@@ -5,6 +5,7 @@ import EntryOverview from '../container/EntryOverview';
 import View from '../store/View';
 import Title from '../component/Title';
 import { ProjectStore } from '../store/Project';
+import { UserStore } from '../store/User';
 import { EntryStore } from '../store/Entry';
 
 @observer
@@ -16,6 +17,7 @@ export default class ProjectEntriesScreen extends Component {
 
     componentWillMount() {
         this.projectStore = new ProjectStore();
+        this.userStore = new UserStore();
         this.entryStore = new EntryStore();
     }
 
@@ -31,6 +33,8 @@ export default class ProjectEntriesScreen extends Component {
     subscribe = () => {
         this.projectStore.clear();
         this.projectStore.subscribe();
+        this.userStore.clear();
+        this.userStore.subscribe();
         this.entryStore.clear();
         this.entryStore.subscribe({
             project: parseInt(this.props.match.params.id),
@@ -39,6 +43,7 @@ export default class ProjectEntriesScreen extends Component {
 
     unsubscribe = () => {
         this.projectStore.unsubscribe();
+        this.userStore.unsubscribe();
         this.entryStore.unsubscribe();
     };
 
@@ -51,6 +56,7 @@ export default class ProjectEntriesScreen extends Component {
                 <EntryOverview
                     entries={this.entryStore}
                     projectStore={this.projectStore}
+                    userStore={this.userStore}
                 />
             </div>
         );
