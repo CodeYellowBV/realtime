@@ -1,7 +1,7 @@
 # CY Time
 
-[![Build Status](https://travis-ci.org/CodeYellowBV/cy-time.svg?branch=master)](https://travis-ci.org/CodeYellowBV/cy-time)
-[![codecov](https://codecov.io/gh/CodeYellowBV/cy-time/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeYellowBV/cy-time)
+[![Build Status](https://travis-ci.org/CodeYellowBV/realtime.svg?branch=master)](https://travis-ci.org/CodeYellowBV/realtime)
+[![codecov](https://codecov.io/gh/CodeYellowBV/realtime/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeYellowBV/realtime)
 
 Realtime is a time tracking tool made from scratch for the needs of Code Yellow employees.
 
