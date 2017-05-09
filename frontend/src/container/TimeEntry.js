@@ -111,7 +111,7 @@ export default class TimeEntry extends Component {
 
         return (
             <TimeEntryFormField label="">
-                <Icon icon={icon} />
+                <Icon big icon={icon} />
             </TimeEntryFormField>
         );
     }

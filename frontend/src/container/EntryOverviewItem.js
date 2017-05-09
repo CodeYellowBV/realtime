@@ -5,16 +5,21 @@ import {
     EntryItem,
     EntryItemDescription,
     EntryItemProject,
-    EntryItemHours,
+    EntryItemTime,
     EntryItemActions,
-} from '../component/EntryList';
-import Button from '../component/Button';
-import { ProjectStore } from '../store/Project';
-import { UserStore } from '../store/User';
-import { Entry } from '../store/Entry';
+} from 'component/EntryList';
+import Icon from 'component/Icon';
+import { ProjectStore } from 'store/Project';
+import { UserStore } from 'store/User';
+import { Entry } from 'store/Entry';
+import IconDelete from 'image/icon-delete.svg';
 
 function formatDiffMinutes(minutes) {
-    return (minutes / 60).toFixed(2);
+    const hours = Math.floor(minutes / 60);
+
+    if (hours) return `${hours}h ${minutes % 60}m`;
+
+    return `${minutes % 60}m`;
 }
 
 @observer
@@ -40,24 +45,23 @@ export default class EntryOverviewItem extends Component {
             const user = entry.user
                 ? this.props.userStore.get(entry.user)
                 : null;
-            userColumn = <EntryItemHours>{user.displayName}</EntryItemHours>;
+            userColumn = <EntryItemTime>{user.displayName}</EntryItemTime>;
         }
         return (
             <EntryItem key={entry.id}>
                 <EntryItemProject>
-                    {project ? project.name : '[No project]'}
+                    {project ? project.name : <i>No project</i>}
                 </EntryItemProject>
                 <EntryItemDescription>{entry.description}</EntryItemDescription>
-                <EntryItemHours>
-                    {entry.startedAt.format('HH:mm')}{' - '}
-                    {entry.endedAt ? entry.endedAt.format('HH:mm') : 'Running'}
-                    {diffMinutes
-                        ? ` (${formatDiffMinutes(diffMinutes)}h)`
-                        : null}
-                </EntryItemHours>
+                <EntryItemTime>{entry.startedAt.format('H:mm')}</EntryItemTime>
+                <div>—</div>
+                <EntryItemTime>{entry.endedAt ? entry.endedAt.format('H:mm') : 'Running'}</EntryItemTime>
+                <EntryItemTime>
+                    {`${formatDiffMinutes(diffMinutes)}`}
+                </EntryItemTime>
                 {userColumn}
                 <EntryItemActions>
-                    <Button onClick={this.handleDelete}>×</Button>
+                    <Icon onClick={this.handleDelete} icon={IconDelete} />
                 </EntryItemActions>
             </EntryItem>
         );

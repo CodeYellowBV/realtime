@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { map } from 'lodash';
 import moment from 'moment';
 import EntryOverviewItem from './EntryOverviewItem';
-import { EntryList } from '../component/EntryList';
+import { EntryList, EntryDay } from '../component/EntryList';
 import { ProjectStore } from '../store/Project';
 import { EntryStore } from '../store/Entry';
 import { UserStore } from '../store/User';
@@ -37,12 +37,12 @@ export default class EntryOverview extends Component {
             sameElse: 'dddd DD MMM',
         });
         return (
-            <div key={date}>
+            <EntryDay key={date}>
                 <h3>{dayTitle}</h3>
                 <EntryList>
                     {entries.map(this.renderEntry)}
                 </EntryList>
-            </div>
+            </EntryDay>
         );
     };
 
@@ -51,9 +51,9 @@ export default class EntryOverview extends Component {
             return <div>You do not have any entries yet.</div>;
         }
         return (
-            <EntryList>
+            <div>
                 {map(this.props.entries.groupByDate, this.renderDay)}
-            </EntryList>
+            </div>
         );
     }
 }

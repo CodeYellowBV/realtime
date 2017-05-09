@@ -1,17 +1,21 @@
-import React from 'react';
 import styled from 'styled-components';
 
 export const EntryList = styled.div`
     width: 100%;
-    border-top: 1px solid #999;
+    border-top: 1px solid #444;
 `;
 
 export const EntryItem = styled.div`
     display: flex;
     width: 100%;
     flex-flow: row wrap;
-    border-bottom: 1px solid #999;
-    padding: .5em 0;
+    align-items: center;
+    border-bottom: 1px solid #444;
+    padding: 10px;
+`;
+
+export const EntryDay = styled.div`
+    margin: 60px 0;
 `;
 
 export const EntryItemDescription = styled.div`
@@ -23,8 +27,9 @@ export const EntryItemProject = styled.div`
     flex: 1;
 `;
 
-export const EntryItemHours = styled.div`
-    flex: 2;
+export const EntryItemTime = styled.div`
+    flex: 1;
+    text-align: center;
 `;
 
 export const EntryItemActions = styled.div`
