@@ -6,8 +6,9 @@ import {
     EntryItemProject,
     EntryItemActions,
 } from '../component/EntryList';
-import Button from '../component/Button';
+import Icon from '../component/Icon';
 import Link from '../component/Link';
+import IconDelete from 'image/icon-delete.svg';
 import { Project } from '../store/Project';
 
 @observer
@@ -35,7 +36,7 @@ export default class ProjectOverviewItem extends Component {
                     </Link>
                 </EntryItemProject>
                 <EntryItemActions>
-                    <Button onClick={this.handleDelete}>×</Button>
+                    <Icon onClick={this.handleDelete} icon={IconDelete} />
                 </EntryItemActions>
             </EntryItem>
         );
