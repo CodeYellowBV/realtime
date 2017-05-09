@@ -1,4 +1,4 @@
-# CY Time
+# Realtime
 
 [![Build Status](https://travis-ci.org/CodeYellowBV/realtime.svg?branch=master)](https://travis-ci.org/CodeYellowBV/realtime)
 [![codecov](https://codecov.io/gh/CodeYellowBV/realtime/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeYellowBV/realtime)
