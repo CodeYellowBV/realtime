@@ -3,9 +3,11 @@
 [![Build Status](https://travis-ci.org/CodeYellowBV/cy-time.svg?branch=master)](https://travis-ci.org/CodeYellowBV/cy-time)
 [![codecov](https://codecov.io/gh/CodeYellowBV/cy-time/branch/master/graph/badge.svg)](https://codecov.io/gh/CodeYellowBV/cy-time)
 
-CY Time is a time tracking tool made from scratch for the needs of Code Yellow employees.
+Realtime is a time tracking tool made from scratch for the needs of Code Yellow employees.
 
 It is work in progress.
+
+At Code Yellow we want to track time with few steps, and see what others are working on / have been working on. Toggl got close, but we don't want to rely on external services. We <3 open source.
 
 ## Requirements
 
