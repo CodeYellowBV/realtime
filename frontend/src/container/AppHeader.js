@@ -43,13 +43,13 @@ export default class Header extends Component {
                 {store.currentUser.displayName}
                 <TopMenuAvatar src={store.currentUser.avatarUrl} />
             </TopMenuBlock>
-        )
+        );
     }
 
     render() {
         return (
             <TopMenu>
-                <TopMenuLogo>CY Time</TopMenuLogo>
+                <TopMenuLogo>Realtime</TopMenuLogo>
                 {this.renderNavigation()}
                 {this.renderAccount()}
             </TopMenu>
