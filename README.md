@@ -5,7 +5,7 @@
 
 Realtime is a time tracking tool made from scratch for the needs of Code Yellow employees.
 
-It is work in progress.
+It is a work in progress.
 
 At Code Yellow we want to track time with few steps, and see what others are working on / have been working on. Toggl got close, but we don't want to rely on external services. We <3 open source.
 
