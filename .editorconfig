@@ -15,5 +15,5 @@ trim_trailing_whitespace = false
 [package.json]
 indent_size = 2
 
-[Makefile]
+[Makefile,/cy/pkg]
 indent_style = tabs
