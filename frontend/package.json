@@ -42,7 +42,7 @@
   },
   "scripts": {
     "start": "CY_ENV_FILE=../.env CHOKIDAR_USEPOLLING=true react-cy-scripts start",
-    "build": "CY_ENV_FILE=../.env react-cy-scripts build",
+    "build": "react-cy-scripts build",
     "test": "react-cy-scripts test --env=jsdom",
     "eject": "react-cy-scripts eject",
     "precommit": "lint-staged"
