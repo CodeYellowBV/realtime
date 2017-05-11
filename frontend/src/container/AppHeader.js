@@ -9,7 +9,6 @@ import {
     TopMenuLink,
     TopMenuLogo,
 } from '../component/TopMenu';
-import Button from '../component/Button';
 import View from '../store/View';
 
 @observer
@@ -22,14 +21,25 @@ export default class Header extends Component {
         this.props.store.performLogout();
     };
 
+    // Workaround because mobx's @observer kills react-router updates.
+    shouldComponentUpdate() {
+        return true;
+    }
+
     renderNavigation() {
         if (!this.props.store.isAuthenticated) return null;
 
         return (
             <TopMenuNav>
-                <TopMenuLink to="/">Personal</TopMenuLink>
-                <TopMenuLink to="/users">Employees</TopMenuLink>
-                <TopMenuLink to="/projects">Projects</TopMenuLink>
+                <TopMenuLink activeClassName="selected" exact to="/">
+                    Personal
+                </TopMenuLink>
+                <TopMenuLink activeClassName="selected" to="/users">
+                    Employees
+                </TopMenuLink>
+                <TopMenuLink activeClassName="selected" to="/projects">
+                    Projects
+                </TopMenuLink>
             </TopMenuNav>
         );
     }
