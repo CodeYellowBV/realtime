@@ -1,0 +1,56 @@
+#! /usr/bin/make -f
+
+error: FORCE
+    @echo "Valid targets: version build test clean pre-install install post-install"
+    @exit 2
+
+# Empty rule to force other rules to be updated.
+FORCE:
+
+
+version: FORCE
+    @echo "3"
+
+
+build: FORCE build-be build-fe
+
+build-fe: FORCE
+    cd frontend && yarn --no-progress
+    cd frontend && yarn run build
+
+build-be: FORCE
+    virtualenv --python=python3 venv
+    . venv/bin/activate && pip install -U pip==9.0.1
+    mkdir backend/packages/
+    . venv/bin/activate && cd backend/packages/ && pip download -r ../packages.pip
+    . venv/bin/activate && pip install backend/packages/*
+
+
+test: FORCE
+    # TODO: activate FE tests again
+    #cd frontend && CI=TRUE yarn test
+    # TODO add backend tests
+
+
+clean: FORCE
+    echo FIXME
+    rm -rf frontend/node_modules
+    rm -rf frontend/public
+    rm -rf frontend/src
+    rm -rf venv
+
+
+pre-install: FORCE
+
+
+install: FORCE
+    # Sigh. Need download to install pip that can do offline installs :(
+    pip install -U pip==9.0.1
+    pip install backend/packages/*
+    cd backend && ./manage.py db upgrade
+
+migrate: FORCE
+    cd backend && ./manage.py db upgrade
+
+
+post-install: FORCE

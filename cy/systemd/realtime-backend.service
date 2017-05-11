@@ -1,0 +1,13 @@
+[Unit]
+Description=Realtime Backend
+Requires=postgresql.service
+After=postgresql.service
+
+[Service]
+ExecStart=/home/realtime/app/cy/appserv
+User=realtime
+WorkingDirectory=/home/realtime
+Restart=always
+
+[Install]
+WantedBy=multi-user.target postgresql.service

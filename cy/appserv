@@ -1,0 +1,26 @@
+#! /bin/bash
+set -e
+
+export CY_ENV_FILE="$HOME/.env"
+source "$HOME/venv/bin/activate"
+
+DEFAULT_APPSERV_WORKERS=2
+DEFAULT_APPSERV_MAXREQ=0
+DEFAULT_APPSERV_TIMEOUT=120
+
+APPSERV_WORKERS="${CY_APPSERV_WORKERS:-$(source ${CY_ENV_FILE}; echo ${CY_APPSERV_WORKERS:-${DEFAULT_APPSERV_WORKERS}})}"
+APPSERV_MAXREQ="${CY_APPSERV_MAXREQ:-$(source ${CY_ENV_FILE}; echo ${CY_APPSERV_MAXREQ:-${DEFAULT_APPSERV_MAXREQ}})}"
+APPSERV_TIMEOUT="${CY_APPSERV_TIMEOUT:-$(source ${CY_ENV_FILE}; echo ${CY_APPSERV_TIMEOUT:-${DEFAULT_APPSERV_TIMEOUT}})}"
+
+cd "$(dirname $(readlink -f $0))/../backend"
+
+mkdir -p $HOME/run/
+
+exec gunicorn \
+    -k flask_sockets.worker \
+    --name "realtime-backend" \
+    --workers ${APPSERV_WORKERS} \
+    --max-requests ${APPSERV_MAXREQ} \
+    --timeout ${APPSERV_TIMEOUT} \
+    --bind "unix:$HOME/run/http" \
+    "main.wsgi:application"
