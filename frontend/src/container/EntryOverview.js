@@ -15,6 +15,7 @@ export default class EntryOverview extends Component {
         entries: PropTypes.instanceOf(EntryStore).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
         userStore: PropTypes.instanceOf(UserStore),
+        allowEdit: PropTypes.bool,
     };
 
     renderEntry = entry => {
@@ -24,6 +25,7 @@ export default class EntryOverview extends Component {
                 entry={entry}
                 projectStore={this.props.projectStore}
                 userStore={this.props.userStore}
+                allowEdit={this.props.allowEdit}
             />
         );
     };

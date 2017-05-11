@@ -28,6 +28,7 @@ export default class EntryOverviewItem extends Component {
         entry: PropTypes.instanceOf(Entry).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
         userStore: PropTypes.instanceOf(UserStore),
+        allowEdit: PropTypes.bool,
     };
 
     handleDelete = () => {
@@ -35,7 +36,7 @@ export default class EntryOverviewItem extends Component {
     };
 
     render() {
-        const { entry } = this.props;
+        const { entry, allowEdit } = this.props;
         const diffMinutes = entry.differenceInMinutes;
         const project = entry.project
             ? this.props.projectStore.get(entry.project)
@@ -55,13 +56,17 @@ export default class EntryOverviewItem extends Component {
                 <EntryItemDescription>{entry.description}</EntryItemDescription>
                 <EntryItemTime>{entry.startedAt.format('H:mm')}</EntryItemTime>
                 <div>—</div>
-                <EntryItemTime>{entry.endedAt ? entry.endedAt.format('H:mm') : 'Running'}</EntryItemTime>
+                <EntryItemTime>
+                    {entry.endedAt ? entry.endedAt.format('H:mm') : 'Running'}
+                </EntryItemTime>
                 <EntryItemTime>
                     {`${formatDiffMinutes(diffMinutes)}`}
                 </EntryItemTime>
                 {userColumn}
                 <EntryItemActions>
-                    <Icon onClick={this.handleDelete} icon={IconDelete} />
+                    {allowEdit
+                        ? <Icon onClick={this.handleDelete} icon={IconDelete} />
+                        : null}
                 </EntryItemActions>
             </EntryItem>
         );

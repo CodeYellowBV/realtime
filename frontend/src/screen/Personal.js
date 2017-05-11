@@ -57,6 +57,7 @@ export default class Personal extends Component {
                 <EntryOverview
                     entries={this.entryStore}
                     projectStore={this.projectStore}
+                    allowEdit
                 />
             </div>
         );
