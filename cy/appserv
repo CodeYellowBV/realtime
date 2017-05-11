@@ -23,4 +23,4 @@ exec gunicorn \
     --max-requests ${APPSERV_MAXREQ} \
     --timeout ${APPSERV_TIMEOUT} \
     --bind "unix:$HOME/run/http" \
-    "main.wsgi:application"
+    "app:app"
