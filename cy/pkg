@@ -17,6 +17,7 @@ build: FORCE build-be build-fe
 build-fe: FORCE
 	cd frontend && yarn --no-progress
 	cd frontend && yarn run build
+	mv frontend/build static
 
 build-be: FORCE
 	virtualenv --python=python3 venv
@@ -33,10 +34,7 @@ test: FORCE
 
 
 clean: FORCE
-	echo FIXME
-	rm -rf frontend/node_modules
-	rm -rf frontend/public
-	rm -rf frontend/src
+	rm -rf frontend
 	rm -rf venv
 
 
