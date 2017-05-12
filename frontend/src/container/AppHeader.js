@@ -1,15 +1,21 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import Button from 'component/Button';
 import {
     TopMenu,
     TopMenuNav,
-    TopMenuBlock,
-    TopMenuAvatar,
     TopMenuLink,
     TopMenuLogo,
-} from '../component/TopMenu';
-import View from '../store/View';
+} from 'component/TopMenu';
+import {
+    Account,
+    AccountDisplay,
+    AccountAvatar,
+    AccountContent,
+    AccountItem,
+} from 'component/Account';
+import View from 'store/View';
 
 @observer
 export default class Header extends Component {
@@ -49,10 +55,17 @@ export default class Header extends Component {
         if (!this.props.store.isAuthenticated) return null;
 
         return (
-            <TopMenuBlock onClick={this.handleClickLogout}>
-                {store.currentUser.displayName}
-                <TopMenuAvatar src={store.currentUser.avatarUrl} />
-            </TopMenuBlock>
+            <Account>
+                <AccountDisplay>
+                    {store.currentUser.displayName}
+                    <AccountAvatar src={store.currentUser.avatarUrl} />
+                </AccountDisplay>
+                <AccountContent>
+                    <AccountItem>
+                        <Button onClick={this.handleClickLogout}>Logout</Button>
+                    </AccountItem>
+                </AccountContent>
+            </Account>
         );
     }
 

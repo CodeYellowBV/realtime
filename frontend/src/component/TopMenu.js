@@ -36,13 +36,6 @@ export const TopMenuBlock = styled.div`
     align-items: center;
 `;
 
-export const TopMenuAvatar = styled.img`
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    margin-left: 16px;
-`;
-
 export const TopMenuLogo = styled.div`
     font-size: 32px;
     display: inline-flex;
