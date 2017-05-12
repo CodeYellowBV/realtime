@@ -25,9 +25,13 @@ export default class App extends Component {
         } else {
             content = <Login viewStore={store} />;
         }
+
+        // This is only meant to be here temporarily as a joke on Roger.
+        const userIsRoger = store.currentUser.username === "rogerkemp"
+
         return (
             <BrowserRouter>
-                <AppContainer>
+                <AppContainer invertColors={userIsRoger}>
                     <Header store={store} />
                     <NotificationArea store={store} />
                     <ContentContainer>

@@ -11,7 +11,7 @@ export default injectGlobal`
         box-sizing: inherit;
     }
     body {
-        background: #333;
+        background: #222;
         color: #fff;
         font-family: -apple-system, system-ui, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const Container = styled.div`
     flex: 1;
     overflow: scroll;
+    background: #333;
 `;
 
 const Main = styled.main`

@@ -6,6 +6,10 @@ const AppContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
+    ${({invertColors}) => invertColors ? `
+        filter: invert();
+    ` : null}
 `;
 
 export default AppContainer;
