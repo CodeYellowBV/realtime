@@ -27,7 +27,7 @@ export default class App extends Component {
         }
 
         // This is only meant to be here temporarily as a joke on Roger.
-        const userIsRoger = store.currentUser.username === "rogerkemp"
+        const userIsRoger = store.currentUser.username === "rogerkemp";
 
         return (
             <BrowserRouter>
