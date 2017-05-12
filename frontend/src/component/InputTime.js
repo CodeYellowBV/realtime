@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import moment from 'moment';
 import onClickOutside from 'react-onclickoutside';
+import Datetime from 'react-datetime';
 import Button from './Button';
 
 const Container = styled.div`
@@ -56,17 +57,29 @@ const ActionContainer = styled.div`
     justify-content: space-between;
 `;
 
-const StyledInput = styled.input`
-    margin: 0 8px 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 18px;
-    height: 40px;
-    outline: none;
+const StyledDatetime = styled(Datetime)`
+    .rdtPicker {
+        background: white;
+        color: black;
+        text-align: center;
+    }
 
-    &::-webkit-clear-button {
-        -webkit-appearance: none;
+    .rdtSwitch,
+    .rdtDay,
+    .rdtBtn {
+        cursor: pointer;
+    }
+
+    .rdtTime {
+        table {
+            width: 100%;
+        }
+    }
+
+    .rdtCounters {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 `;
 
@@ -91,28 +104,14 @@ export default onClickOutside(
         @observable showOverlay = false;
         @observable shouldFocusTime = false;
 
-        @observable date = moment().format('YYYY-MM-DD');
-        @observable time = moment().format('HH:mm');
-
         toggleOverlay = () => {
             const showOverlay = !this.showOverlay;
             this.showOverlay = showOverlay;
             this.shouldFocusTime = showOverlay;
         };
 
-        changeValue = () => {
-            const datetime = moment(`${this.date} ${this.time}`);
-            this.props.onChange(this.props.name, datetime);
-        };
-
-        handleChangeDate = value => {
-            this.date = value;
-            this.changeValue();
-        };
-
-        handleChangeTime = value => {
-            this.time = value;
-            this.changeValue();
+        handleChange = value => {
+            this.props.onChange(this.props.name, moment(value));
         };
 
         handleClickOutside() {
@@ -159,7 +158,6 @@ export default onClickOutside(
         }
 
         render() {
-            const now = moment();
             return (
                 <Container>
                     <InputTimeButton
@@ -177,32 +175,11 @@ export default onClickOutside(
                             {this.renderNow()}
                             {this.renderClear()}
                         </ActionContainer>
-                        <StyledInput
-                            innerRef={input => {
-                                this.inputTime = input;
-                            }}
-                            type="time"
-                            name={this.props.name}
-                            value={
-                                this.props.value
-                                    ? this.props.value.format('HH:mm')
-                                    : this.time
-                            }
-                            onChange={e => {
-                                this.handleChangeTime(e.target.value);
-                            }}
-                        />
-                        <StyledInput
-                            type="date"
-                            max={now.format('YYYY-MM-DD')}
-                            onChange={e => {
-                                this.handleChangeDate(e.target.value);
-                            }}
-                            value={
-                                this.props.value
-                                    ? this.props.value.format('YYYY-MM-DD')
-                                    : this.date
-                            }
+                        <StyledDatetime
+                            onChange={this.handleChange}
+                            viewMode="time"
+                            locale="nl"
+                            open
                         />
                     </Overlay>
                 </Container>
