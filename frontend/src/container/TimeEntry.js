@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
+import { orderBy, sortBy } from 'lodash';
 import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime, { InputTimeButton } from '../component/InputTime';
@@ -119,15 +120,18 @@ export default class TimeEntry extends Component {
     render() {
         const { entry } = this.props;
 
+        let projectOptions = this.props.projectStore.map(
+            this.formatProjectToOption
+        );
+        projectOptions = sortBy(projectOptions, m => m.label.toLowerCase());
+
         return (
             <TimeEntryForm onSubmit={this.handleSubmit}>
                 <TimeEntryFormField label="Project" size="1">
                     <InputSelect
                         name="project"
                         placeholder="Choose project"
-                        options={this.props.projectStore.map(
-                            this.formatProjectToOption
-                        )}
+                        options={projectOptions}
                         onChange={this.handleInput}
                         value={entry.project ? String(entry.project) : ''}
                     />
