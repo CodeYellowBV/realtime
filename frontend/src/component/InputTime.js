@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import moment from 'moment';
 import onClickOutside from 'react-onclickoutside';
+import TimeInput from '../patch/react-time-input';
 import Button from './Button';
 
 const Container = styled.div`
@@ -68,6 +69,16 @@ const StyledInput = styled.input`
     &::-webkit-clear-button {
         -webkit-appearance: none;
     }
+`;
+
+const StyledTime = styled(TimeInput)`
+    margin: 0 8px 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    height: 40px;
+    outline: none;
 `;
 
 export default onClickOutside(
@@ -177,19 +188,18 @@ export default onClickOutside(
                             {this.renderNow()}
                             {this.renderClear()}
                         </ActionContainer>
-                        <StyledInput
-                            innerRef={input => {
+                        <StyledTime
+                            inputRef={input => {
                                 this.inputTime = input;
                             }}
-                            type="time"
                             name={this.props.name}
                             value={
                                 this.props.value
                                     ? this.props.value.format('HH:mm')
                                     : this.time
                             }
-                            onChange={e => {
-                                this.handleChangeTime(e.target.value);
+                            onTimeChange={val => {
+                                this.handleChangeTime(val);
                             }}
                         />
                         <StyledInput
