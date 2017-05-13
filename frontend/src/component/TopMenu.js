@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR_TINT } from '../styles';
+import { COLOR_TINT, mobile } from '../styles';
 import { NavLink } from 'react-router-dom';
 
 export const TopMenu = styled.div`
@@ -9,6 +9,12 @@ export const TopMenu = styled.div`
     align-items: stretch;
     background: #222;
     padding: 0 16px;
+
+    ${mobile`
+        height: 125px;
+        flex-direction: column;
+        align-items: center;
+    `}
 `;
 
 export const TopMenuNav = styled.nav`
@@ -29,11 +35,6 @@ export const TopMenuLink = styled(NavLink)`
     &.selected {
         color: white;
     }
-`;
-
-export const TopMenuBlock = styled.div`
-    display: flex;
-    align-items: center;
 `;
 
 export const TopMenuLogo = styled.div`

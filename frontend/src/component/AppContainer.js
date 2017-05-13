@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mobile } from '../styles';
 
 const AppContainer = styled.div`
     width: 100%;
@@ -7,9 +8,13 @@ const AppContainer = styled.div`
     flex-direction: column;
     align-items: stretch;
 
-    ${({invertColors}) => invertColors ? `
+    ${({ invertColors }) => (invertColors ? `
         filter: invert();
-    ` : null}
+    ` : null)}
+
+    ${mobile`
+        height: auto;
+    `}
 `;
 
 export default AppContainer;

@@ -3,11 +3,11 @@ import 'react-select/dist/react-select.css';
 
 export const COLOR_TINT = '#eecb3d';
 
-const DESKTOP_QUERY = '(max-width: 768px)';
+const MOBILE_QUERY = '(max-width: 768px)';
 
-export function desktop(...args) {
+export function mobile(...args) {
     return css`
-        @media ${DESKTOP_QUERY} {
+        @media ${MOBILE_QUERY} {
             ${css(...args)}
         }
     `;
