@@ -130,7 +130,7 @@ export default class TimeEntry extends Component {
                 <TimeEntryFormField label="Project" size="1">
                     <InputSelect
                         name="project"
-                        placeholder="Choose project"
+                        placeholder="Project"
                         options={projectOptions}
                         onChange={this.handleInput}
                         value={entry.project ? String(entry.project) : ''}
