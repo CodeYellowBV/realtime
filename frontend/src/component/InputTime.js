@@ -49,6 +49,7 @@ const Overlay = styled.div`
     top: 100%;
     left: 0;
     right: 0;
+    z-index: 2;
     ${props => (props.hide ? `display: none;` : null)};
 `;
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
-import { orderBy, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime, { InputTimeButton } from '../component/InputTime';
@@ -111,7 +111,7 @@ export default class TimeEntry extends Component {
         }
 
         return (
-            <TimeEntryFormField label="">
+            <TimeEntryFormField label="" center>
                 <Icon big icon={icon} />
             </TimeEntryFormField>
         );
