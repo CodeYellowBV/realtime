@@ -67,12 +67,7 @@ class Controller():
         }
 
     def get_bootstrap(self):
-        output = _copy.copy(self.currentUser)
-        # Remove session specific data as we only want the bootstrap to return
-        # user data
-        # dict.pop(key) errors if the key isn't found
-        # But we expect a session to always include an exp(iration_date) so that's okay
-        output.pop('exp')
+        output = _copy.copy(self.currentUser.dump())
         return {
             'type': self.body['type'],
             'code': 'success',
@@ -84,7 +79,8 @@ class Controller():
             return False
 
         try:
-            self.currentUser = _jwt.decode(self.body['authorization'], _os.environ.get('CY_SECRET_KEY'), algorithms=['HS256'])
+            userData = _jwt.decode(self.body['authorization'], _os.environ.get('CY_SECRET_KEY'), algorithms=['HS256'])
+            self.currentUser = User(userData)
         except _jwt.InvalidTokenError:
             return False
 
@@ -97,7 +93,10 @@ class Controller():
         if 'id' in data and data['id'] is not None:
             return self.error('ID given when saving, try using type=update')
 
-        m = cls(data, self.currentUser)
+        try:
+            m = cls(data, self.currentUser)
+        except Exception as e:
+            return self.error(str(e))
 
         self.db.session.add(m)
         self.db.session.commit()
@@ -119,7 +118,7 @@ class Controller():
 
         m = self.db.session.query(cls).get(data['id'])
         mSnapshot = m.dump()
-        m.parse(data, self.currentUser)
+        m.parse(data, self.currentUser, 'update')
 
         self.db.session.add(m)
         self.db.session.commit()

@@ -20,7 +20,7 @@ class EntrySaveCase(unittest.TestCase):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
         db.create_all()
 
-        self.uHenk = User({'username': 'Kenk'})
+        self.uHenk = User({'username': 'Henk'})
         self.uKarel = User({'username': 'Karel'})
         db.session.add(self.uHenk)
         db.session.add(self.uKarel)
@@ -40,11 +40,11 @@ class EntrySaveCase(unittest.TestCase):
         """
         db.drop_all()
 
-    # You can't
+    # You can't save a new running Entry when another is still running
     def test_multiple_running_blocked(self):
         c = Controller(db, None, None)
 
-        c.currentUser = self.uHenk.dump()
+        c.currentUser = self.uHenk
         c.body = {
             'data': {
                 'started_at': '2017-05-06T13:56:54+02:00',
@@ -62,7 +62,7 @@ class EntrySaveCase(unittest.TestCase):
     def test_finished_new(self):
         c = Controller(db, None, None)
 
-        c.currentUser = self.uHenk.dump()
+        c.currentUser = self.uHenk
         c.body = {
             'data': {
                 'id': 1,
@@ -92,7 +92,7 @@ class EntrySaveCase(unittest.TestCase):
     def test_multiple_running_multiuser(self):
         c = Controller(db, None, None)
 
-        c.currentUser = self.uKarel.dump()
+        c.currentUser = self.uKarel
         c.body = {
             'data': {
                 'started_at': '2017-05-06T13:56:54+02:00',

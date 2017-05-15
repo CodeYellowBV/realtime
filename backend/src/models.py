@@ -18,9 +18,9 @@ class Collection():
 
 class Base(object):
     def __init__(self, data, currentUser=None):
-        self.parse(data, currentUser)
+        self.parse(data, currentUser, 'save')
 
-    def parse(self, data, currentUser=None):
+    def parse(self, data, currentUser=None, reqType=None):
         for col in self.__table__.columns:
             key = col.name
 
@@ -99,11 +99,14 @@ class Entry(Base, db.Model):
     user = db.relationship('User',
         backref=db.backref('entries', lazy='dynamic', cascade='all, delete-orphan'))
 
-    def parse(self, data, currentUser=None):
+    def parse(self, data, currentUser, reqType):
         if currentUser:
-            data['user'] = currentUser['id']
+            data['user'] = currentUser.id
 
-        return super(Entry, self).parse(data)
+        if reqType == 'save' and currentUser and currentUser.has_running_entries():
+            raise Exception('User has running entries')
+
+        return super(Entry, self).parse(data, currentUser, reqType)
 
 
 class Project(Base, db.Model):
@@ -128,6 +131,10 @@ class User(Base, db.Model):
         payload = self.dump()
         payload['exp'] = datetime.datetime.utcnow() + datetime.timedelta(weeks=8)
         return jwt.encode(payload, secret, algorithm='HS256').decode('utf-8')
+
+    def has_running_entries(self):
+        query = db.session.query(Entry).filter_by(user_id=self.id, ended_at=None)
+        return query.count() > 0
 
     def is_authenticated(self):
         return True
