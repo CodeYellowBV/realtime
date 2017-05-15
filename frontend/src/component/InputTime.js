@@ -194,6 +194,7 @@ export default onClickOutside(
                                 this.inputTime = input;
                             }}
                             name={this.props.name}
+                            placeholder="13:37"
                             value={
                                 this.props.value
                                     ? this.props.value.format('HH:mm')

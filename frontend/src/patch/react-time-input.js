@@ -12,6 +12,7 @@ var TimeInput = React.createClass({
     getDefaultProps() {
         return {
             inputRef() {},
+            placeholder: ' ',
         };
     },
 
@@ -138,7 +139,7 @@ var TimeInput = React.createClass({
                 className={this.props.className}
                 type={this.getType()}
                 disabled={this.props.disabled}
-                placeholder=" "
+                placeholder={this.props.placeholder}
                 value={this.state.time}
                 onChange={e => this.onChangeHandler(e.target.value)}
                 onFocus={
