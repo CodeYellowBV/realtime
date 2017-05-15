@@ -21,6 +21,7 @@ export const EntryDay = styled.div`
 export const EntryItemDescription = styled.div`
     font-weight: bold;
     flex: 3;
+    cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
 
 export const EntryItemProject = styled.div`
