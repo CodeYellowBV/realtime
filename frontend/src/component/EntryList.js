@@ -20,12 +20,15 @@ export const EntryDay = styled.div`
 
 export const EntryItemDescription = styled.div`
     font-weight: bold;
+    margin-right: 20px;
     flex: 3;
     cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
 
 export const EntryItemProject = styled.div`
     flex: 1;
+    margin-right: 20px;
+    cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
 
 export const EntryItemTime = styled.div`

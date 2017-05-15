@@ -6,23 +6,23 @@ import styled from 'styled-components';
 
 const StyledSelect = styled(Select)`
     .Select-control {
-        height: 48px;
+        height: ${props => (props.small ? '35' : '48')}px;
         border: 0;
         border-radius: 8px;
         cursor: pointer;
     }
 
     .Select-input {
-        height: 48px;
+        height: ${props => (props.small ? '35' : '48')}px;
     }
 
     .Select-input > input {
-        line-height: 28px;
+        line-height: ${props => (props.small ? '14' : '28')}px;
     }
 
     .Select-placeholder,
     .Select-control .Select-value {
-        line-height: 48px !important;
+        line-height: ${props => (props.small ? '35' : '48')}px!important;
     }
 
     .Select-value-label {
@@ -52,6 +52,9 @@ export default class InputSelect extends Component {
         options: MobxTypes.arrayOrObservableArray.isRequired,
         value: PropTypes.string,
         placeholder: PropTypes.string,
+        autoFocus: PropTypes.bool,
+        onBlur: PropTypes.func,
+        small: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -77,6 +80,9 @@ export default class InputSelect extends Component {
                 options={this.props.options}
                 onChange={this.handleChange}
                 placeholder={this.props.placeholder}
+                autofocus={this.props.autoFocus}
+                onBlur={this.props.onBlur}
+                small={this.props.small}
             />
         );
     }

@@ -13,6 +13,7 @@ import { UserStore } from 'store/User';
 import { Entry } from 'store/Entry';
 import IconDelete from 'image/icon-delete.svg';
 import EntryDescription from 'component/Entry/Description';
+import EntryProject from 'component/Entry/Project';
 
 function formatDiffMinutes(minutes) {
     const hours = Math.floor(minutes / 60);
@@ -36,11 +37,9 @@ export default class EntryOverviewItem extends Component {
     };
 
     render() {
-        const { entry, allowEdit } = this.props;
+        const { entry, allowEdit, projectStore } = this.props;
         const diffMinutes = entry.differenceInMinutes;
-        const project = entry.project
-            ? this.props.projectStore.get(entry.project)
-            : null;
+
         let userColumn = null;
         if (this.props.userStore) {
             const user = entry.user
@@ -50,9 +49,11 @@ export default class EntryOverviewItem extends Component {
         }
         return (
             <EntryItem>
-                <EntryItemProject>
-                    {project ? project.name : <i>No project</i>}
-                </EntryItemProject>
+                <EntryProject
+                    entry={entry}
+                    projectStore={projectStore}
+                    allowEdit={allowEdit}
+                />
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
                 <EntryItemTime>{entry.startedAt.format('H:mm')}</EntryItemTime>
                 <div>—</div>
