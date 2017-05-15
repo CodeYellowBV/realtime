@@ -10,6 +10,9 @@ import NetworkInfo from '../component/NetworkInfo';
 import View from '../store/View';
 import Router from './Router';
 import { BrowserRouter } from 'react-router-dom';
+import Favicon from 'react-favicon';
+import faviconStandby from '../image/favicon-standby.png';
+import faviconRecord from '../image/favicon-record.png';
 
 @observer
 export default class App extends Component {
@@ -27,11 +30,17 @@ export default class App extends Component {
         }
 
         // This is only meant to be here temporarily as a joke on Roger.
-        const userIsRoger = store.currentUser.username === "rogerkemp";
+        const userIsRoger = store.currentUser.username === 'rogerkemp';
+
+        let activeFavicon = faviconStandby;
+        if (store.runningEntryStore.length > 0) {
+            activeFavicon = faviconRecord;
+        }
 
         return (
             <BrowserRouter>
                 <AppContainer invertColors={userIsRoger}>
+                    <Favicon url={[activeFavicon]} />
                     <Header store={store} />
                     <NotificationArea store={store} />
                     <ContentContainer>

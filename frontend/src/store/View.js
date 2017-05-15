@@ -1,6 +1,7 @@
 import { observable, computed } from 'mobx';
 import Uri from 'urijs';
 import { User } from './User';
+import { EntryStore } from './Entry';
 import Socket from '../Socket';
 import { api } from './Base';
 
@@ -9,6 +10,7 @@ export default class ViewStore {
     @observable online = false;
     @observable currentUser = new User();
     @observable notifications = [];
+    @observable runningEntryStore = new EntryStore();
 
     @computed get isAuthenticated() {
         return !!this.currentUser.id;
@@ -58,6 +60,7 @@ export default class ViewStore {
         }
         if (type === 'bootstrap') {
             this.currentUser.parse(data);
+            this.afterBootstrap();
         }
     };
 
@@ -75,6 +78,16 @@ export default class ViewStore {
         if (token) {
             this.socket.authToken = token;
             this.socket.send({ type: 'bootstrap' });
+        }
+    }
+
+    afterBootstrap() {
+        this.runningEntryStore.unsubscribe();
+        if (this.isAuthenticated) {
+            this.runningEntryStore.subscribe({
+                user: this.currentUser.id,
+                ended_at: null,
+            });
         }
     }
 
