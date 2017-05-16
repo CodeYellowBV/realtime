@@ -5,6 +5,7 @@ import { observable } from 'mobx';
 import { EntryItemDescription } from 'component/EntryList';
 import { Entry } from 'store/Entry';
 import InputText from 'component/InputText';
+import Form from '../Form';
 
 @observer
 export default class EntryDescription extends Component {
@@ -35,14 +36,16 @@ export default class EntryDescription extends Component {
         if (this.editing) {
             return (
                 <EntryItemDescription>
-                    <InputText
-                        onChange={this.handleChange}
-                        name="description"
-                        value={entry.description}
-                        onBlur={this.handleBlur}
-                        autoFocus
-                        small
-                    />
+                    <Form onSubmit={this.handleBlur}>
+                        <InputText
+                            onChange={this.handleChange}
+                            name="description"
+                            value={entry.description}
+                            onBlur={this.handleBlur}
+                            autoFocus
+                            small
+                        />
+                    </Form>
                 </EntryItemDescription>
             );
         }

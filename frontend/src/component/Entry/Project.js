@@ -7,6 +7,7 @@ import { EntryItemProject } from '../EntryList';
 import { Entry } from 'store/Entry';
 import { ProjectStore } from 'store/Project';
 import InputSelect from '../InputSelect';
+import Form from '../Form';
 
 function formatProjectToOption(project) {
     return {
@@ -52,16 +53,18 @@ export default class EntryProject extends Component {
         if (this.editing) {
             return (
                 <EntryItemProject>
-                    <InputSelect
-                        name="project"
-                        placeholder="Project"
-                        options={projectOptions}
-                        onChange={this.handleChange}
-                        autoFocus
-                        small
-                        onBlur={this.handleBlur}
-                        value={entry.project ? String(entry.project) : ''}
-                    />
+                    <Form onSubmit={this.handleBlur}>
+                        <InputSelect
+                            name="project"
+                            placeholder="Project"
+                            options={projectOptions}
+                            onChange={this.handleChange}
+                            autoFocus
+                            small
+                            onBlur={this.handleBlur}
+                            value={entry.project ? String(entry.project) : ''}
+                        />
+                    </Form>
                 </EntryItemProject>
             );
         }
