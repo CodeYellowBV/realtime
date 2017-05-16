@@ -33,7 +33,9 @@ export default class ProjectAdd extends Component {
                         value={project.name}
                     />
                 </TimeEntryFormField>
-                <Button type="submit">Save</Button>
+                <TimeEntryFormField label="" center>
+                    <Button type="submit">Save</Button>
+                </TimeEntryFormField>
             </TimeEntryForm>
         );
     }
