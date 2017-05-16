@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import View from '../store/View';
 import { Route, Switch } from 'react-router-dom';
 
-import Personal from '../screen/Personal';
+import MyTime from '../screen/MyTime';
 import Project from '../screen/Project';
 import ProjectEntries from '../screen/ProjectEntries';
 import UserEntries from '../screen/UserEntries';
@@ -22,7 +22,7 @@ export default class Router extends Component {
                 <Route
                     exact
                     path="/"
-                    render={() => <Personal viewStore={store} />}
+                    render={() => <MyTime viewStore={store} />}
                 />
                 <Route
                     path="/users"

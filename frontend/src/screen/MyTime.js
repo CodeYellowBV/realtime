@@ -8,7 +8,7 @@ import { Entry, EntryStore } from '../store/Entry';
 import { ProjectStore } from '../store/Project';
 
 @observer
-export default class Personal extends Component {
+export default class MyTime extends Component {
     static propTypes = {
         viewStore: PropTypes.instanceOf(View).isRequired,
     };

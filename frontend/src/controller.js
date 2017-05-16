@@ -1,4 +1,4 @@
-import PersonalScreen from './screen/Personal';
+import MyTimeScreen from './screen/MyTime';
 import ProjectScreen from './screen/Project';
 import UserScreen from './screen/User';
 import NotFound from './component/NotFound';
@@ -12,7 +12,7 @@ export function home(store) {
     const entryStore = new EntryStore();
     store.setView({
         name: 'home',
-        render: PersonalScreen,
+        render: MyTimeScreen,
         currentEntry: new Entry({ startedAt: moment() }),
         projectStore,
         entryStore,

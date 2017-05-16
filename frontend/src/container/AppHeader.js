@@ -38,7 +38,7 @@ export default class Header extends Component {
         return (
             <TopMenuNav>
                 <TopMenuLink activeClassName="selected" exact to="/">
-                    Personal
+                    My time
                 </TopMenuLink>
                 <TopMenuLink activeClassName="selected" to="/users">
                     Employees
