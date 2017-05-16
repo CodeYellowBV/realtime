@@ -48,8 +48,17 @@ export default class TimeEntry extends Component {
         }
     };
 
+    @action handleBlur = () => {
+        const now = moment();
+        // Only when the entry is already saved explicitly, we want to save changes on blur.
+        if (this.props.entry.id) {
+            console.log('save after blur');
+            this.save(now);
+        }
+    };
+
     @action handleSubmit = () => {
-        const { entry, viewStore } = this.props;
+        const { entry } = this.props;
         const now = moment();
         // If the entry already existed, we just want to set the end time.
         if (entry.id && !entry.endedAt) {
@@ -59,6 +68,13 @@ export default class TimeEntry extends Component {
         if (!entry.startedAt) {
             entry.startedAt = now;
         }
+        this.save(now);
+    };
+
+    // This is a separate function because we want different handling of save depending on if the user explicitly pressed submit
+    // or a blur on an input happened.
+    @action save = now => {
+        const { entry, viewStore } = this.props;
         let msg = '';
         if (entry.startedAt.isAfter(now)) {
             msg = 'From time cannot be in the future';
@@ -134,6 +150,7 @@ export default class TimeEntry extends Component {
                         options={projectOptions}
                         onChange={this.handleInput}
                         value={entry.project ? String(entry.project) : ''}
+                        onBlur={this.handleBlur}
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="Description" size="2">
@@ -141,6 +158,7 @@ export default class TimeEntry extends Component {
                         name="description"
                         onChange={this.handleInput}
                         value={entry.description}
+                        onBlur={this.handleBlur}
                     />
                 </TimeEntryFormField>
                 <TimeEntryFormField label="From" size="1">
