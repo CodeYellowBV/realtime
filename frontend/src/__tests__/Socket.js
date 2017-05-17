@@ -22,11 +22,10 @@ test('Should receive a message as object', done => {
     mockServer.on('connection', ws => {
         ws.send(JSON.stringify({ foo: 'bar' }));
     });
-    new Socket({
-        onMessage: msg => {
-            expect(msg).toEqual({ foo: 'bar' });
-            done();
-        },
+    const socket = new Socket();
+    socket.on('message', msg => {
+        expect(msg).toEqual({ foo: 'bar' });
+        done();
     });
 });
 
@@ -80,11 +79,11 @@ test('Should use fallback if messageHandler does not return true', done => {
         ws.send(JSON.stringify({ foo: 'bar' }));
     });
     let visitedHandler = false;
-    const socket = new Socket({
-        onMessage: () => {
-            expect(visitedHandler).toBe(true);
-            done();
-        },
+    const socket = new Socket();
+
+    socket.on('message', () => {
+        expect(visitedHandler).toBe(true);
+        done();
     });
     socket.addMessageHandler(msg => {
         visitedHandler = true;
