@@ -16,7 +16,7 @@ export default class Login extends Component {
     };
 
     handleClick() {
-        const redirectUri = encodeURIComponent(window.location.href);
+        const redirectUri = encodeURIComponent(`${window.location.origin}/`);
         window.location = `${CY_FRONTEND_PHABRICATOR_URL}/oauthserver/auth/?response_type=code&client_id=${CY_FRONTEND_PHABRICATOR_CLIENT_ID}&redirect_uri=${redirectUri}`;
     }
 
