@@ -52,7 +52,6 @@ export default class TimeEntry extends Component {
         const now = moment();
         // Only when the entry is already saved explicitly, we want to save changes on blur.
         if (this.props.entry.id) {
-            console.log('save after blur');
             this.save(now);
         }
     };
