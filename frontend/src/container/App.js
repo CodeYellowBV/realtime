@@ -29,9 +29,6 @@ export default class App extends Component {
             content = <Login viewStore={store} />;
         }
 
-        // This is only meant to be here temporarily as a joke on Roger.
-        const userIsRoger = store.currentUser.username === 'rogerkemp';
-
         let activeFavicon = faviconStandby;
         if (store.runningEntryStore.length > 0) {
             activeFavicon = faviconRecord;
@@ -39,7 +36,7 @@ export default class App extends Component {
 
         return (
             <BrowserRouter>
-                <AppContainer invertColors={userIsRoger}>
+                <AppContainer>
                     <Favicon url={[activeFavicon]} />
                     <Header store={store} />
                     <NotificationArea store={store} />
