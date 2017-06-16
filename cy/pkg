@@ -24,7 +24,7 @@ build-be: FORCE
 	. venv/bin/activate && pip install -U pip==9.0.1
 	mkdir backend/packages/
 	. venv/bin/activate && cd backend/packages/ && pip download -r ../packages.pip
-	. venv/bin/activate && pip install backend/packages/*
+	. venv/bin/activate && pip install -U backend/packages/*
 
 
 test: FORCE
@@ -44,7 +44,7 @@ pre-install: FORCE
 install: FORCE
 	# Sigh. Need download to install pip that can do offline installs :(
 	pip install -U pip==9.0.1
-	pip install backend/packages/*
+	pip install -U backend/packages/*
 	cd backend && ./manage.py db upgrade
 
 migrate: FORCE
