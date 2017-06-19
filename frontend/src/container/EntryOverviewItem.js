@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import {
     EntryItem,
-    EntryItemProject,
     EntryItemTime,
     EntryItemActions,
 } from 'component/EntryList';
+import SimpleDuration from 'component/SimpleDuration';
 import Icon from 'component/Icon';
 import { ProjectStore } from 'store/Project';
 import { UserStore } from 'store/User';
@@ -14,14 +14,6 @@ import { Entry } from 'store/Entry';
 import IconDelete from 'image/icon-delete.svg';
 import EntryDescription from 'component/Entry/Description';
 import EntryProject from 'component/Entry/Project';
-
-function formatDiffMinutes(minutes) {
-    const hours = Math.floor(minutes / 60);
-
-    if (hours) return `${hours}h ${minutes % 60}m`;
-
-    return `${minutes % 60}m`;
-}
 
 @observer
 export default class EntryOverviewItem extends Component {
@@ -61,7 +53,7 @@ export default class EntryOverviewItem extends Component {
                     {entry.endedAt ? entry.endedAt.format('H:mm') : 'Running'}
                 </EntryItemTime>
                 <EntryItemTime>
-                    {`${formatDiffMinutes(diffMinutes)}`}
+                    <SimpleDuration minutes={diffMinutes} />
                 </EntryItemTime>
                 {userColumn}
                 <EntryItemActions>

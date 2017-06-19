@@ -18,6 +18,11 @@ export const EntryDay = styled.div`
     margin: 60px 0;
 `;
 
+export const EntryHeading = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 export const EntryItemDescription = styled.div`
     font-weight: bold;
     margin-right: 20px;

@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { map } from 'lodash';
 import moment from 'moment';
+import SimpleDuration from 'component/SimpleDuration';
 import EntryOverviewItem from './EntryOverviewItem';
-import { EntryList, EntryDay } from '../component/EntryList';
+import { EntryList, EntryDay, EntryHeading } from '../component/EntryList';
 import { ProjectStore } from '../store/Project';
 import { EntryStore } from '../store/Entry';
 import { UserStore } from '../store/User';
@@ -40,7 +41,14 @@ export default class EntryOverview extends Component {
         });
         return (
             <EntryDay key={date}>
-                <h3>{dayTitle}</h3>
+                <EntryHeading>
+                    <h3>{dayTitle}</h3>
+                    <h3>
+                        <SimpleDuration
+                            minutes={EntryStore.calculateTotalMinutes(entries)}
+                        />
+                    </h3>
+                </EntryHeading>
                 <EntryList>
                     {entries.map(this.renderEntry)}
                 </EntryList>
