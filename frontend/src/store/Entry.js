@@ -1,5 +1,6 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed } from 'mobx';
 import { groupBy, orderBy } from 'lodash';
+import moment from 'moment';
 import { Model, Store, Casts } from './Base';
 
 export class Entry extends Model {
@@ -24,6 +25,9 @@ export class Entry extends Model {
     get differenceInMinutes() {
         if (this.startedAt && this.endedAt) {
             return this.endedAt.diff(this.startedAt, 'minutes');
+        }
+        if (this.startedAt) {
+            return moment().diff(this.startedAt, 'minutes');
         }
         return null;
     }
