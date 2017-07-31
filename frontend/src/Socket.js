@@ -65,10 +65,14 @@ export default class Socket {
         };
         // console.log('[sent]', msg);
         // Wait for a while if the socket is not yet done connecting...
+        this._sendWait(msg);
+    }
+
+    _sendWait(msg) {
         if (this.instance.readyState !== 1) {
             setTimeout(() => {
-                this._sendDirectly(msg);
-            }, 200);
+                this._sendWait(msg);
+            }, 100);
             return;
         }
         this._sendDirectly(msg);
