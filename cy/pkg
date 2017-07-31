@@ -43,8 +43,7 @@ pre-install: FORCE
 
 install: FORCE
 	# Sigh. Need download to install pip that can do offline installs :(
-	pip install -U pip==9.0.1
-	pip install -U backend/packages/*
+	. venv/bin/activate && pip install -U pip==9.0.1
 	cd backend && ./manage.py db upgrade
 
 migrate: FORCE
