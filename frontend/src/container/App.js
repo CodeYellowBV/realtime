@@ -25,7 +25,7 @@ export default class App extends Component {
         let content = null;
         if (store.isAuthenticated) {
             content = <Router store={store} />;
-        } else {
+        } else if (store.online) {
             content = <Login viewStore={store} />;
         }
 

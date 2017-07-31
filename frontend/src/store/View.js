@@ -8,11 +8,13 @@ import { api } from './Base';
 export default class ViewStore {
     socket = null;
     @observable online = false;
+    @observable bootstrapDone = false;
     @observable currentUser = new User();
     @observable notifications = [];
     @observable runningEntryStore = new EntryStore();
 
-    @computed get isAuthenticated() {
+    @computed
+    get isAuthenticated() {
         return !!this.currentUser.id;
     }
 
@@ -82,6 +84,7 @@ export default class ViewStore {
     }
 
     afterBootstrap() {
+        this.bootstrapDone = true;
         this.runningEntryStore.unsubscribe();
         if (this.isAuthenticated) {
             this.runningEntryStore.subscribe({
