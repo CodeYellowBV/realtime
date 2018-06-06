@@ -6,6 +6,7 @@ import { sortBy } from 'lodash';
 import moment from 'moment';
 import InputText from '../component/InputText';
 import InputTime, { InputTimeButton } from '../component/InputTime';
+import InputInteger from '../component/InputInteger';
 import SmartDuration from '../component/SmartDuration';
 import InputSelect from '../component/InputSelect';
 import { TimeEntryForm, TimeEntryFormField } from '../component/TimeEntryForm';
@@ -31,6 +32,9 @@ export default class TimeEntry extends Component {
         entry._editing = true;
 
         switch (key) {
+            case 'ticket':
+                entry.ticket = value;
+                break;
             case 'description':
                 entry.description = value;
                 break;
@@ -149,6 +153,14 @@ export default class TimeEntry extends Component {
                         options={projectOptions}
                         onChange={this.handleInput}
                         value={entry.project ? String(entry.project) : ''}
+                        onBlur={this.handleBlur}
+                    />
+                </TimeEntryFormField>
+                <TimeEntryFormField label="Ticket" size="1">
+                    <InputInteger
+                        name="ticket"
+                        onChange={this.handleInput}
+                        value={entry.ticket + ''}
                         onBlur={this.handleBlur}
                     />
                 </TimeEntryFormField>

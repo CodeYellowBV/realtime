@@ -14,6 +14,8 @@ import { Entry } from 'store/Entry';
 import IconDelete from 'image/icon-delete.svg';
 import EntryDescription from 'component/Entry/Description';
 import EntryProject from 'component/Entry/Project';
+import EntryTicket from 'component/Entry/Ticket';
+import EntryWBSO from 'component/Entry/WBSO';
 
 @observer
 export default class EntryOverviewItem extends Component {
@@ -32,6 +34,8 @@ export default class EntryOverviewItem extends Component {
         const { entry, allowEdit, projectStore } = this.props;
         const diffMinutes = entry.differenceInMinutes;
 
+        const wbso = entry.wbso;
+
         let userColumn = null;
         if (this.props.userStore) {
             const user = entry.user
@@ -46,6 +50,7 @@ export default class EntryOverviewItem extends Component {
                     projectStore={projectStore}
                     allowEdit={allowEdit}
                 />
+                <EntryTicket entry={entry} allowEdit={allowEdit} />
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
                 <EntryItemTime>{entry.startedAt.format('H:mm')}</EntryItemTime>
                 <div>—</div>
@@ -56,6 +61,7 @@ export default class EntryOverviewItem extends Component {
                     <SimpleDuration minutes={diffMinutes} />
                 </EntryItemTime>
                 {userColumn}
+                <EntryWBSO entry={entry} allowEdit={allowEdit} />
                 <EntryItemActions>
                     {allowEdit
                         ? <Icon onClick={this.handleDelete} icon={IconDelete} />
