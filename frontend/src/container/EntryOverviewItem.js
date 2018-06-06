@@ -15,6 +15,8 @@ import IconDelete from 'image/icon-delete.svg';
 import EntryDescription from 'component/Entry/Description';
 import EntryProject from 'component/Entry/Project';
 import EntryTicket from 'component/Entry/Ticket';
+import EntryStartTime from 'component/Entry/StartTime';
+import EntryEndTime from 'component/Entry/EndTime';
 import EntryWBSO from 'component/Entry/WBSO';
 
 @observer
@@ -52,11 +54,9 @@ export default class EntryOverviewItem extends Component {
                 />
                 <EntryTicket entry={entry} allowEdit={allowEdit} />
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
-                <EntryItemTime>{entry.startedAt.format('H:mm')}</EntryItemTime>
+                <EntryStartTime entry={entry} allowEdit={allowEdit} />
                 <div>—</div>
-                <EntryItemTime>
-                    {entry.endedAt ? entry.endedAt.format('H:mm') : 'Running'}
-                </EntryItemTime>
+                <EntryEndTime entry={entry} allowEdit={allowEdit} />
                 <EntryItemTime>
                     <SimpleDuration minutes={diffMinutes} />
                 </EntryItemTime>
