@@ -31,6 +31,9 @@ export default class InputInteger extends Component {
     };
 
     handleChange = e => {
+        if(e.target.value.includes('null') && e.target.value.length > 4){
+            e.target.value = e.target.value.substring(4,5);
+        }
         if(!isNumeric(e.target.value) && e.target.value.length > 0){
             return;
         }
