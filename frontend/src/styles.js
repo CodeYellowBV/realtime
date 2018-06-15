@@ -1,9 +1,21 @@
 import { injectGlobal, css } from 'styled-components';
 import 'react-select/dist/react-select.css';
 
+//import isStaging from 'container/AppHeader';
+
 export const COLOR_TINT = '#eecb3d';
 
 const MOBILE_QUERY = '(max-width: 768px)';
+
+export function isStaging(){
+    return window.location.href.includes('realtime.test') || window.location.href.includes('staging');
+}
+
+function getTextColor(){
+    if(isStaging())
+        return '#f22';
+    return '#fff';
+}
 
 export function mobile(...args) {
     return css`
@@ -22,7 +34,7 @@ export default injectGlobal`
     }
     body {
         background: #222;
-        color: #fff;
+        color: ${getTextColor()};
         font-family: -apple-system, system-ui, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
