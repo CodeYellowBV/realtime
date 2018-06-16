@@ -6,6 +6,7 @@ import { EntryList } from '../component/EntryList';
 import { UserStore } from '../store/User';
 import { EntryStore } from '../store/Entry';
 import { ProjectStore } from '../store/Project';
+import { UserFilter, UserFilterChange } from '../component/UserFilter';
 
 @observer
 export default class UserOverview extends Component {
@@ -14,6 +15,10 @@ export default class UserOverview extends Component {
         entries: PropTypes.instanceOf(EntryStore).isRequired,
         projects: PropTypes.instanceOf(ProjectStore).isRequired,
     };
+
+    constructor(props){
+        super(props);
+    }
 
     renderUser = user => {
         const { entries, projects } = this.props;
@@ -33,10 +38,18 @@ export default class UserOverview extends Component {
     };
 
     render() {
+        const result = this.props.users.map(this.renderUser);
+        console.log('map result', result);
         return (
+        <div>
+            <UserFilter>
+                <UserFilterChange overview={this}>
+                </UserFilterChange>
+            </UserFilter>
             <EntryList>
-                {this.props.users.map(this.renderUser)}
+                {result}
             </EntryList>
+        </div>
         );
     }
 }

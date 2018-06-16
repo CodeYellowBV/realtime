@@ -8,6 +8,7 @@ export class User extends Model {
     @observable displayName = '';
     @observable email = '';
     @observable avatarUrl = '';
+    @observable stillWorking = '';
 
     setToken(token) {
         localStorage.setItem('jwt-auth-token', token);

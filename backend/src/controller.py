@@ -30,32 +30,32 @@ class Controller():
             return 'pong'
 
         self.body = _json.loads(self.message)
-
         if self.body['type'] == 'authenticate':
             return self.do_auth()
 
         authorized = self.check_auth()
         if not authorized:
             return self.error('unauthorized')
-
         if self.body['type'] == 'bootstrap':
             return self.get_bootstrap()
         if self.body['type'] == 'unsubscribe':
             return self.unsubscribe(self.body['requestId'])
-
+        if self.body['type'] == 'enableUser':
+            return self.enableUser(self.body['data'])
+        if self.body['type'] == 'disableUser':
+            return self.disableUser(self.body['data'])
+        # test these new methods and inspect closely
         if 'target' not in self.body:
             return self.error('No target given')
 
         t = self.body['target'].title()
         if t not in globals() or t.startswith('_') or t == 'self':
             return self.error('Invalid target given')
-
         target = globals()[t]
         method = getattr(self, self.body['type'], None)
 
         if not method or self.body['type'] not in ['save', 'update', 'delete', 'subscribe', 'unsubscribe', 'get']:
             return self.error('Invalid type given')
-
         # Call the method with the class as param
         return method(target)
 
@@ -107,6 +107,24 @@ class Controller():
             'target': self.body['target'],
             'code': 'success',
             'data': result,
+        }
+
+    def enableUser(self, username):
+        user = self.db.session.query(User).filter(User.username == username).first()
+        user.still_working = True;
+        self.db.session.commit()
+        return {
+            'type': 'enableUser',
+            'code': 'success'
+        }
+
+    def disableUser(self, username):
+        user = self.db.session.query(User).filter(User.username == username).first()
+        user.still_working = False;
+        self.db.session.commit()
+        return {
+            'type': 'disableUser',
+            'code': 'success'
         }
 
     def update(self, cls):
@@ -207,6 +225,7 @@ class Controller():
         token = r1.json()['access_token']
         r2 = _requests.get(_os.environ.get('CY_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
         res = r2.json()['result']
+        print(str(res))
         user = self.db.session.query(User).filter(User.email == res['primaryEmail']).first()
 
         if not user:
@@ -215,6 +234,7 @@ class Controller():
                 'email': res['primaryEmail'],
                 'avatar_url': res['image'],
                 'display_name': res['realName'],
+                'still_working': not ('Disabled' in res['roles']),
             }
             user = User(u)
             self.db.session.add(user)

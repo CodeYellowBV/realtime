@@ -116,7 +116,7 @@ export class Store extends BStore {
 
     parseChanges(changes) {
         if (changes.add) {
-            this.add(changes.add);
+            this.add(changes.add);//this appears to be the place where the values of store/User.js are set
         }
         if (changes.update) {
             changes.update.forEach(change => {
@@ -131,6 +131,14 @@ export class Store extends BStore {
                 return this.get(change.id);
             });
             this.remove(removes);
+        }
+        if(this.target === 'user'){
+            for(let index = 0; index < this.models.length; index++){
+                const user = this.models[index];
+                if(user.stillWorking === null){
+                    user.stillWorking = true;//default value of stillWorking is supposed to be true and null is default value, so...
+                }
+            }
         }
     }
 }
