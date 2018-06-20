@@ -12,6 +12,7 @@ import { ProjectStore } from 'store/Project';
 import { UserStore } from 'store/User';
 import { Entry } from 'store/Entry';
 import IconDelete from 'image/icon-delete.svg';
+import IconTicketLink from 'image/icon-ticket-link.svg';
 import EntryDescription from 'component/Entry/Description';
 import EntryProject from 'component/Entry/Project';
 import EntryTicket from 'component/Entry/Ticket';
@@ -31,6 +32,10 @@ export default class EntryOverviewItem extends Component {
     handleDelete = () => {
         this.props.entry.delete();
     };
+
+    enterTicketPage = () => {
+        window.open('https://phabricator.codeyellow.nl/T' + this.props.entry.ticket, '_blank');
+    }
 
     render() {
         const { entry, allowEdit, projectStore } = this.props;
@@ -53,6 +58,9 @@ export default class EntryOverviewItem extends Component {
                     allowEdit={allowEdit}
                 />
                 <EntryTicket entry={entry} allowEdit={allowEdit} />
+                <EntryItemActions>
+                    <Icon onClick={this.enterTicketPage} icon={IconTicketLink}/>
+                </EntryItemActions>
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
                 <EntryStartTime entry={entry} allowEdit={allowEdit} />
                 <div>—</div>
