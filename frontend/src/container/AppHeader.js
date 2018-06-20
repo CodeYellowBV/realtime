@@ -15,12 +15,6 @@ import {
     AccountContent,
     AccountItem,
 } from 'component/Account';
-import {
-    EnvBar,
-    EnvBarEnvironment,
-    EnvBarClientId,
-    EnvBarStaging,
-} from 'component/EnvBar';
 import View from 'store/View';
 
 @observer
@@ -36,17 +30,6 @@ export default class Header extends Component {
     // Workaround because mobx's @observer kills react-router updates.
     shouldComponentUpdate() {
         return true;
-    }
-
-    renderEnvBar() {
-        if (!this.props.store.isAuthenticated) return null;
-        return (
-            <EnvBar>
-                <EnvBarEnvironment></EnvBarEnvironment>
-                <EnvBarStaging></EnvBarStaging>
-                <EnvBarClientId></EnvBarClientId>
-            </EnvBar>
-        );
     }
 
     renderNavigation() {
@@ -91,7 +74,6 @@ export default class Header extends Component {
             <TopMenu>
                 <TopMenuLogo>Realtime</TopMenuLogo>
                 {this.renderNavigation()}
-                {this.renderEnvBar()}
                 {this.renderAccount()}
             </TopMenu>
         );
