@@ -31,10 +31,16 @@ export default class InputInteger extends Component {
     };
 
     handleChange = e => {
-        if(e.target.value.includes('null') && e.target.value.length > 4){
-            e.target.value = e.target.value.substring(4,5);
+        if(e.target.value.length > 4){
+            e.target.value = e.target.value.replace('n', '');
+            e.target.value = e.target.value.replace('u', '');
+            e.target.value = e.target.value.replace('l', '');
+            e.target.value = e.target.value.replace('l', '');
         }
-        if(!isNumeric(e.target.value) && e.target.value.length > 0){
+        if(e.target.value.length === 0){
+            e.target.value = 'null';
+        }
+        else if(!isNumeric(e.target.value)){
             return;
         }
         this.props.onChange(this.props.name, e.target.value);
