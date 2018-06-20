@@ -31,7 +31,19 @@ export const EntryItemDescription = styled.div`
 `;
 
 export const EntryItemProject = styled.div`
-    flex: 1;
+    flex: 1.75;
+    margin-right: 20px;
+    cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
+`;
+
+export const EntryItemTicket = styled.div`
+    flex: 0.8;
+    margin-right: 20px;
+    cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
+`;
+
+export const EntryItemWBSO = styled.div`
+    flex: 0.8;
     margin-right: 20px;
     cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;

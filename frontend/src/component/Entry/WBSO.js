@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { EntryItemDescription } from 'component/EntryList';
+import { EntryItemWBSO } from 'component/EntryList';
 import { Entry } from 'store/Entry';
 import InputInteger from 'component/InputInteger';
 import Form from '../Form';
@@ -31,12 +31,12 @@ export default class EntryWBSO extends Component {
     render() {
         const { entry, allowEdit } = this.props;
         return (
-            <EntryItemDescription
+            <EntryItemWBSO
                 onClick={this.handleClick}
                 allowEdit={allowEdit}
             >
                 {getStringValue(entry.wbso)}
-            </EntryItemDescription>
+            </EntryItemWBSO>
         );
     }
 }

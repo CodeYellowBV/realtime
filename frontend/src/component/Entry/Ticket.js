@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { EntryItemDescription } from 'component/EntryList';
+import { EntryItemTicket } from 'component/EntryList';
 import { Entry } from 'store/Entry';
 import InputInteger from 'component/InputInteger';
 import Form from '../Form';
@@ -35,7 +35,7 @@ export default class EntryTicket extends Component {
         const { entry, allowEdit } = this.props;
         if (this.editing) {
             return (
-                <EntryItemDescription>
+                <EntryItemTicket>
                     <Form onSubmit={this.handleBlur}>
                         <InputInteger
                             onChange={this.handleChange}
@@ -46,17 +46,17 @@ export default class EntryTicket extends Component {
                             small
                         />
                     </Form>
-                </EntryItemDescription>
+                </EntryItemTicket>
             );
         }
-        const showTicket = entry.ticket;
+        const showTicket = entry.ticket !== null && entry.ticket !== 'null';
         return (
-            <EntryItemDescription
+            <EntryItemTicket
                 onClick={this.handleClick}
                 allowEdit={allowEdit}
             >
                 {showTicket ? 'T' + entry.ticket : <i>No ticket</i>}
-            </EntryItemDescription>
+            </EntryItemTicket>
         );
     }
 }
