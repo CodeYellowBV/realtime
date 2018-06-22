@@ -6,7 +6,6 @@ import { EntryList } from '../component/EntryList';
 import { UserStore } from '../store/User';
 import { EntryStore } from '../store/Entry';
 import { ProjectStore } from '../store/Project';
-import { UserFilter, UserFilterChange } from '../component/UserFilter';
 
 @observer
 export default class UserOverview extends Component {
@@ -20,7 +19,7 @@ export default class UserOverview extends Component {
         super(props);
     }
 
-    renderUser = user => {
+    renderEnabledUser = user => {
         const { entries, projects } = this.props;
 
         const userEntries = entries.filter(entry => {
@@ -33,21 +32,45 @@ export default class UserOverview extends Component {
                 user={user}
                 entries={userEntries}
                 projects={projects}
+                showenabled={true}
             />
         );
     };
 
+    renderDisabledUser = user => {
+        const { entries, projects } = this.props;
+
+        const userEntries = entries.filter(entry => {
+            return entry.user === user.id && !entry.endedAt;
+        });
+
+        //refresh
+
+        return (
+            <UserOverviewItem
+                key={user.id}
+                user={user}
+                entries={userEntries}
+                projects={projects}
+                showenabled={false}
+            />
+        );
+    }
+
     render() {
-        const result = this.props.users.map(this.renderUser);
-        console.log('map result', result);
+        const enabled = this.props.users.map(this.renderEnabledUser);
+        const disabled = this.props.users.map(this.renderDisabledUser);
         return (
         <div>
-            <UserFilter>
-                <UserFilterChange overview={this}>
-                </UserFilterChange>
-            </UserFilter>
             <EntryList>
-                {result}
+                {enabled}
+            </EntryList>
+            <br></br>
+            <br></br>
+            <div>Users that no longer work here</div>
+            <br></br>
+            <EntryList>
+                {disabled}
             </EntryList>
         </div>
         );

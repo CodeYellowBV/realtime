@@ -6,12 +6,16 @@ import {
     EntryItem,
     EntryItemProject,
     EntryItemDescription,
+    EntryItemActions,
 } from '../component/EntryList';
 import Link from '../component/Link';
 import { User } from '../store/User';
 import { ProjectStore } from '../store/Project';
 import SmartDuration from '../component/SmartDuration';
 import { api } from '../store/Base';
+import IconEnable from 'image/icon-enable-user.svg';
+import IconDisable from 'image/icon-disable-user.svg';
+import Icon from 'component/Icon';
 
 @observer
 export default class UserOverviewItem extends Component {
@@ -19,6 +23,7 @@ export default class UserOverviewItem extends Component {
         user: PropTypes.instanceOf(User).isRequired,
         entries: PropTypes.array.isRequired,
         projects: PropTypes.instanceOf(ProjectStore).isRequired,
+        showenabled: PropTypes.bool,
     };
 
     renderEntry = entry => {
@@ -47,9 +52,15 @@ export default class UserOverviewItem extends Component {
 
     renderDisable = user => {
         if(user.stillWorking){
-            return 'Click to disable';
+            //return 'Click to disable';
+            return (<EntryItemActions>
+                        <Icon onClick={this.handleDisable} icon={IconDisable} />
+                    </EntryItemActions>);
         }
-        return 'Click to enable';
+        //return 'Click to enable';
+        return (<EntryItemActions>
+                        <Icon onClick={this.handleDisable} icon={IconEnable} />
+                    </EntryItemActions>);
     };
 
     handleDisable = () => {
@@ -70,8 +81,8 @@ export default class UserOverviewItem extends Component {
 
     render() {
         const { user, entries } = this.props;
-        if(!user.stillWorking && sessionStorage.getItem('UserFilter') === 'Active'){
-            return (<EntryItem></EntryItem>);
+        if(user.stillWorking !== this.props.showenabled){
+            return null;
         }
         return (
             <EntryItem>
@@ -83,7 +94,7 @@ export default class UserOverviewItem extends Component {
                 <EntryItemDescription>
                     {this.renderEntries(entries)}
                 </EntryItemDescription>
-                <EntryItemDescription onClick={this.handleDisable}>
+                <EntryItemDescription>
                     {this.renderDisable(user)}
                 </EntryItemDescription>
             </EntryItem>
