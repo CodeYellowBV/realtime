@@ -38,7 +38,8 @@ export default class InputInteger extends Component {
             e.target.value = e.target.value.replace('l', '');
         }
         if(e.target.value.length === 0){
-            e.target.value = 'null';
+            this.props.onChange(this.props.name, null);
+            return;
         }
         else if(!isNumeric(e.target.value)){
             return;

@@ -51,6 +51,9 @@ export default class EntryOverviewItem extends Component {
                 : null;
             userColumn = <EntryItemTime>{user.displayName}</EntryItemTime>;
         }
+        const ticketLinkStyle = {
+            visibility: ticketLink ? 'visible' : 'hidden'
+        };
         return (
             <EntryItem>
                 <EntryProject
@@ -58,13 +61,11 @@ export default class EntryOverviewItem extends Component {
                     projectStore={projectStore}
                     allowEdit={allowEdit}
                 />
-                {ticketLink ?
-                    <EntryItemActions>
-                        <a href={ticketLink} target="_blank">
-                            <Icon icon={IconTicketLink}/>
-                        </a>
-                    </EntryItemActions>
-                 : null}
+                <EntryItemActions>
+                    <a href={ticketLink} target="_blank" style={ticketLinkStyle}>
+                        <Icon icon={IconTicketLink}/>
+                    </a>
+                </EntryItemActions>
                 <EntryTicket entry={entry} allowEdit={allowEdit} />
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
                 <EntryStartTime entry={entry} allowEdit={allowEdit} />

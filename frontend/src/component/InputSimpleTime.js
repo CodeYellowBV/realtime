@@ -54,7 +54,7 @@ export default class InputSimpleTime extends Component {
                 name={this.props.name}
                 onBlur={this.props.onBlur}
                 autoFocus={this.props.autoFocus}
-            ><input type="text" value={this.state.tempValue} ref={(input) => { this.nameInput = input; }} onChange={this.handleChange}></input></StyledInput>
+            ><input type="text" value={this.state.tempValue} size="1" ref={(input) => { this.nameInput = input; }} onChange={this.handleChange}></input></StyledInput>
         );
     }
 }
