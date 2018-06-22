@@ -74,6 +74,7 @@ export default class EntryOverviewItem extends Component {
                     <SimpleDuration minutes={diffMinutes} />
                 </EntryItemTime>
                 {userColumn}
+                <div>wbso</div>
                 <EntryWBSO entry={entry} allowEdit={allowEdit} />
                 <EntryItemActions>
                     {allowEdit

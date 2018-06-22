@@ -6,6 +6,9 @@ import { EntryItemWBSO } from 'component/EntryList';
 import { Entry } from 'store/Entry';
 import InputInteger from 'component/InputInteger';
 import Form from '../Form';
+import IconCheck from '../../image/icon-check.svg';
+import IconNoCheck from '../../image/icon-no-check.svg';
+import Icon from 'component/Icon';
 
 function getStringValue(wbso){
     if(wbso)
@@ -30,12 +33,10 @@ export default class EntryWBSO extends Component {
 
     render() {
         const { entry, allowEdit } = this.props;
+        const hasWbso = this.props.entry.wbso;
         return (
-            <EntryItemWBSO
-                onClick={this.handleClick}
-                allowEdit={allowEdit}
-            >
-                {getStringValue(entry.wbso)}
+            <EntryItemWBSO onClick={this.handleClick} allowEdit={allowEdit}>
+                <Icon icon={hasWbso ? IconCheck : IconNoCheck}/>
             </EntryItemWBSO>
         );
     }
