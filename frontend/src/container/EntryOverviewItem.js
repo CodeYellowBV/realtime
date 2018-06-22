@@ -42,6 +42,7 @@ export default class EntryOverviewItem extends Component {
         const diffMinutes = entry.differenceInMinutes;
 
         const wbso = entry.wbso;
+        const ticketLink = this.props.entry.ticket ? 'https://phabricator.codeyellow.nl/T' + this.props.entry.ticket : null;
 
         let userColumn = null;
         if (this.props.userStore) {
@@ -57,10 +58,14 @@ export default class EntryOverviewItem extends Component {
                     projectStore={projectStore}
                     allowEdit={allowEdit}
                 />
+                {ticketLink ?
+                    <EntryItemActions>
+                        <a href={ticketLink} target="_blank">
+                            <Icon icon={IconTicketLink}/>
+                        </a>
+                    </EntryItemActions>
+                 : null}
                 <EntryTicket entry={entry} allowEdit={allowEdit} />
-                <EntryItemActions>
-                    <Icon onClick={this.enterTicketPage} icon={IconTicketLink}/>
-                </EntryItemActions>
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
                 <EntryStartTime entry={entry} allowEdit={allowEdit} />
                 <div>—</div>
