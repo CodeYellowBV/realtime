@@ -5,6 +5,7 @@ import { observable } from 'mobx';
 import { EntryItemTime } from 'component/EntryList';
 import { Entry } from 'store/Entry';
 import InputTime from 'component/InputTime';
+import InputSimpleTime from 'component/InputSimpleTime';
 import Form from '../Form';
 
 @observer
@@ -16,7 +17,9 @@ export default class EntryStartTime extends Component {
 
     @observable editing = false;
 
-    handleBlur = () => {};
+    handleBlur = () => {
+        this.editing = false;
+    };
 
     handleClick = () => {
         if (this.props.allowEdit) {
@@ -36,7 +39,7 @@ export default class EntryStartTime extends Component {
             return (
                 <EntryItemTime>
                     <Form onSubmit={this.handleBlur}>
-                        <InputTime
+                        <InputSimpleTime
                             onChange={this.handleChange}
                             name="startedAt"
                             value={entry.startedAt}
@@ -53,7 +56,7 @@ export default class EntryStartTime extends Component {
                 onClick={this.handleClick}
                 allowEdit={allowEdit}
             >
-                {entry.startedAt.format("HH:mm")}
+                {entry.startedAt ? entry.startedAt.format("HH:mm") : 'Not started'}
             </EntryItemTime>
         );
     }
