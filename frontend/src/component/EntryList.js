@@ -51,6 +51,7 @@ export const EntryItemWBSO = styled.div`
 export const EntryItemTime = styled.div`
     flex: 1;
     text-align: center;
+    cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
 
 export const EntryItemActions = styled.div`
