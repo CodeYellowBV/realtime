@@ -28,9 +28,16 @@ export default class EntryStartTime extends Component {
     };
 
     handleChange = (name, value) => {
-        this.props.entry.startedAt = value;
-        this.props.entry.save();
-        this.editing = false;
+        const newMillis = value._d.getTime();
+        const endMillis = this.props.entry.endedAt._d.getTime();
+        if(newMillis <= endMillis){
+            this.props.entry.startedAt = value;
+            this.props.entry.save();
+            this.editing = false;
+        }
+        else {
+            window.alert("The start time can't be later than the end time.");
+        }
     };
 
     render() {
