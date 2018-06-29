@@ -57,9 +57,15 @@ export default class UserOverview extends Component {
         );
     }
 
+    compare = (a,b) => {
+        return a.user.localeCompare(b.user);
+    };
+
     render() {
         const enabled = this.props.users.map(this.renderEnabledUser);
         const disabled = this.props.users.map(this.renderDisabledUser);
+        enabled.sort(this.compare);
+        disabled.sort(this.compare);
         return (
         <div>
             <EntryList>
