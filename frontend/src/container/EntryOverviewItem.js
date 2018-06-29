@@ -5,6 +5,7 @@ import {
     EntryItem,
     EntryItemTime,
     EntryItemActions,
+    EntryItemWBSO,
 } from 'component/EntryList';
 import SimpleDuration from 'component/SimpleDuration';
 import Icon from 'component/Icon';
@@ -75,8 +76,8 @@ export default class EntryOverviewItem extends Component {
                     <SimpleDuration minutes={diffMinutes} />
                 </EntryItemTime>
                 {userColumn}
-                <div>wbso</div>
                 <EntryWBSO entry={entry} allowEdit={allowEdit} />
+                <EntryItemWBSO>wbso</EntryItemWBSO>
                 <EntryItemActions>
                     {allowEdit
                         ? <Icon onClick={this.handleDelete} icon={IconDelete} />

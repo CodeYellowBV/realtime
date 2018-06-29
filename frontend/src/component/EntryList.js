@@ -43,7 +43,7 @@ export const EntryItemTicket = styled.div`
 `;
 
 export const EntryItemWBSO = styled.div`
-    flex: 0.8;
+    flex: 0.1;
     margin-right: 20px;
     cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
