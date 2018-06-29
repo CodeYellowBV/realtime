@@ -60,7 +60,7 @@ export const EntryItemWBSOText = styled.div`
 export const EntryItemTime = styled.div`
     flex: 1;
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
 
