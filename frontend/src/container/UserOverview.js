@@ -58,7 +58,9 @@ export default class UserOverview extends Component {
     }
 
     compare = (a,b) => {
-        return a.user.localeCompare(b.user);
+        console.log('compare: a', a);
+        console.log('compare: b', b);
+        return a.props.user.username.localeCompare(b.props.user.username);
     };
 
     render() {
