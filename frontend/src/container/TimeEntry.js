@@ -160,7 +160,7 @@ export default class TimeEntry extends Component {
                     <InputInteger
                         name="ticket"
                         onChange={this.handleInput}
-                        value={entry.ticket + ''}
+                        value={entry.ticket ? entry.ticket + '' : ''}
                         onBlur={this.handleBlur}
                     />
                 </TimeEntryFormField>

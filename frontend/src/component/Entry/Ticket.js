@@ -40,7 +40,7 @@ export default class EntryTicket extends Component {
                         <InputInteger
                             onChange={this.handleChange}
                             name="ticket"
-                            value={entry.ticket + ''}
+                            value={entry.ticket ? entry.ticket + '' : ''}
                             onBlur={this.handleBlur}
                             autoFocus
                             small

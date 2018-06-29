@@ -34,10 +34,6 @@ export default class EntryOverviewItem extends Component {
         this.props.entry.delete();
     };
 
-    enterTicketPage = () => {
-        window.open('https://phabricator.codeyellow.nl/T' + this.props.entry.ticket, '_blank');
-    }
-
     render() {
         const { entry, allowEdit, projectStore } = this.props;
         const diffMinutes = entry.differenceInMinutes;
