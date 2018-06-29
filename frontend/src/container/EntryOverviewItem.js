@@ -73,7 +73,7 @@ export default class EntryOverviewItem extends Component {
                 </EntryItemTime>
                 {userColumn}
                 <EntryWBSO entry={entry} allowEdit={allowEdit} />
-                <EntryItemWBSO>wbso</EntryItemWBSO>
+                <EntryItemWBSO/>
                 <EntryItemActions>
                     {allowEdit
                         ? <Icon onClick={this.handleDelete} icon={IconDelete} />

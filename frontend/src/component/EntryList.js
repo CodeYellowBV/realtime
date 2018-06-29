@@ -43,14 +43,24 @@ export const EntryItemTicket = styled.div`
 `;
 
 export const EntryItemWBSO = styled.div`
-    flex: 0.1;
-    margin-right: 20px;
+    flex: 0.9;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-flow: row wrap;
+    cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
+`;
+
+export const EntryItemWBSOText = styled.div`
+    flex: 0.3;
+    margin-left: 10px;
     cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
 
 export const EntryItemTime = styled.div`
     flex: 1;
     text-align: center;
+    padding: 10px;
     cursor: ${props => (props.allowEdit ? 'pointer' : 'default')};
 `;
 
