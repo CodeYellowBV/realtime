@@ -37,14 +37,20 @@ export default class InputInteger extends Component {
             e.target.value = e.target.value.replace('l', '');
             e.target.value = e.target.value.replace('l', '');
         }
+        if(e.target.value.includes('T')){
+            e.target.value = e.target.value.replace('T', '');//when you past ticket numbers, the T will be removed and the number will be kept
+        }
         if(e.target.value.length === 0){
             this.props.onChange(this.props.name, null);
             return;
         }
-        else if(!isNumeric(e.target.value)){
-            return;
+        else {
+            const asInt = parseInt(e.target.value);
+            if(asInt >= 0 && asInt < 2000000000){//fractional numbers will return undefined and numbers shouldn't greater than 2billion might cause problems.
+                this.props.onChange(this.props.name, asInt);
+                return;
+            }
         }
-        this.props.onChange(this.props.name, e.target.value);
     };
 
     render() {
