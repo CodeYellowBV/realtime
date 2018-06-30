@@ -20,6 +20,7 @@ import EntryTicket from 'component/Entry/Ticket';
 import EntryStartTime from 'component/Entry/StartTime';
 import EntryEndTime from 'component/Entry/EndTime';
 import EntryWBSO from 'component/Entry/WBSO';
+import View from '../store/View';
 
 @observer
 export default class EntryOverviewItem extends Component {
@@ -65,9 +66,9 @@ export default class EntryOverviewItem extends Component {
                 </EntryItemActions>
                 <EntryTicket entry={entry} allowEdit={allowEdit} />
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
-                <EntryStartTime entry={entry} allowEdit={allowEdit} />
+                <EntryStartTime entry={entry} allowEdit={allowEdit} viewStore={this.props.viewStore}/>
                 <div>—</div>
-                <EntryEndTime entry={entry} allowEdit={allowEdit} />
+                <EntryEndTime entry={entry} allowEdit={allowEdit} viewStore={this.props.viewStore}/>
                 <EntryItemTime>
                     <SimpleDuration minutes={diffMinutes} />
                 </EntryItemTime>

@@ -7,11 +7,13 @@ import { Entry } from 'store/Entry';
 import InputTime from 'component/InputTime';
 import InputSimpleTime from 'component/InputSimpleTime';
 import Form from '../Form';
+import View from '../../store/View';
 
 @observer
 export default class EntryStartTime extends Component {
     static propTypes = {
         entry: PropTypes.instanceOf(Entry).isRequired,
+        viewStore: PropTypes.instanceOf(View).isRequired,
         allowEdit: PropTypes.bool,
     };
 
@@ -36,7 +38,11 @@ export default class EntryStartTime extends Component {
             this.editing = false;
         }
         else {
-            window.alert("The start time can't be later than the end time.");
+            this.props.viewStore.addNotification({//normally, I would use single quotes, but... well... the word can't...
+                message: "The start time can't be later than the end time.",
+                key: 'entryFail',
+                dismissAfter: 4000,
+            });
         }
     };
 

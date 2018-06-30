@@ -9,6 +9,7 @@ import { EntryList, EntryDay, EntryHeading } from '../component/EntryList';
 import { ProjectStore } from '../store/Project';
 import { EntryStore } from '../store/Entry';
 import { UserStore } from '../store/User';
+import View from '../store/View';
 
 @observer
 export default class EntryOverview extends Component {
@@ -16,6 +17,7 @@ export default class EntryOverview extends Component {
         entries: PropTypes.instanceOf(EntryStore).isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
         userStore: PropTypes.instanceOf(UserStore),
+        viewStore: PropTypes.instanceOf(View).isRequired,
         allowEdit: PropTypes.bool,
     };
 
@@ -26,6 +28,7 @@ export default class EntryOverview extends Component {
                 entry={entry}
                 projectStore={this.props.projectStore}
                 userStore={this.props.userStore}
+                viewStore={this.props.viewStore}
                 allowEdit={this.props.allowEdit}
             />
         );

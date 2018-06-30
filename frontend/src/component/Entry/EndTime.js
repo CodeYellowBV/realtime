@@ -36,7 +36,11 @@ export default class EntryEndTime extends Component {
             this.editing = false;
         }
         else {
-            window.alert("The end time can't be earlier than the start time.");
+            this.props.viewStore.addNotification({//normally, I would use single quotes, but... well... the word can't...
+                message: "The end time can't be earlier than the start time.",
+                key: 'entryFail',
+                dismissAfter: 4000,
+            });
         }
     };
 

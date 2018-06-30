@@ -57,6 +57,7 @@ export default class MyTime extends Component {
                 <EntryOverview
                     entries={this.entryStore}
                     projectStore={this.projectStore}
+                    viewStore={this.props.viewStore}
                     allowEdit
                 />
             </div>
