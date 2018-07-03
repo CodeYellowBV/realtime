@@ -30,6 +30,7 @@ class Controller():
             return 'pong'
 
         self.body = _json.loads(self.message)
+
         if self.body['type'] == 'authenticate':
             return self.do_auth()
 
@@ -44,6 +45,34 @@ class Controller():
             return self.enableUser(self.body['data'])
         if self.body['type'] == 'disableUser':
             return self.disableUser(self.body['data'])
+            # Burhan needed a quick hack to improve the real-phab summary plugin, so... here we go!
+        if(self.body['type'] == 'tickets'):
+            tickets = self.body['tickets']
+            print('requested summary for ' + str(tickets))
+            reply = {
+                'code': 'success',
+                'type': 'tickets',
+                'requestId': self.body['requestId'],
+                'entries': {}
+            }
+            for ticket in tickets:
+                print('find data for ' + str(ticket))
+                currentEntries = self.db.session.query(Entry).filter(Entry.ticket == ticket)
+                entriesAsDict = []
+                for entry in currentEntries:
+                    entriesAsDict.append({
+                        'user': entry.user_id,
+                        'project': entry.project_id,
+                        'ticket': entry.ticket,
+                        'description': entry.description,
+                        'started_at': str(entry.started_at),
+                        'ended_at': str(entry.ended_at),
+                        'wbso': entry.wbso,
+                        'id': entry.id
+                    });
+                reply['entries'][ticket] = entriesAsDict
+            print('reply is ' + str(reply))
+            return reply
         # test these new methods and inspect closely
         if 'target' not in self.body:
             return self.error('No target given')
