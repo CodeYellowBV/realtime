@@ -37,9 +37,9 @@ export default class EntryOverview extends Component {
     renderDay = (entries, date) => {
         const day = moment(date);
         const dayTitle = day.calendar(null, {
-            sameDay: '[Today]',
-            lastDay: '[Yesterday]',
-            lastWeek: '[Last] dddd',
+            sameDay: '[Today] (DD MMM)',
+            lastDay: '[Yesterday] (DD MMM)',
+            lastWeek: '[Last] dddd (DD MMM)',
             sameElse: 'dddd DD MMM',
         });
         return (
