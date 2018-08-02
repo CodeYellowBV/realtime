@@ -23,6 +23,28 @@ export const EntryHeading = styled.div`
     justify-content: space-between;
 `;
 
+export const EntryDayHeading = styled.div`
+    display: flex;
+    width: 100%;
+    flex-flow: row wrap;
+    border-bottom: 1px solid #444;
+`;
+
+export const EntryDayHeadingDay = styled.div`
+    flex: 1.75;
+    text-align: left;
+`;
+
+export const EntryDayHeadingWeek = styled.div`
+    flex: 1.75;
+    text-align: center;
+`;
+
+export const EntryDayHeadingTime = styled.div`
+    flex: 1.75;
+    text-align: right;
+`;
+
 export const EntryItemDescription = styled.div`
     font-weight: bold;
     margin-right: 20px;

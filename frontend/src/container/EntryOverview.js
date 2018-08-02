@@ -5,7 +5,7 @@ import { map } from 'lodash';
 import moment from 'moment';
 import SimpleDuration from 'component/SimpleDuration';
 import EntryOverviewItem from './EntryOverviewItem';
-import { EntryList, EntryDay, EntryHeading } from '../component/EntryList';
+import { EntryList, EntryDay, EntryDayHeading, EntryDayHeadingDay, EntryDayHeadingWeek, EntryDayHeadingTime } from '../component/EntryList';
 import { ProjectStore } from '../store/Project';
 import { EntryStore } from '../store/Entry';
 import { UserStore } from '../store/User';
@@ -42,16 +42,14 @@ export default class EntryOverview extends Component {
             lastWeek: '[Last] dddd (DD MMM)',
             sameElse: 'dddd DD MMM',
         });
+        const weekTitle = 'week ' + day.format('WW - YYYY');
         return (
             <EntryDay key={date}>
-                <EntryHeading>
-                    <h3>{dayTitle}</h3>
-                    <h3>
-                        <SimpleDuration
-                            minutes={EntryStore.calculateTotalMinutes(entries)}
-                        />
-                    </h3>
-                </EntryHeading>
+                <EntryDayHeading>
+                    <EntryDayHeadingDay><h3>{dayTitle}</h3></EntryDayHeadingDay>
+                    <EntryDayHeadingWeek><h3>{weekTitle}</h3></EntryDayHeadingWeek>
+                    <EntryDayHeadingTime><h3><SimpleDuration minutes={EntryStore.calculateTotalMinutes(entries)} /></h3></EntryDayHeadingTime>
+                </EntryDayHeading>
                 <EntryList>
                     {entries.map(this.renderEntry)}
                 </EntryList>
