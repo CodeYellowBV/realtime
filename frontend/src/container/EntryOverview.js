@@ -19,6 +19,7 @@ export default class EntryOverview extends Component {
         userStore: PropTypes.instanceOf(UserStore),
         viewStore: PropTypes.instanceOf(View).isRequired,
         allowEdit: PropTypes.bool,
+        showOld: PropTypes.bool,
     };
 
     renderEntry = entry => {
@@ -36,6 +37,14 @@ export default class EntryOverview extends Component {
 
     renderDay = (entries, date) => {
         const day = moment(date);
+        if(!this.props.showOld){
+            const currentMillis = moment().valueOf();
+            const dayMillis = day.valueOf();
+            const daysPassed = (currentMillis - dayMillis) / 1000 / 3600 / 24;
+            if(daysPassed > 70){
+                return null;
+            }
+        }
         const dayTitle = day.calendar(null, {
             sameDay: '[Today] (DD MMM)',
             lastDay: '[Yesterday] (DD MMM)',

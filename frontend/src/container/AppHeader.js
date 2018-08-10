@@ -46,6 +46,9 @@ export default class Header extends Component {
                 <TopMenuLink activeClassName="selected" to="/projects">
                     Projects
                 </TopMenuLink>
+                <TopMenuLink activeClassName="selected" to="/archive">
+                    Archive
+                </TopMenuLink>
             </TopMenuNav>
         );
     }

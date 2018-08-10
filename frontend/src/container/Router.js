@@ -4,6 +4,7 @@ import View from '../store/View';
 import { Route, Switch } from 'react-router-dom';
 
 import MyTime from '../screen/MyTime';
+import Archive from '../screen/Archive';
 import Project from '../screen/Project';
 import ProjectEntries from '../screen/ProjectEntries';
 import UserEntries from '../screen/UserEntries';
@@ -31,6 +32,10 @@ export default class Router extends Component {
                 <Route
                     path="/projects"
                     render={() => <Project viewStore={store} />}
+                />
+                <Route
+                    path="/archive"
+                    render={() => <Archive viewStore={store} />}
                 />
                 <Route
                     path="/project/entries/:id"
