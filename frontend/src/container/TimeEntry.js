@@ -139,9 +139,13 @@ export default class TimeEntry extends Component {
     render() {
         const { entry } = this.props;
 
-        let projectOptions = this.props.projectStore.map(
-            this.formatProjectToOption
-        );
+        let projectOptions = [];
+        for(let index = 0; index < this.props.projectStore.models.length; index++){
+            const model = this.props.projectStore.models[index];
+            if(model && model.isActive){
+                projectOptions.push(this.formatProjectToOption(model));
+            }
+        }
         projectOptions = sortBy(projectOptions, m => m.label.toLowerCase());
 
         return (

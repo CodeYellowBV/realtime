@@ -11,6 +11,14 @@ export default class ProjectOverview extends Component {
         projects: PropTypes.instanceOf(ProjectStore).isRequired,
     };
 
+    constructor(props){
+        super(props);
+        this.props.projects.comparator = function(a, b){
+            return a.name.localeCompare(b.name);
+        };
+        this.props.projects.sort();
+    }
+
     renderProject(project) {
         return <ProjectOverviewItem key={project.cid} project={project} />;
     }

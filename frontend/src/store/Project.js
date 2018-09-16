@@ -7,6 +7,7 @@ export class Project extends Model {
     @observable id = null;
     @observable name = '';
     @observable description = '';
+    @observable isActive = true;
 }
 
 export class ProjectStore extends Store {

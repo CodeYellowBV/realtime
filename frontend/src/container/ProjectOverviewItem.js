@@ -9,6 +9,8 @@ import {
 } from '../component/EntryList';
 import Icon from '../component/Icon';
 import IconDelete from 'image/icon-delete.svg';
+import IconDisable from 'image/icon-disable-project.svg';
+import IconEnable from 'image/icon-enable-project.svg';
 import IconEdit from 'image/icon-edit.svg';
 import { Project } from '../store/Project';
 import ProjectName from '../component/Project/Name';
@@ -47,6 +49,16 @@ export default class ProjectOverviewItem extends Component {
         }
     };
 
+    handleEnable = () => {
+        this.props.project.isActive = true;
+        this.props.project.save();
+    };
+
+    handleDisable = () => {
+        this.props.project.isActive = false;
+        this.props.project.save();
+    };
+
     render() {
         const { project } = this.props;
         return (
@@ -60,6 +72,7 @@ export default class ProjectOverviewItem extends Component {
                 </EntryItemProject>
                 <EntryItemActions>
                     <Icon onClick={this.toggleEditing} icon={IconEdit} />
+                    {project.isActive ? <Icon onClick={this.handleDisable} icon={IconDisable} /> : <Icon onClick={this.handleEnable} icon={IconEnable} /> }
                     <Icon onClick={this.handleDelete} icon={IconDelete} />
                 </EntryItemActions>
             </EntryItem>

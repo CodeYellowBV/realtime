@@ -47,7 +47,13 @@ export default class EntryProject extends Component {
             ? this.props.projectStore.get(entry.project)
             : null;
 
-        let projectOptions = this.props.projectStore.map(formatProjectToOption);
+        let projectOptions = [];
+        for(let index = 0; index < this.props.projectStore.models.length; index++){
+            const model = this.props.projectStore.models[index];
+            if(model && model.isActive){
+                projectOptions.push(formatProjectToOption(model));
+            }
+        }
         projectOptions = sortBy(projectOptions, m => m.label.toLowerCase());
 
         if (this.editing) {
