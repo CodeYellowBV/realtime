@@ -156,4 +156,7 @@ class Ticket(Base, db.Model):
     __tablename__ = 'tickets'
 
     number = db.Column(db.Integer, primary_key=True)
+
+    # Errors will occur if the name of the ticket is longer than the maximum length
+    # So better safe than sorry
     name = db.Column(db.String(500))
