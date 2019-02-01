@@ -7,7 +7,7 @@ import os as _os
 import jwt as _jwt
 import requests as _requests
 import copy as _copy
-from .models import Entry, Project, User
+from .models import Entry, Project, User, Ticket
 
 
 class Controller():
@@ -25,6 +25,7 @@ class Controller():
     # The type is like addEntry of getProject
     # Split the type into a method and a class
     def handle(self):
+
         if self.message == 'ping':
             # todo keepalive logic
             return 'pong'
@@ -45,18 +46,43 @@ class Controller():
             return self.enableUser(self.body['data'])
         if self.body['type'] == 'disableUser':
             return self.disableUser(self.body['data'])
-            # Burhan needed a quick hack to improve the real-phab summary plugin, so... here we go!
+
+        # Burhan needed a quick hack to improve the real-phab summary plugin, so... here we go!
         if(self.body['type'] == 'tickets'):
             tickets = self.body['tickets']
-            print('requested summary for ' + str(tickets))
+
+            # Outdated versions of real-phab won't do this
+            hasTicketNames = False
+            ticketNames = []
+            try:
+                ticketNames = self.body['ticketNames']
+                hasTicketNames = True
+            except KeyError:
+                print('outdated real-phab')
+
             reply = {
                 'code': 'success',
                 'type': 'tickets',
                 'requestId': self.body['requestId'],
                 'entries': {}
             }
+            ticketNameIndex = 0
             for ticket in tickets:
-                print('find data for ' + str(ticket))
+                if hasTicketNames:
+                    ticketEntries = self.db.session.query(Ticket).filter(Ticket.number == ticket)
+
+                    # Check if we already know the ticket name
+                    hasTicketNameAlready = False
+                    for ticketEntry in ticketEntries:
+                        hasTicketNameAlready = True
+
+                    if not hasTicketNameAlready:
+                        print('Assign name ' + ticketNames[ticketNameIndex] + ' to number ' + str(ticket))
+                        self.db.session.add(Ticket({
+                            'number': ticket,
+                            'name': ticketNames[ticketNameIndex]
+                        }))
+                    ticketNameIndex += 1
                 currentEntries = self.db.session.query(Entry).filter(Entry.ticket == ticket)
                 entriesAsDict = []
                 for entry in currentEntries:
@@ -71,8 +97,10 @@ class Controller():
                         'id': entry.id
                     });
                 reply['entries'][ticket] = entriesAsDict
-            print('reply is ' + str(reply))
+            if hasTicketNames:
+                self.db.session.commit()
             return reply
+
         # test these new methods and inspect closely
         if 'target' not in self.body:
             return self.error('No target given')

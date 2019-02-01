@@ -151,3 +151,9 @@ class User(Base, db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
+class Ticket(Base, db.Model):
+    __tablename__ = 'tickets'
+
+    number = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(500))
