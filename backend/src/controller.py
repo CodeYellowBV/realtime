@@ -59,7 +59,7 @@ class Controller():
                 hasTicketNames = True
             except KeyError:
                 print('outdated real-phab')
-
+            print('hasTicketNames is ' + str(hasTicketNames))
             reply = {
                 'code': 'success',
                 'type': 'tickets',
@@ -75,6 +75,8 @@ class Controller():
                     hasTicketNameAlready = False
                     for ticketEntry in ticketEntries:
                         hasTicketNameAlready = True
+
+                    print('hasTicketNameAlready is ' + str(hasTicketNameAlready))
 
                     if not hasTicketNameAlready:
                         print('Assign name ' + ticketNames[ticketNameIndex] + ' to number ' + str(ticket))
