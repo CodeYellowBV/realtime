@@ -34,6 +34,7 @@ export default class Archive extends Component {
         this.entryStore.clear();
         this.entryStore.subscribe({
             user: this.props.viewStore.currentUser.id,
+            all: true,
         });
     };
 

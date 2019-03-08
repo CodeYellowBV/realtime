@@ -5,7 +5,14 @@ import { map } from 'lodash';
 import moment from 'moment';
 import SimpleDuration from 'component/SimpleDuration';
 import EntryOverviewItem from './EntryOverviewItem';
-import { EntryList, EntryDay, EntryDayHeading, EntryDayHeadingDay, EntryDayHeadingWeek, EntryDayHeadingTime } from '../component/EntryList';
+import {
+    EntryList,
+    EntryDay,
+    EntryDayHeading,
+    EntryDayHeadingDay,
+    EntryDayHeadingWeek,
+    EntryDayHeadingTime,
+} from '../component/EntryList';
 import { ProjectStore } from '../store/Project';
 import { EntryStore } from '../store/Entry';
 import { UserStore } from '../store/User';
@@ -37,14 +44,6 @@ export default class EntryOverview extends Component {
 
     renderDay = (entries, date) => {
         const day = moment(date);
-        if(!this.props.showOld){
-            const currentMillis = moment().valueOf();
-            const dayMillis = day.valueOf();
-            const daysPassed = (currentMillis - dayMillis) / 1000 / 3600 / 24;
-            if(daysPassed > 70){
-                return null;
-            }
-        }
         const dayTitle = day.calendar(null, {
             sameDay: '[Today] (DD MMM)',
             lastDay: '[Yesterday] (DD MMM)',
@@ -56,8 +55,18 @@ export default class EntryOverview extends Component {
             <EntryDay key={date}>
                 <EntryDayHeading>
                     <EntryDayHeadingDay><h3>{dayTitle}</h3></EntryDayHeadingDay>
-                    <EntryDayHeadingWeek><h3>{weekTitle}</h3></EntryDayHeadingWeek>
-                    <EntryDayHeadingTime><h3><SimpleDuration minutes={EntryStore.calculateTotalMinutes(entries)} /></h3></EntryDayHeadingTime>
+                    <EntryDayHeadingWeek>
+                        <h3>{weekTitle}</h3>
+                    </EntryDayHeadingWeek>
+                    <EntryDayHeadingTime>
+                        <h3>
+                            <SimpleDuration
+                                minutes={EntryStore.calculateTotalMinutes(
+                                    entries
+                                )}
+                            />
+                        </h3>
+                    </EntryDayHeadingTime>
                 </EntryDayHeading>
                 <EntryList>
                     {entries.map(this.renderEntry)}
