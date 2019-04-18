@@ -33,6 +33,16 @@ class Controller():
 
         self.body = _json.loads(self.message)
 
+        if self.body['type'] == 'env':
+            return {
+                'type': 'env',
+                'code': 'env',
+                'env': {
+                    'CY_FRONTEND_PHABRICATOR_URL': _os.environ.get('CY_FRONTEND_PHABRICATOR_URL'),
+                    'CY_FRONTEND_PHABRICATOR_CLIENT_ID': _os.environ.get('CY_FRONTEND_PHABRICATOR_CLIENT_ID')
+                }
+            }
+
         if self.body['type'] == 'authenticate':
             return self.do_auth()
 
@@ -131,7 +141,7 @@ class Controller():
         return {
             'type': self.body['type'],
             'code': 'success',
-            'data': output,
+            'data': output
         }
 
     def check_auth(self):

@@ -5,6 +5,10 @@ import { EntryStore } from './Entry';
 import Socket from '../Socket';
 import { api } from './Base';
 
+export const FrontendEnv = {
+    env: {},
+};
+
 export default class ViewStore {
     socket = null;
     @observable online = false;
@@ -47,7 +51,14 @@ export default class ViewStore {
         console.log('Connection closed.');
     };
 
-    handleSocketMessage = ({ type, data, ...meta }) => {
+    handleSocketMessage = ({ type, data, env, ...meta }) => {
+        if (type == 'env') {
+            FrontendEnv.env = env;
+            if (FrontendEnv.callback) {
+                FrontendEnv.callback();
+            }
+            return;
+        }
         if (meta.code === 'unauthorized') {
             this.currentUser.logout();
             return;
