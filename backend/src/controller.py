@@ -7,8 +7,8 @@ import os as _os
 import jwt as _jwt
 import requests as _requests
 import copy as _copy
-from datetime import datetime
-from .models import Entry, Project, User, Ticket
+from datetime import datetime, timedelta
+from .models import Entry, Project, User, Ticket, Collection
 
 
 class Controller():
@@ -234,17 +234,15 @@ class Controller():
     def subscribe(self, cls):
         scope = self.body['data'] if 'data' in self.body else {}
 
-        send_limited = 'user' in scope and not 'all' in scope and not 'ended_at' in scope
-        result = cls.find(self.db.session, scope).dump()
+        send_limited = 'user' in scope and (not 'all' in scope) and (not 'ended_at' in scope)
 
         if send_limited:
             current_time = datetime.now()
+            filter_time = current_time - timedelta(seconds=3600*24*90)
             user_id = scope['user']
-            all_entries = self.db.session.query(Entry).filter(Entry.user_id == user_id).all()
-            result = []
-            for entry in all_entries:
-                if (entry.ended_at == None) or ((current_time - entry.ended_at).total_seconds() <= 3600 * 24 * 90):
-                    result.append(entry.dump())
+            result = Collection(self.db.session.query(Entry).filter(Entry.user_id == user_id, Entry.started_at > filter_time).all()).dump()
+        else:
+            result = cls.find(self.db.session, scope).dump()
 
         # Mark the socket as subscribing so we know what is listening to what
         self.socketContainer.subscribe(self.body['requestId'], self.body['target'], scope)
