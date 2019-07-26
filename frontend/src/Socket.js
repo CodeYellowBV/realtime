@@ -12,7 +12,11 @@ export default class Socket {
     }
 
     initialize() {
-        this.instance = new WebSocket(process.env.CY_FRONTEND_WEBSOCKET_URL);
+        // This will replace the first 'http' by 'ws' and it won't touch any other 'http' that may occur in the url
+        // This is a quite simple way to replace our current environment variable that is automagically created
+        this.instance = new WebSocket(
+            'ws' + window.location.href.substring(4) + 'api/'
+        );
 
         this.instance.onopen = () => {
             this._events.emit('open');
