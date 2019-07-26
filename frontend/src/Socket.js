@@ -15,7 +15,11 @@ export default class Socket {
         // This will replace the first 'http' by 'ws' and it won't touch any other 'http' that may occur in the url
         // This is a quite simple way to replace our current environment variable that is automagically created
         this.instance = new WebSocket(
-            'ws' + window.location.href.substring(4) + 'api/'
+            'ws' +
+                window.location.protocol.substring(4) +
+                '//' +
+                window.location.hostname +
+                '/api/'
         );
 
         this.instance.onopen = () => {
