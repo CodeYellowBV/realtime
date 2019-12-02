@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "eslint": "^3.17.1",
+    "eslint": "^4.18.2",
     "eslint-config-codeyellow": "^4.0.0",
     "husky": "^0.13.2",
     "lint-staged": "^4.0.0",
