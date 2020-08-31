@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  db:
+    build:
+      context: ./
+      dockerfile: docker/db/Dockerfile
+    volumes:
+      - ./docker/db/runit:/runit
+    environment:
+      - LOCAL_USER_ID=${LOCAL_USER_ID:-9001}
+      - LOCAL_GROUP_ID=${LOCAL_GROUP_ID:-9001}
+
+  backend:
+    build:
+      context: ./
+      dockerfile: docker/backend/Dockerfile
+    volumes:
+      - ./backend:/backend
+      - ./.env:/backend/.env
+    command: /runit
+
+  frontend:
+    build:
+      context: ./
+      dockerfile: docker/frontend/Dockerfile
+    volumes:
+      - ./frontend/src:/frontend/src
+      - ./.env:/.env
+      - ./.env.override:/.env.override
+    depends_on:
+      - backend
+
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - 1337:8000

@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "eslint": "^3.17.1",
+    "@babel/plugin-proposal-decorators": "^7.7.4",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "eslint-config-codeyellow": "^4.0.0",
     "husky": "^0.13.2",
     "lint-staged": "^4.0.0",
     "mock-socket": "^6.0.4",
     "prettier": "^1.1.0",
-    "react-cy-scripts": "0.11.1"
+    "react-scripts": "3.2.0"
   },
   "dependencies": {
+    "@craco/craco": "^5.6.2",
     "axios": "^0.16.1",
     "lodash": "^4.17.4",
     "mitt": "^1.1.2",
@@ -42,11 +46,23 @@
     ]
   },
   "scripts": {
-    "start": "CY_ENV_FILE=../.env CHOKIDAR_USEPOLLING=true react-cy-scripts start",
+    "start": "CHOKIDAR_USEPOLLING=true craco start",
+    "build": "EXTEND_ESLINT=true craco build",
     "lint": "eslint src",
-    "build": "react-cy-scripts build",
-    "test": "react-cy-scripts test --env=jsdom",
-    "eject": "react-cy-scripts eject",
+    "test": "craco test --env=jsdom src/.*__tests__.*.js$",
+    "eject": "react-scripts eject",
     "precommit": "lint-staged"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

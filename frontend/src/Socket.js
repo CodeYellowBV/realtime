@@ -19,6 +19,8 @@ export default class Socket {
                 window.location.protocol.substring(4) +
                 '//' +
                 window.location.hostname +
+                ':' +
+                window.location.port +
                 '/api/'
         );
 
