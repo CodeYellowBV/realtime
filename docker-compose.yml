@@ -9,15 +9,18 @@ services:
       - ./docker/db/runit:/runit
     environment:
       - LOCAL_USER_ID=${LOCAL_USER_ID:-9001}
-      - LOCAL_GROUP_ID=${LOCAL_GROUP_ID:-9001}
+      - LOCAL_GROUP_ID=${LOCAL_GROUP_ID:-f9001}
 
   backend:
     build:
       context: ./
       dockerfile: docker/backend/Dockerfile
+    environment:
+      - CY_ENV_OVERRIDE_FILE=/backend/.env.override
     volumes:
       - ./backend:/backend
       - ./.env:/backend/.env
+      - ./.env.override:/backend/.env.override
     command: /runit
 
   frontend:

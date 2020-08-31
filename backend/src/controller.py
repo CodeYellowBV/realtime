@@ -8,7 +8,8 @@ import jwt as _jwt
 import requests as _requests
 import copy as _copy
 from datetime import datetime, timedelta
-from .models import Entry, Project, User, Ticket, Collection
+from .models import Entry, User, Ticket, Collection
+from settings import Settings
 
 
 class Controller():
@@ -47,10 +48,11 @@ class Controller():
             return self.do_auth()
 
         authorized = self.check_auth()
-        if not authorized:
-            return self.error('unauthorized')
         if self.body['type'] == 'bootstrap':
             return self.get_bootstrap()
+        if not authorized:
+            return self.error('unauthorized')
+
         if self.body['type'] == 'unsubscribe':
             return self.unsubscribe(self.body['requestId'])
         if self.body['type'] == 'enableUser':
@@ -59,7 +61,7 @@ class Controller():
             return self.disableUser(self.body['data'])
 
         # Burhan needed a quick hack to improve the real-phab summary plugin, so... here we go!
-        if(self.body['type'] == 'tickets'):
+        if (self.body['type'] == 'tickets'):
             tickets = self.body['tickets']
 
             # Outdated versions of real-phab won't do this
@@ -137,11 +139,18 @@ class Controller():
         }
 
     def get_bootstrap(self):
-        output = _copy.copy(self.currentUser.dump())
+        if self.currentUser:
+            output = _copy.copy(self.currentUser.dump())
+        else:
+            output = {}
         return {
             'type': self.body['type'],
             'code': 'success',
-            'data': output
+            'data': {
+                'env_override': Settings.FRONTEND_SETTINGS,
+                'user': output
+            },
+
         }
 
     def check_auth(self):
@@ -248,9 +257,10 @@ class Controller():
 
         if send_limited:
             current_time = datetime.now()
-            filter_time = current_time - timedelta(seconds=3600*24*90)
+            filter_time = current_time - timedelta(seconds=3600 * 24 * 90)
             user_id = scope['user']
-            result = Collection(self.db.session.query(Entry).filter(Entry.user_id == user_id, Entry.started_at > filter_time).all()).dump()
+            result = Collection(self.db.session.query(Entry).filter(Entry.user_id == user_id,
+                                                                    Entry.started_at > filter_time).all()).dump()
         else:
             result = cls.find(self.db.session, scope).dump()
 
@@ -295,6 +305,8 @@ class Controller():
             'grant_type': 'authorization_code',
         }
 
+        print(_os.environ.get('CY_PHABRICATOR_URL') + '/oauthserver/token/')
+
         r1 = _requests.post(_os.environ.get('CY_PHABRICATOR_URL') + '/oauthserver/token/', params=data)
 
         if r1.status_code != 200:
@@ -303,7 +315,6 @@ class Controller():
         token = r1.json()['access_token']
         r2 = _requests.get(_os.environ.get('CY_PHABRICATOR_URL') + '/api/user.whoami', params={'access_token': token})
         res = r2.json()['result']
-        print(str(res))
         user = self.db.session.query(User).filter(User.email == res['primaryEmail']).first()
 
         if not user:

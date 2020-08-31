@@ -11,6 +11,9 @@
 # app = Flask(__name__)
 # CORS(app)
 
+import gevent.monkey
+gevent.monkey.patch_all()
+
 from settings import Settings
 from flask import Flask
 import logging

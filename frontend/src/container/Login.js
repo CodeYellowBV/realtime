@@ -15,6 +15,8 @@ export default class Login extends Component {
             const redirectUri = encodeURIComponent(
                 `${window.location.origin}/`
             );
+            const env = FrontendEnv;
+            debugger;
             window.location = `${FrontendEnv.env
                 .CY_FRONTEND_PHABRICATOR_URL}/oauthserver/auth/?response_type=code&client_id=${FrontendEnv
                 .env

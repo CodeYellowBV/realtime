@@ -33,6 +33,10 @@ export default class ViewStore {
     initialize() {
         const url = new Uri(window.location.href);
         const urlParams = url.search(true);
+
+        // Set the environment settings
+        this.socket.send({ type: 'bootstrap' });
+
         if (urlParams.code) {
             this.performAuthentication(urlParams.code);
             window.history.replaceState({}, null, '/');
@@ -52,13 +56,6 @@ export default class ViewStore {
     };
 
     handleSocketMessage = ({ type, data, env, ...meta }) => {
-        if (type == 'env') {
-            FrontendEnv.env = env;
-            if (FrontendEnv.callback) {
-                FrontendEnv.callback();
-            }
-            return;
-        }
         if (meta.code === 'unauthorized') {
             this.currentUser.logout();
             return;
@@ -72,7 +69,8 @@ export default class ViewStore {
             }
         }
         if (type === 'bootstrap') {
-            this.currentUser.parse(data);
+            FrontendEnv.env = data['env_override'];
+            this.currentUser.parse(data['user']);
             this.afterBootstrap();
         }
     };

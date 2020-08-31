@@ -1,7 +1,5 @@
 #!/bin/sh
 set -e
-
-
 while ! pg_isready -h db; do sleep 2; done
 cd /backend
 /entrypoint.sh ./manage.py db upgrade
