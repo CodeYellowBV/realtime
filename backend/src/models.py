@@ -129,6 +129,7 @@ class User(Base, db.Model):
     username = db.Column(db.String(50))
     display_name = db.Column(db.String(50))
     avatar_url = db.Column(db.String(300))
+    pmc = db.Column(db.String(50), default='')
     still_working = db.Column(db.Boolean)
 
     def create_session(self):

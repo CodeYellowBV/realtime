@@ -16,6 +16,11 @@ import { api } from '../store/Base';
 import IconEnable from 'image/icon-enable-user.svg';
 import IconDisable from 'image/icon-disable-user.svg';
 import Icon from 'component/Icon';
+import styled from 'styled-components';
+
+const PMCLabel = styled.span`
+    margin-left: 10px;
+`;
 
 @observer
 export default class UserOverviewItem extends Component {
@@ -51,37 +56,40 @@ export default class UserOverviewItem extends Component {
     };
 
     renderDisable = user => {
-        if(user.stillWorking){
+        if (user.stillWorking) {
             //return 'Click to disable';
-            return (<EntryItemActions>
-                        <Icon onClick={this.handleDisable} icon={IconDisable} />
-                    </EntryItemActions>);
+            return (
+                <EntryItemActions>
+                    <Icon onClick={this.handleDisable} icon={IconDisable} />
+                </EntryItemActions>
+            );
         }
         //return 'Click to enable';
-        return (<EntryItemActions>
-                        <Icon onClick={this.handleDisable} icon={IconEnable} />
-                    </EntryItemActions>);
+        return (
+            <EntryItemActions>
+                <Icon onClick={this.handleDisable} icon={IconEnable} />
+            </EntryItemActions>
+        );
     };
 
     handleDisable = () => {
         this.props.user.stillWorking = !this.props.user.stillWorking;
-        if(this.props.user.stillWorking){
+        if (this.props.user.stillWorking) {
             api.socket.send({
-                'type': 'enableUser',
-                'data': this.props.user.username
+                type: 'enableUser',
+                data: this.props.user.username,
+            });
+        } else {
+            api.socket.send({
+                type: 'disableUser',
+                data: this.props.user.username,
             });
         }
-        else {
-            api.socket.send({
-                'type': 'disableUser',
-                'data': this.props.user.username
-            });
-        }
-    }
+    };
 
     render() {
         const { user, entries } = this.props;
-        if(user.stillWorking !== this.props.showenabled){
+        if (user.stillWorking !== this.props.showenabled) {
             return null;
         }
         return (
@@ -90,6 +98,9 @@ export default class UserOverviewItem extends Component {
                     <Link to={`/user/entries/${user.id}`}>
                         {user.displayName}
                     </Link>
+                    <PMCLabel>
+                        PMC: {user.pmc}
+                    </PMCLabel>
                 </EntryItemProject>
                 <EntryItemDescription>
                     {this.renderEntries(entries)}

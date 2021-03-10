@@ -8,6 +8,7 @@ export class User extends Model {
     @observable displayName = '';
     @observable email = '';
     @observable avatarUrl = '';
+    @observable pmc = '';
     @observable stillWorking = '';
 
     setToken(token) {
