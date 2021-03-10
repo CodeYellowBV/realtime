@@ -7,6 +7,44 @@ import { Project } from 'store/Project';
 import InputText from 'component/InputText';
 import Form from '../Form';
 import Link from '../Link';
+import styled from 'styled-components';
+const PMCLabel = styled.span`
+    margin-left: 10px;
+`;
+
+@observer
+export class ProjectPmc extends Component {
+    static propTypes = {
+        project: PropTypes.instanceOf(Project).isRequired,
+        editing: PropTypes.bool,
+        onClose: PropTypes.func.isRequired,
+    };
+
+    handleChange = (name, value) => {
+        this.props.project.pmc = value;
+    };
+
+    render() {
+        const { project, editing } = this.props;
+        if (editing) {
+            return (
+                <EntryItemProject>
+                    PMC:
+                    <Form onSubmit={this.props.onClose}>
+                        <InputText
+                            onChange={this.handleChange}
+                            name="pmc"
+                            value={project.pmc}
+                            autoFocus
+                            small
+                        />
+                    </Form>
+                </EntryItemProject>
+            );
+        }
+        return <EntryItemProject />;
+    }
+}
 
 @observer
 export default class ProjectName extends Component {
@@ -26,6 +64,7 @@ export default class ProjectName extends Component {
             return (
                 <EntryItemProject>
                     <Form onSubmit={this.props.onClose}>
+                        Naam:
                         <InputText
                             onChange={this.handleChange}
                             name="name"
@@ -42,6 +81,9 @@ export default class ProjectName extends Component {
                 <Link to={`/project/entries/${project.id}`}>
                     {project.name || <i>No name</i>}
                 </Link>
+                <PMCLabel>
+                    PMC: {project.pmc || <i>No pmc</i>}
+                </PMCLabel>
             </EntryItemProject>
         );
     }

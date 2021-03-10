@@ -121,7 +121,7 @@ class Controller():
             return self.error('No target given')
 
         t = self.body['target'].title()
-        
+
         if t not in globals() or t.startswith('_') or t == 'self':
 
             return self.error('Invalid target given')

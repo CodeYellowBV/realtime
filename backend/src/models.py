@@ -116,6 +116,7 @@ class Project(Base, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
+    pmc = db.Column(db.String(50))
     description = db.Column(db.String(200))
     is_active = db.Column(db.Boolean)
 

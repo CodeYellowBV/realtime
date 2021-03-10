@@ -32,6 +32,15 @@ export default class ProjectAdd extends Component {
                         onChange={this.handleInput}
                         value={project.name}
                     />
+
+                </TimeEntryFormField>
+                <TimeEntryFormField label="PMC" size="2">
+                    <InputText
+                        name="pmc"
+                        onChange={this.handleInput}
+                        value={project.pmc}
+                    />
+
                 </TimeEntryFormField>
                 <TimeEntryFormField label="" center>
                     <Button type="submit">Save</Button>

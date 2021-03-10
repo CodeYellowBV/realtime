@@ -13,7 +13,7 @@ import IconDisable from 'image/icon-disable-project.svg';
 import IconEnable from 'image/icon-enable-project.svg';
 import IconEdit from 'image/icon-edit.svg';
 import { Project } from '../store/Project';
-import ProjectName from '../component/Project/Name';
+import ProjectName, { ProjectPmc } from '../component/Project/Name';
 
 @observer
 export default class ProjectOverviewItem extends Component {
@@ -69,10 +69,23 @@ export default class ProjectOverviewItem extends Component {
                         editing={this.editing}
                         onClose={this.stopEditing}
                     />
+                    <ProjectPmc
+                        project={project}
+                        editing={this.editing}
+                        onClose={this.stopEditing}
+                    />
                 </EntryItemProject>
                 <EntryItemActions>
                     <Icon onClick={this.toggleEditing} icon={IconEdit} />
-                    {project.isActive ? <Icon onClick={this.handleDisable} icon={IconDisable} /> : <Icon onClick={this.handleEnable} icon={IconEnable} /> }
+                    {project.isActive
+                        ? <Icon
+                              onClick={this.handleDisable}
+                              icon={IconDisable}
+                          />
+                        : <Icon
+                              onClick={this.handleEnable}
+                              icon={IconEnable}
+                          />}
                     <Icon onClick={this.handleDelete} icon={IconDelete} />
                 </EntryItemActions>
             </EntryItem>
