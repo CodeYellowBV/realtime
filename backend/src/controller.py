@@ -8,7 +8,7 @@ import jwt as _jwt
 import requests as _requests
 import copy as _copy
 from datetime import datetime, timedelta
-from .models import Entry, User, Ticket, Collection
+from .models import Entry, User, Ticket, Collection, Project
 from settings import Settings
 
 
@@ -121,7 +121,9 @@ class Controller():
             return self.error('No target given')
 
         t = self.body['target'].title()
+        
         if t not in globals() or t.startswith('_') or t == 'self':
+
             return self.error('Invalid target given')
         target = globals()[t]
         method = getattr(self, self.body['type'], None)
