@@ -48,6 +48,8 @@ class Controller():
             return self.do_auth()
 
         authorized = self.check_auth()
+        if self.body['type'] == 'auth':
+            return {'authorized': authorized}
         if self.body['type'] == 'bootstrap':
             return self.get_bootstrap()
         if not authorized:
@@ -123,7 +125,6 @@ class Controller():
         t = self.body['target'].title()
 
         if t not in globals() or t.startswith('_') or t == 'self':
-
             return self.error('Invalid target given')
         target = globals()[t]
         method = getattr(self, self.body['type'], None)

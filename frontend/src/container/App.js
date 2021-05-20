@@ -20,6 +20,12 @@ export default class App extends Component {
         store: PropTypes.instanceOf(View).isRequired,
     };
 
+    constructor(props) {
+        // setInterval(() => props.store.socket.send({ type: 'auth' }), 1000);
+
+        super(props);
+    }
+
     render() {
         const { store } = this.props;
         let content = null;
