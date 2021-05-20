@@ -32,6 +32,9 @@ export default class EntryOverviewItem extends Component {
     };
 
     handleDelete = () => {
+        if (!window.confirm('Are you sure you want to delete this?')) {
+            return;
+        }
         this.props.entry.delete();
     };
 
@@ -40,7 +43,9 @@ export default class EntryOverviewItem extends Component {
         const diffMinutes = entry.differenceInMinutes;
 
         const wbso = entry.wbso;
-        const ticketLink = this.props.entry.ticket ? 'https://phabricator.codeyellow.nl/T' + this.props.entry.ticket : null;
+        const ticketLink = this.props.entry.ticket
+            ? 'https://phabricator.codeyellow.nl/T' + this.props.entry.ticket
+            : null;
 
         let userColumn = null;
         if (this.props.userStore) {
@@ -50,7 +55,7 @@ export default class EntryOverviewItem extends Component {
             userColumn = <EntryItemTime>{user.displayName}</EntryItemTime>;
         }
         const ticketLinkStyle = {
-            visibility: ticketLink ? 'visible' : 'hidden'
+            visibility: ticketLink ? 'visible' : 'hidden',
         };
         return (
             <EntryItem>
@@ -60,21 +65,33 @@ export default class EntryOverviewItem extends Component {
                     allowEdit={allowEdit}
                 />
                 <EntryItemActions>
-                    <a href={ticketLink} target="_blank" style={ticketLinkStyle}>
-                        <Icon icon={IconTicketLink}/>
+                    <a
+                        href={ticketLink}
+                        target="_blank"
+                        style={ticketLinkStyle}
+                    >
+                        <Icon icon={IconTicketLink} />
                     </a>
                 </EntryItemActions>
                 <EntryTicket entry={entry} allowEdit={allowEdit} />
                 <EntryDescription entry={entry} allowEdit={allowEdit} />
-                <EntryStartTime entry={entry} allowEdit={allowEdit} viewStore={this.props.viewStore}/>
+                <EntryStartTime
+                    entry={entry}
+                    allowEdit={allowEdit}
+                    viewStore={this.props.viewStore}
+                />
                 <div>—</div>
-                <EntryEndTime entry={entry} allowEdit={allowEdit} viewStore={this.props.viewStore}/>
+                <EntryEndTime
+                    entry={entry}
+                    allowEdit={allowEdit}
+                    viewStore={this.props.viewStore}
+                />
                 <EntryItemTime>
                     <SimpleDuration minutes={diffMinutes} />
                 </EntryItemTime>
                 {userColumn}
                 <EntryWBSO entry={entry} allowEdit={allowEdit} />
-                <EntryItemWBSO/>
+                <EntryItemWBSO />
                 <EntryItemActions>
                     {allowEdit
                         ? <Icon onClick={this.handleDelete} icon={IconDelete} />
