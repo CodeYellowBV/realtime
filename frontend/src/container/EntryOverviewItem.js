@@ -13,6 +13,7 @@ import { ProjectStore } from 'store/Project';
 import { UserStore } from 'store/User';
 import { Entry } from 'store/Entry';
 import IconDelete from 'image/icon-delete.svg';
+import IconCopy from 'image/icon-copy.svg';
 import IconTicketLink from 'image/icon-ticket-link.svg';
 import EntryDescription from 'component/Entry/Description';
 import EntryProject from 'component/Entry/Project';
@@ -20,15 +21,23 @@ import EntryTicket from 'component/Entry/Ticket';
 import EntryStartTime from 'component/Entry/StartTime';
 import EntryEndTime from 'component/Entry/EndTime';
 import EntryWBSO from 'component/Entry/WBSO';
-import View from '../store/View';
 
 @observer
 export default class EntryOverviewItem extends Component {
     static propTypes = {
         entry: PropTypes.instanceOf(Entry).isRequired,
+        onCopy: PropTypes.func.isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
         userStore: PropTypes.instanceOf(UserStore),
         allowEdit: PropTypes.bool,
+    };
+
+    handleCopy = () => {
+        const { onCopy, entry } = this.props;
+
+        if (onCopy) {
+            onCopy(entry);
+        }
     };
 
     handleDelete = () => {
@@ -93,6 +102,7 @@ export default class EntryOverviewItem extends Component {
                 <EntryWBSO entry={entry} allowEdit={allowEdit} />
                 <EntryItemWBSO />
                 <EntryItemActions>
+                    <Icon onClick={this.handleCopy} icon={IconCopy} />
                     {allowEdit
                         ? <Icon onClick={this.handleDelete} icon={IconDelete} />
                         : null}

@@ -42,6 +42,37 @@ export default class MyTime extends Component {
         this.entryStore.unsubscribe();
     };
 
+    onCopyEntry = oldEntry => {
+        let runningEntry = this.entryStore.find(
+            entry => entry._editing || !entry.endedAt
+        );
+
+        if (!runningEntry) {
+            const newEntry = new Entry({
+                startedAt: new Date(),
+                user: this.props.viewStore.user,
+            });
+            newEntry.project = oldEntry.project;
+            newEntry.description = oldEntry.description;
+            newEntry.ticket = oldEntry.ticket;
+            newEntry.wbso = oldEntry.wbso;
+            newEntry.save();
+            // this.entryStore.add(newEntry);
+
+            // Save triggers a reaoad
+            return;
+
+            runningEntry = this.entryStore.find(
+                entry => entry._editing || !entry.endedAt
+            );
+        }
+
+        runningEntry.project = oldEntry.project;
+        runningEntry.description = oldEntry.description;
+        runningEntry.ticket = oldEntry.ticket;
+        runningEntry.wbso = oldEntry.wbso;
+    };
+
     render() {
         const runningEntry = this.entryStore.find(
             entry => entry._editing || !entry.endedAt
@@ -58,6 +89,7 @@ export default class MyTime extends Component {
                     entries={this.entryStore}
                     projectStore={this.projectStore}
                     viewStore={this.props.viewStore}
+                    onCopy={this.onCopyEntry}
                     allowEdit
                 />
             </div>

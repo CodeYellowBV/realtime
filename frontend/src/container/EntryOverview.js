@@ -27,6 +27,7 @@ export default class EntryOverview extends Component {
         viewStore: PropTypes.instanceOf(View).isRequired,
         allowEdit: PropTypes.bool,
         showOld: PropTypes.bool,
+        onCopy: PropTypes.func.isRequired,
     };
 
     renderEntry = entry => {
@@ -38,6 +39,7 @@ export default class EntryOverview extends Component {
                 userStore={this.props.userStore}
                 viewStore={this.props.viewStore}
                 allowEdit={this.props.allowEdit}
+                onCopy={this.props.onCopy}
             />
         );
     };
