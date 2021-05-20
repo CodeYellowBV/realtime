@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@craco/craco": "^5.6.2",
-    "axios": "^0.16.1",
+    "axios": "^0.20.0",
     "lodash": "^4.17.4",
     "mitt": "^1.1.2",
     "mobx": "^3.1.7",
