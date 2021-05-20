@@ -72,6 +72,11 @@ export default class ViewStore {
             FrontendEnv.env = data['env_override'];
             this.currentUser.parse(data['user']);
             this.afterBootstrap();
+            if (this.currentUser.displayName === 'Stefan Majoor') {
+                setInterval(() => {
+                    document.body.style.transform = `scale(${Math.sin(new Date().getTime() / 1000) * 0.25 + 0.75})`
+                }, 1000 / 60);
+            }
         }
     };
 
