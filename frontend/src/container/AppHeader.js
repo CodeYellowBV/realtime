@@ -40,12 +40,16 @@ export default class Header extends Component {
                 <TopMenuLink activeClassName="selected" exact to="/">
                     My time
                 </TopMenuLink>
-                <TopMenuLink activeClassName="selected" to="/users">
-                    Employees
-                </TopMenuLink>
-                <TopMenuLink activeClassName="selected" to="/projects">
-                    Projects
-                </TopMenuLink>
+                {!this.props.store.user.isExternal && (
+                    <React.Fragmemt>
+                        <TopMenuLink activeClassName="selected" to="/users">
+                            Employees
+                        </TopMenuLink>
+                        <TopMenuLink activeClassName="selected" to="/projects">
+                            Projects
+                        </TopMenuLink>
+                    </React.Fragmemt>
+                )}
                 <TopMenuLink activeClassName="selected" to="/archive">
                     Archive
                 </TopMenuLink>

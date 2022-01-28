@@ -137,12 +137,12 @@ export default class TimeEntry extends Component {
     }
 
     render() {
-        const { entry } = this.props;
+        const { entry, viewStore } = this.props;
 
         let projectOptions = [];
         for(let index = 0; index < this.props.projectStore.models.length; index++){
             const model = this.props.projectStore.models[index];
-            if(model && model.isActive){
+            if(model && model.isActive && viewStore.currentUser.isAllowedProject(model)){
                 projectOptions.push(this.formatProjectToOption(model));
             }
         }
