@@ -21,7 +21,7 @@ build-fe: FORCE
 
 build-be: FORCE
 	virtualenv --python=python3 venv
-	. venv/bin/activate && pip install -U pip==9.0.1
+	. venv/bin/activate && pip install -U pip==21.3.1
 	mkdir backend/packages/
 	. venv/bin/activate && cd backend/packages/ && pip download -r ../packages.pip
 	. venv/bin/activate && pip install -U backend/packages/*
