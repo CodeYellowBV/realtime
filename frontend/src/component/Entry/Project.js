@@ -42,7 +42,7 @@ export default class EntryProject extends Component {
     };
 
     render() {
-        const { entry, allowEdit } = this.props;
+        const { entry, allowEdit, viewStore } = this.props;
         const project = entry.project
             ? this.props.projectStore.get(entry.project)
             : null;
@@ -50,7 +50,7 @@ export default class EntryProject extends Component {
         let projectOptions = [];
         for(let index = 0; index < this.props.projectStore.models.length; index++){
             const model = this.props.projectStore.models[index];
-            if(model && model.isActive){
+            if(model && model.isActive && viewStore.currentUser.isAllowedProject(model)){
                 projectOptions.push(formatProjectToOption(model));
             }
         }

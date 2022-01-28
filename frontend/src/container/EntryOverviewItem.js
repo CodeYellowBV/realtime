@@ -12,6 +12,7 @@ import Icon from 'component/Icon';
 import { ProjectStore } from 'store/Project';
 import { UserStore } from 'store/User';
 import { Entry } from 'store/Entry';
+import View from 'store/View';
 import IconDelete from 'image/icon-delete.svg';
 import IconCopy from 'image/icon-copy.svg';
 import IconTicketLink from 'image/icon-ticket-link.svg';
@@ -29,6 +30,7 @@ export default class EntryOverviewItem extends Component {
         onCopy: PropTypes.func.isRequired,
         projectStore: PropTypes.instanceOf(ProjectStore).isRequired,
         userStore: PropTypes.instanceOf(UserStore),
+        viewStore: PropTypes.instanceOf(View).isRequired,
         allowEdit: PropTypes.bool,
     };
 
@@ -48,7 +50,7 @@ export default class EntryOverviewItem extends Component {
     };
 
     render() {
-        const { entry, allowEdit, projectStore } = this.props;
+        const { entry, allowEdit, projectStore, viewStore } = this.props;
         const diffMinutes = entry.differenceInMinutes;
 
         const wbso = entry.wbso;
@@ -72,6 +74,7 @@ export default class EntryOverviewItem extends Component {
                     entry={entry}
                     projectStore={projectStore}
                     allowEdit={allowEdit}
+                    viewStore={viewStore}
                 />
                 <EntryItemActions>
                     <a
