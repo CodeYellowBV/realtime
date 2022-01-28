@@ -15,7 +15,7 @@ version: FORCE
 build: FORCE build-be build-fe
 
 build-fe: FORCE
-	cd frontend && yarn --no-progress
+	cd frontend && yarn --frozen-lockfile
 	cd frontend && yarn run build
 	mv frontend/build static
 
