@@ -41,7 +41,7 @@ export default class Header extends Component {
                     My time
                 </TopMenuLink>
                 {!this.props.store.currentUser.isExternal && (
-                    <div>
+                    <div style={{ display: 'inherit' }}>
                         <TopMenuLink activeClassName="selected" to="/users">
                             Employees
                         </TopMenuLink>
