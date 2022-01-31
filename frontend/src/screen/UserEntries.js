@@ -57,6 +57,7 @@ export default class UserEntriesScreen extends Component {
                     viewStore={this.props.viewStore}
                     entries={this.entryStore}
                     projectStore={this.projectStore}
+                    allowEdit={this.props.viewStore.currentUser.pmc === 'management'}
                 />
             </div>
         );

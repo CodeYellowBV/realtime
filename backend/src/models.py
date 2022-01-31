@@ -102,7 +102,9 @@ class Entry(Base, db.Model):
         backref=db.backref('entries', lazy='dynamic', cascade='all, delete-orphan'))
 
     def parse(self, data, currentUser, reqType):
-        if currentUser:
+        is_new = self.id is None
+
+        if is_new and currentUser:
             data['user'] = currentUser.id
 
         if reqType == 'save' and currentUser and currentUser.has_running_entries():
