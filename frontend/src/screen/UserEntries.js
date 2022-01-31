@@ -54,6 +54,7 @@ export default class UserEntriesScreen extends Component {
             <div>
                 <Title>Employee {user ? user.displayName : 'Unknown'}</Title>
                 <EntryOverview
+                    viewStore={this.props.viewStore}
                     entries={this.entryStore}
                     projectStore={this.projectStore}
                 />
